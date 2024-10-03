@@ -4,6 +4,7 @@ import BootstrapClient from "@Om/components/BootstrapClient";
 import "bootstrap/dist/css/bootstrap.min.css";
 //import Footer from "@Om/components/HeaderandFooter/Footer";
 //import Header from "@Om/components/HeaderandFooter/Header";
+import Footer2 from "@Om/components/HeaderandFooter/Footer2";
 
 
 
@@ -32,7 +33,7 @@ export default function RootLayout({ children }) {
        
         {children}
 
-      
+      <Footer2/>
        
         <BootstrapClient />
       </body>

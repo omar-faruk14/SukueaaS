@@ -2,21 +2,22 @@
 import React, { useEffect, useState } from "react";
 import liff from "@line/liff";
 import axios from "axios";
-
 import "bootstrap/dist/css/bootstrap.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 
 const JomonRegistration = () => {
-  //const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState(null);
   const [formData, setFormData] = useState({
-    Applicant_District: "",
-    Applicant_User_Name: "",
-    Birth_Year: "",
-    Line_User_ID: "",
-    Gender_type: "",
-    Driver_Volunteer: "No",
-    Watch_Volunteer: "NO",
-
-    Line_Name: "",
+    Registration_Address: "",
+    Registration_Name: "",
+    Registration_Age: "",
+    Registration_Phone: "",
+    Line_User_ID: "", 
+    Registration_Gender: "",
+    Registration_Driver_Volunteer: "No",
+    Registration_Watch_Volunteer: "No",
+    Registration_Line_Name: "", 
   });
 
   const [driverVolunteer, setDriverVolunteer] = useState(false);
@@ -24,77 +25,80 @@ const JomonRegistration = () => {
   const [submissionStatus, setSubmissionStatus] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const handleInfoClick = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   const [isUserRegistered, setIsUserRegistered] = useState(false);
 
   useEffect(() => {
     const initLiff = async () => {
       try {
-        await liff.init({
-          liffId: "2006381311-XDQEmkPw",
-          redirectUri: window.location.href,
-        });
+        
+        await liff.init({ liffId: "2006381311-XDQEmkPw" });
+
+       
         if (liff.isLoggedIn()) {
-          const profile = await liff.getProfile();
-          setProfile(profile);
+         
+          const userProfile = await liff.getProfile();
+          setProfile(userProfile); 
+
+          
           setFormData((prevData) => ({
             ...prevData,
-            Line_User_ID: profile.userId,
-            Line_Name: profile.displayName,
+            Line_User_ID: userProfile.userId, 
+            Registration_Line_Name: userProfile.displayName, 
           }));
 
-          const response = await axios.get(
-            `${process.env.REACT_APP_API_URL}/Line_Infromation_Fetch`
-          );
+          
+          const response = await axios.get(`/api/Users/Line_User_Registration`);
           const userExists = response.data.some(
-            (item) => item.Line_User_ID === profile.userId
+            (item) => item.Line_User_ID === userProfile.userId
           );
+
           if (userExists) {
             setIsUserRegistered(true);
-            setShowExistModal(true);
           }
         } else {
+          
           liff.login();
         }
       } catch (error) {
-        console.error("LIFF Initialization failed ", error);
+        console.error("LIFF Initialization failed:", error);
       }
     };
+
+    
     initLiff();
   }, []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setFormData({
-      ...formData,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
-      Driver_Volunteer: driverVolunteer ? "Yes" : "No",
-      Watch_Volunteer: WatchVolunteer ? "Yes" : "No",
-    });
-  };
-
-  const handleCheckboxChange = () => {
-    setDriverVolunteer(!driverVolunteer);
-  };
-
-  const handleCheckboxChange2 = () => {
-    setWatchVolunteer(!WatchVolunteer);
+      Registration_Driver_Volunteer: driverVolunteer ? "Yes" : "No",
+      Registration_Watch_Volunteer: WatchVolunteer ? "Yes" : "No",
+    }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     if (isSubmitting) return;
     setIsSubmitting(true);
 
     try {
-      await axios.post(
-        `${process.env.REACT_APP_API_URL}/Line_Login_Insert`,
-        formData
-      );
+      await axios.post(`/api/Users/Registration`, formData);
       setSubmissionStatus("success");
       setIsSubmitted(true);
-      setShowSuccessModal(true);
+      
+      
+      // Automatically close the LIFF window
       liff.closeWindow();
     } catch (error) {
       setSubmissionStatus("error");
@@ -105,7 +109,26 @@ const JomonRegistration = () => {
     }
   };
 
-  // if (!profile) return <div>Loading...</div>;
+const handleCheckboxChange = (event) => {
+  const isChecked = event.target.checked;
+  setDriverVolunteer(isChecked);
+  setFormData((prevData) => ({
+    ...prevData,
+    Registration_Driver_Volunteer: isChecked ? "Yes" : "No",
+  }));
+};
+
+const handleCheckboxChange2 = (event) => {
+  const isChecked = event.target.checked;
+  setWatchVolunteer(isChecked);
+  setFormData((prevData) => ({
+    ...prevData,
+    Registration_Watch_Volunteer: isChecked ? "Yes" : "No",
+  }));
+};
+
+
+
 
   return (
     <div>
@@ -121,7 +144,7 @@ const JomonRegistration = () => {
 
                   {isSubmitted && submissionStatus === "success" && (
                     <div className="alert alert-success" role="alert">
-                      この度はイベントのご検討ありがとうございます。
+                      ご登録いただきありがとうございます。
                     </div>
                   )}
                   {isSubmitted && submissionStatus === "error" && (
@@ -135,39 +158,24 @@ const JomonRegistration = () => {
                   {!isSubmitted && !isUserRegistered && (
                     <form onSubmit={handleSubmit}>
                       <div className="mb-3">
-                        <label htmlFor="Line_Name" className="form-label">
+                        <label
+                          htmlFor="Registration_Line_Name"
+                          className="form-label"
+                        >
                           Line名<span className="text-danger">*</span>
                         </label>
                         <input
                           type="text"
                           className="form-control"
-                          // value={profile.displayName}
-                          value="Omar"
-                          id="Line_Name"
-                          name="Line_Name"
+                          value={formData.Registration_Line_Name || ""}
+                          id="Registration_Line_Name"
+                          name="Registration_Line_Name"
                           readOnly
                           style={{
                             backgroundColor: "#ccc",
                             border: "1px solid #ccc",
                             color: "#000",
                           }}
-                          required
-                        />
-                      </div>
-
-                      <div className="mb-3">
-                        <label
-                          htmlFor="Applicant_User_Name"
-                          className="form-label"
-                        >
-                          名前<span className="text-danger">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="Applicant_User_Name"
-                          name="Applicant_User_Name"
-                          value={formData.Applicant_User_Name}
                           onChange={handleInputChange}
                           required
                         />
@@ -175,7 +183,25 @@ const JomonRegistration = () => {
 
                       <div className="mb-3">
                         <label
-                          htmlFor="Applicant_District"
+                          htmlFor="Registration_Name"
+                          className="form-label"
+                        >
+                          名前<span className="text-danger">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="Registration_Name"
+                          name="Registration_Name"
+                          value={formData.Registration_Name}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </div>
+
+                      <div className="mb-3">
+                        <label
+                          htmlFor="Registration_Address"
                           className="form-label"
                         >
                           住所<span className="text-danger">*</span>
@@ -183,9 +209,9 @@ const JomonRegistration = () => {
                         <select
                           type="text"
                           className="form-select"
-                          id="Applicant_District"
-                          name="Applicant_District"
-                          value={formData.Applicant_District}
+                          id="Registration_Address"
+                          name="Registration_Address"
+                          value={formData.Registration_Address}
                           onChange={handleInputChange}
                           required
                         >
@@ -238,7 +264,7 @@ const JomonRegistration = () => {
 
                       <div className="mb-3">
                         <label
-                          htmlFor="Applicant_User_Name"
+                          htmlFor="Registration_Phone"
                           className="form-label"
                         >
                           電話番号<span className="text-danger">*</span>
@@ -246,24 +272,27 @@ const JomonRegistration = () => {
                         <input
                           type="text"
                           className="form-control"
-                          id="Applicant_User_Name"
-                          name="Applicant_User_Name"
-                          value={formData.Applicant_User_Name}
+                          id="Registration_Phone"
+                          name="Registration_Phone"
+                          value={formData.Registration_Phone}
                           onChange={handleInputChange}
                           required
                         />
                       </div>
 
                       <div className="mb-3">
-                        <label htmlFor="Birth_Year" className="form-label">
+                        <label
+                          htmlFor="Registration_Age"
+                          className="form-label"
+                        >
                           年代<span className="text-danger">*</span>
                         </label>
                         <select
                           type="text"
                           className="form-select"
-                          id="Birth_Year"
-                          name="Birth_Year"
-                          value={formData.Birth_Year}
+                          id="Registration_Age"
+                          name="Registration_Age"
+                          value={formData.Registration_Age}
                           onChange={handleInputChange}
                           required
                         >
@@ -278,17 +307,20 @@ const JomonRegistration = () => {
                       </div>
 
                       <div className="mb-3">
-                        <label htmlFor="Gender_type" className="form-label">
+                        <label
+                          htmlFor="Registration_Gender"
+                          className="form-label"
+                        >
                           性別<span className="text-danger">*</span>
                         </label>
                         <div className="form-check">
                           <input
                             className="form-check-input"
                             type="radio"
-                            name="Gender_type"
+                            name="Registration_Gender"
                             id="male"
                             value="男性"
-                            checked={formData.Gender_type === "男性"}
+                            checked={formData.Registration_Gender === "男性"}
                             onChange={handleInputChange}
                             required
                           />
@@ -300,10 +332,10 @@ const JomonRegistration = () => {
                           <input
                             className="form-check-input"
                             type="radio"
-                            name="Gender_type"
+                            name="Registration_Gender"
                             id="female"
                             value="女性"
-                            checked={formData.Gender_type === "女性"}
+                            checked={formData.Registration_Gender === "女性"}
                             onChange={handleInputChange}
                             required
                           />
@@ -315,51 +347,121 @@ const JomonRegistration = () => {
                           <input
                             className="form-check-input"
                             type="radio"
-                            name="Gender_type"
+                            name="Registration_Gender"
                             id="other"
-                            value="その他"
-                            checked={formData.Gender_type === "その他"}
+                            value="その他・未回答"
+                            checked={
+                              formData.Registration_Gender === "その他・未回答"
+                            }
                             onChange={handleInputChange}
                             required
                           />
                           <label className="form-check-label" htmlFor="other">
-                            その他
+                            その他・未回答
                           </label>
                         </div>
                       </div>
 
-                      <div className="mb-3 form-check">
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id="Driver_Volunteer"
-                          checked={driverVolunteer}
-                          onChange={handleCheckboxChange}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="Driver_Volunteer"
+                    
+                      <div className="card mb-3 p-3 border-0 shadow-sm">
+                        <h5
+                          className="fw-bold mb-3 text-primary"
+                          style={{ cursor: "pointer" }}
+                          onClick={handleInfoClick}
                         >
-                          ドライバーボランティアをします。
-                        </label>
-                      </div>
+                          <span>ボランティア活動</span>
+                     
+                          <i
+                            className="ms-1 fa-solid fa-circle-info text-primary"
+                            onClick={handleInfoClick} 
+                            style={{
+                              cursor: "pointer",
+                              fontSize: "1rem", 
+                            }}
+                          ></i>
+                        </h5>
 
-                      <div className="mb-3 form-check">
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id="Watch_Volunteer"
-                          checked={WatchVolunteer}
-                          onChange={handleCheckboxChange2}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="Watch_Volunteer"
+                        <div className="form-check mb-2">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="Registration_Driver_Volunteer"
+                            name="Registration_Driver_Volunteer"
+                            checked={driverVolunteer}
+                            onChange={handleCheckboxChange}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="Registration_Driver_Volunteer"
+                          >
+                            運転ボランティアとしての参加に興味ある
+                          </label>
+                        </div>
+
+                        <div className="form-check d-flex align-items-center">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="Registration_Watch_Volunteer"
+                            name="Registration_Watch_Volunteer"
+                            checked={WatchVolunteer}
+                            onChange={handleCheckboxChange2}
+                          />
+                          <label
+                            className="form-check-label text-danger mb-0 me-2"
+                            htmlFor="Registration_Watch_Volunteer"
+                          >
+                            見守りボランティアとしての参加に興味ある
+                          </label>
+                        </div>
+
+                        {/* Modal for volunteer information */}
+                        <div
+                          className={`modal fade ${showModal ? "show" : ""}`}
+                          style={{ display: showModal ? "block" : "none" }}
+                          tabIndex="-1"
+                          role="dialog"
+                          aria-labelledby="volunteerInfoModalLabel"
+                          aria-hidden={!showModal}
                         >
-                          <span className="text-danger">
-                            見守ボランティアとしての参加に興味ある
-                          </span>
-                        </label>
+                          <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                              <div className="modal-header">
+                                <h5
+                                  className="modal-title"
+                                  id="volunteerInfoModalLabel"
+                                >
+                                  ボランティアについて
+                                </h5>
+                                
+                              </div>
+                              <div className="modal-body">
+                                <h6>運転ボランティアとは？</h6>
+                                <ul>
+                                  <li>
+                                    イベントの際に送迎をお手伝いをしてくれる方
+                                  </li>
+                                  <li>送迎用の車両が貸し出し可能な方</li>
+                                </ul>
+                                <h6>見守りボランティアとは？</h6>
+                                <ul>
+                                  <li>
+                                    イベント会場で介助が必要な方のお手伝いをしてくれる方。例.車の乗り降りを補助する、等
+                                  </li>
+                                </ul>
+                              </div>
+                              <div className="modal-footer">
+                                <button
+                                  type="button"
+                                  className="btn btn-secondary"
+                                  onClick={handleCloseModal}
+                                >
+                                  閉じる
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
 
                       <p className="text-primary">
@@ -375,13 +477,46 @@ const JomonRegistration = () => {
                         </span>
                       </p>
 
-                      <button
-                        type="submit"
-                        className="btn btn-primary w-100"
-                        disabled={isSubmitting}
-                      >
-                        送信
-                      </button>
+                      <div className="form-group">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="gridCheck"
+                            required
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="gridCheck"
+                          >
+                            同意して登録します
+                          </label>
+                        </div>
+                      </div>
+
+                      {/* Submit Button */}
+                      <div className="text-center">
+                        <button
+                          type="submit"
+                          className="btn btn-primary btn-lg"
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <span
+                                className="spinner-border spinner-border-sm me-2"
+                                role="status"
+                                aria-hidden="true"
+                              ></span>
+                              登録中...
+                            </>
+                          ) : (
+                            <>
+                              <i className="fas fa-paper-plane me-2"></i>
+                              登録
+                            </>
+                          )}
+                        </button>
+                      </div>
                     </form>
                   )}
 

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { NextResponse } from "next/server";
 
 const kintoneUrl = "https://emi-lab-osaka.cybozu.com/k/v1";
@@ -7,6 +6,7 @@ const appId = 30;
 
 export async function POST(request) {
   const data = await request.json();
+
   try {
     const recordData = {
       app: appId,
@@ -17,31 +17,31 @@ export async function POST(request) {
         Registration_Phone: { value: data.Registration_Phone },
         Registration_Age: { value: data.Registration_Age },
         Registration_Gender: { value: data.Registration_Gender },
-        Registration_Driver_Volunteer: { value: data.Registration_Driver_Volunteer},
-        Registration_Watch_Volunteer: {value: data.Registration_Watch_Volunteer},
-        Line_User_ID: {value: data.Line_User_ID},
+        Registration_Driver_Volunteer: {
+          value: data.Registration_Driver_Volunteer,
+        },
+        Registration_Watch_Volunteer: {
+          value: data.Registration_Watch_Volunteer,
+        },
+        Line_User_ID: { value: data.Line_User_ID },
       },
     };
 
-    const createRecordResponse = await axios.post(
-      `${kintoneUrl}/record.json`,
-      recordData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "X-Cybozu-API-Token": apiToken,
-        },
-      }
-    );
+    const response = await fetch(`${kintoneUrl}/record.json`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Cybozu-API-Token": apiToken,
+      },
+      body: JSON.stringify(recordData),
+    });
 
-    console.log("Received coordinates:", data);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
     return NextResponse.json({
       message: "Data uploaded successfully to Kintone.",
-      coordinates: {
-        latitude: data.latitude,
-        longitude: data.longitude,
-      },
-      kintoneResponse: createRecordResponse.data,
     });
   } catch (error) {
     console.error(error);
