@@ -36,46 +36,46 @@ const JomonRegistration = () => {
 
   const [isUserRegistered, setIsUserRegistered] = useState(false);
 
-  useEffect(() => {
-    const initLiff = async () => {
-      try {
-        
-        await liff.init({ liffId: "2006381311-XDQEmkPw" });
+useEffect(() => {
+  const initLiff = async () => {
+    try {
+      await liff.init({ liffId: "2006381311-XDQEmkPw" });
 
-       
-        if (liff.isLoggedIn()) {
-         
-          const userProfile = await liff.getProfile();
-          setProfile(userProfile); 
+      if (liff.isLoggedIn()) {
+        const userProfile = await liff.getProfile();
+        setProfile(userProfile);
 
-          
-          setFormData((prevData) => ({
-            ...prevData,
-            Line_User_ID: userProfile.userId, 
-            Registration_Line_Name: userProfile.displayName, 
-          }));
+        // Update formData with the user's LINE ID and display name
+        setFormData((prevData) => ({
+          ...prevData,
+          Line_User_ID: userProfile.userId,
+          Registration_Line_Name: userProfile.displayName,
+        }));
 
-          
-          const response = await axios.get(`/api/Users/Line_User_Registration`);
-          const userExists = response.data.some(
-            (item) => item.Line_User_ID === userProfile.userId
-          );
+        // Correctly use userProfile.userId instead of Line_User_ID
+        const response = await axios.get(
+          `/api/Users/Registration/ID/${userProfile.userId}`
+        );
 
-          if (userExists) {
-            setIsUserRegistered(true);
-          }
-        } else {
-          
-          liff.login();
+        const userExists = response.data.some(
+          (item) => item.Line_User_ID === userProfile.userId
+        );
+
+        if (userExists) {
+          setIsUserRegistered(true);
         }
-      } catch (error) {
-        console.error("LIFF Initialization failed:", error);
+      } else {
+        // Trigger login if not logged in
+        liff.login();
       }
-    };
+    } catch (error) {
+      console.error("LIFF Initialization failed:", error);
+    }
+  };
 
-    
-    initLiff();
-  }, []);
+  initLiff();
+}, []);
+
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -131,7 +131,10 @@ const handleCheckboxChange2 = (event) => {
 
 
   return (
-    <div>
+    <div
+      className="d-flex flex-column"
+      style={{ backgroundColor: "lightblue" }}
+    >
       <div className="container pt-2 pb-2 p-0 overflow-hidden">
         <div className="row justify-content-center">
           <div className="col-md-8">
@@ -267,7 +270,7 @@ const handleCheckboxChange2 = (event) => {
                           htmlFor="Registration_Phone"
                           className="form-label"
                         >
-                          電話番号<span className="text-danger">*</span>
+                          電話<span className="text-danger">*</span>
                         </label>
                         <input
                           type="text"
@@ -362,21 +365,20 @@ const handleCheckboxChange2 = (event) => {
                         </div>
                       </div>
 
-                    
                       <div className="card mb-3 p-3 border-0 shadow-sm">
                         <h5
-                          className="fw-bold mb-3 text-primary"
+                          className="fw-bold mb-3 text-info"
                           style={{ cursor: "pointer" }}
                           onClick={handleInfoClick}
                         >
-                          <span>ボランティア活動</span>
-                     
+                          <span>ボランティアの種類について</span>
+
                           <i
-                            className="ms-1 fa-solid fa-circle-info text-primary"
-                            onClick={handleInfoClick} 
+                            className="ms-1 fa-solid fa-circle-info text-danger"
+                            onClick={handleInfoClick}
                             style={{
                               cursor: "pointer",
-                              fontSize: "1rem", 
+                              fontSize: "1rem",
                             }}
                           ></i>
                         </h5>
@@ -433,7 +435,6 @@ const handleCheckboxChange2 = (event) => {
                                 >
                                   ボランティアについて
                                 </h5>
-                                
                               </div>
                               <div className="modal-body">
                                 <h6>運転ボランティアとは？</h6>
@@ -495,10 +496,10 @@ const handleCheckboxChange2 = (event) => {
                       </div>
 
                       {/* Submit Button */}
-                      <div className="text-center">
+                      <div className="text-center mt-3">
                         <button
                           type="submit"
-                          className="btn btn-primary btn-lg"
+                          className="btn btn-primary btn-lg w-100"
                         >
                           {isSubmitting ? (
                             <>
@@ -525,7 +526,8 @@ const handleCheckboxChange2 = (event) => {
                       className="alert alert-info text-center mt-3"
                       role="alert"
                     >
-                      あなたはすでに登録されています。
+                      {formData.Registration_Line_Name}
+                      さんはすでに登録されています。
                     </div>
                   )}
                 </div>

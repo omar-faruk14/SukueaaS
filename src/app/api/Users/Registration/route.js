@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import axios from "axios";
 
 const kintoneUrl = "https://emi-lab-osaka.cybozu.com/k/v1";
 const apiToken = "2y1jtdTXfHArGgdAzKlHiPFTf0IluCplHFDZOF8x";
@@ -48,3 +49,5 @@ export async function POST(request) {
     return NextResponse.json({ error: "Internal Server Error" });
   }
 }
+
+
