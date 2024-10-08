@@ -2,11 +2,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import BootstrapClient from "@Om/components/BootstrapClient";
 import "bootstrap/dist/css/bootstrap.min.css";
-//import Footer from "@Om/components/HeaderandFooter/Footer";
-//import Header from "@Om/components/HeaderandFooter/Header";
-
-
-
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

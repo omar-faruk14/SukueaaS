@@ -4,6 +4,8 @@ import axios from "axios";
 import liff from "@line/liff";
 import { Gear, Info, Shield, List } from "react-bootstrap-icons";
 import Link from "next/link";
+import Header from "@Om/components/HeaderandFooter/Header";
+import Footer from "@Om/components/HeaderandFooter/Footer";
 
 function LineUserInfo() {
   const [lineData, setLineData] = useState(null);
@@ -47,6 +49,7 @@ function LineUserInfo() {
 
   return (
     <div>
+      <Header />
       <section className="py-3">
         <div className="container justify-content-center">
           {/* Breadcrumb */}
@@ -84,6 +87,7 @@ function LineUserInfo() {
                             <span className="fw-bold">名前: </span>
                             {lineData.Registration_Name}
                           </p>
+
                           <p className="card-text">
                             <span className="fw-bold">住所: </span>
                             {lineData.Registration_Address}
@@ -115,7 +119,7 @@ function LineUserInfo() {
                           <div className="d-grid">
                             <a
                               className="btn btn-secondary rounded-pill"
-                              href={`/Line_Account_Edit/${userId}/${profile?.displayName}`}
+                              href={`/Users/Settings/Update_User_Information/${userId}`}
                             >
                               編集
                             </a>
@@ -183,7 +187,7 @@ function LineUserInfo() {
                   </div> */}
 
                   {/* 利用にあたってのお願い */}
-                  <div className="col h-100">
+                  <div className="col mb-5 h-100">
                     <div className="card bg-light">
                       <div className="card-body">
                         {/* You can replace the placeholder icon with the appropriate one */}
@@ -201,7 +205,7 @@ function LineUserInfo() {
                   </div>
 
                   {/* Self Settings */}
-                  <div className="col mb-5 h-100">
+                  <div className="col h-100">
                     <div className="card bg-light">
                       <div className="card-body">
                         <h5 className="card-title">
@@ -222,6 +226,7 @@ function LineUserInfo() {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }

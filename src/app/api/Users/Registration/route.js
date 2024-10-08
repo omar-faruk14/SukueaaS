@@ -51,3 +51,76 @@ export async function POST(request) {
 }
 
 
+
+export async function PUT(request) {
+  const data = await request.json(); 
+
+  try {
+    
+    const query = `Line_User_ID = "${data.Line_User_ID}"`;
+    const getRecordResponse = await axios.get(`${kintoneUrl}/records.json`, {
+      headers: {
+        "X-Cybozu-API-Token": apiToken,
+      },
+      params: {
+        app: appId,
+        query: query, 
+      },
+    });
+
+    const getRecordData = getRecordResponse.data;
+    if (!getRecordData.records.length) {
+      console.error("No records found for Line_User_ID:", data.Line_User_ID);
+      return NextResponse.json(
+        { error: "No record found to update." },
+        { status: 404 }
+      );
+    }
+
+    const recordId = getRecordData.records[0].$id.value;
+
+  
+    const recordData = {
+      app: appId,
+      id: recordId, 
+      record: {
+        Registration_Line_Name: { value: data.Registration_Line_Name },
+        Registration_Name: { value: data.Registration_Name },
+        Registration_Address: { value: data.Registration_Address },
+        Registration_Phone: { value: data.Registration_Phone },
+        Registration_Age: { value: data.Registration_Age },
+        Registration_Gender: { value: data.Registration_Gender },
+        Registration_Driver_Volunteer: {
+          value: data.Registration_Driver_Volunteer,
+        },
+        Registration_Watch_Volunteer: {
+          value: data.Registration_Watch_Volunteer,
+        },
+        Line_User_ID: { value: data.Line_User_ID },
+      },
+    };
+
+    
+    const updateResponse = await axios.put(
+      `${kintoneUrl}/record.json`,
+      recordData,
+      {
+        headers: {
+          "X-Cybozu-API-Token": apiToken,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return NextResponse.json({
+      message: "Data updated successfully in Kintone.",
+      response: updateResponse.data,
+    });
+  } catch (error) {
+    console.error("Error during PUT operation:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}
