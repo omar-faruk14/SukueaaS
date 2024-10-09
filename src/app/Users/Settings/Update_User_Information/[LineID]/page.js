@@ -198,59 +198,15 @@ const UpdateUser = ({ params }) => {
                         >
                           住所<span className="text-danger">*</span>
                         </label>
-                        <select
-                          className="form-select"
+                        <input
+                          type="text"
+                          className="form-control"
                           id="Registration_Address"
                           name="Registration_Address"
                           value={formData.Registration_Address}
                           onChange={handleInputChange}
                           required
-                        >
-                          <option value="" disabled>
-                            選択してください
-                          </option>
-                          <option value="富里">富里</option>
-                          <option value="富士見">富士見</option>
-                          <option value="とちの木">とちの木</option>
-                          <option value="横吹">横吹</option>
-                          <option value="花場">花場</option>
-                          <option value="木の間">木の間</option>
-                          <option value="若宮">若宮</option>
-                          <option value="原の茶屋">原の茶屋</option>
-                          <option value="松目">松目</option>
-                          <option value="大平">大平</option>
-                          <option value="栗生">栗生</option>
-                          <option value="御射山神戸">御射山神戸</option>
-                          <option value="富原">富原</option>
-                          <option value="塚平">塚平</option>
-                          <option value="南原山">南原山</option>
-                          <option value="富士見ヶ丘">富士見ヶ丘</option>
-                          <option value="富士見台">富士見台</option>
-                          <option value="瀨沢新田">瀨沢新田</option>
-                          <option value="立沢">立沢</option>
-                          <option value="乙事">乙事</option>
-                          <option value="桜ヶ丘">桜ヶ丘</option>
-                          <option value="小六">小六</option>
-                          <option value="高森">高森</option>
-                          <option value="葛窪">葛窪</option>
-                          <option value="田端">田端</option>
-                          <option value="先達">先達</option>
-                          <option value="池袋">池袋</option>
-                          <option value="信濃境">信濃境</option>
-                          <option value="下蔦木">下蔦木</option>
-                          <option value="烏帽子">烏帽子</option>
-                          <option value="上蔦木">上蔦木</option>
-                          <option value="神代">神代</option>
-                          <option value="平岡">平岡</option>
-                          <option value="机">机</option>
-                          <option value="先能">先能</option>
-                          <option value="瀨沢">瀨沢</option>
-                          <option value="富ヶ丘">富ヶ丘</option>
-                          <option value="休戸">休戸</option>
-                          <option value="その他・町外在住">
-                            その他・町外在住
-                          </option>
-                        </select>
+                        />
                       </div>
 
                       <div className="mb-3">

@@ -1,9 +1,20 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
+// Import LINE Client
+const { Client } = require("@line/bot-sdk");
 
 const kintoneUrl = "https://emi-lab-osaka.cybozu.com/k/v1";
 const apiToken = "2y1jtdTXfHArGgdAzKlHiPFTf0IluCplHFDZOF8x";
 const appId = 30;
+
+const lineConfig = {
+  channelAccessToken:
+    "MIxODpLupR/q1JiD0p6Bqm2/R9L3v+SZxgyLr3CkKnZ4osC5iCAGeD5X/G4VRafltZsNoPvTDX/RwnfSGaVWCiqhqUyhoxQyy/icRsBvtMiUKVEPGrgSp18UTNKblEckBamOrR+FACLJ/PTGa3wS1gdB04t89/1O/w1cDnyilFU=",
+  channelSecret: "6eff6ee34af287ead8444ece38e8eb74",
+};
+
+
+const lineClient = new Client(lineConfig);
 
 export async function POST(request) {
   const data = await request.json();
@@ -41,8 +52,16 @@ export async function POST(request) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
+ 
+    const replyMessage = {
+      type: "text",
+      text: `登録が完了しました。\n\n名前: ${data.Registration_Name}\n住所: ${data.Registration_Address}`,
+    };
+
+    await lineClient.pushMessage(data.Line_User_ID, replyMessage);
+
     return NextResponse.json({
-      message: "Data uploaded successfully to Kintone.",
+      message: "Data uploaded successfully to Kintone and LINE message sent.",
     });
   } catch (error) {
     console.error(error);
@@ -50,13 +69,10 @@ export async function POST(request) {
   }
 }
 
-
-
 export async function PUT(request) {
-  const data = await request.json(); 
+  const data = await request.json();
 
   try {
-    
     const query = `Line_User_ID = "${data.Line_User_ID}"`;
     const getRecordResponse = await axios.get(`${kintoneUrl}/records.json`, {
       headers: {
@@ -64,7 +80,7 @@ export async function PUT(request) {
       },
       params: {
         app: appId,
-        query: query, 
+        query: query,
       },
     });
 
@@ -79,10 +95,9 @@ export async function PUT(request) {
 
     const recordId = getRecordData.records[0].$id.value;
 
-  
     const recordData = {
       app: appId,
-      id: recordId, 
+      id: recordId,
       record: {
         Registration_Line_Name: { value: data.Registration_Line_Name },
         Registration_Name: { value: data.Registration_Name },
@@ -100,7 +115,6 @@ export async function PUT(request) {
       },
     };
 
-    
     const updateResponse = await axios.put(
       `${kintoneUrl}/record.json`,
       recordData,
@@ -111,9 +125,15 @@ export async function PUT(request) {
         },
       }
     );
+    const replyMessage = {
+      type: "text",
+      text: `登録情報が更新されました。\n\n名前: ${data.Registration_Name}\n住所: ${data.Registration_Address}`,
+    };
+
+    await lineClient.pushMessage(data.Line_User_ID, replyMessage);
 
     return NextResponse.json({
-      message: "Data updated successfully in Kintone.",
+      message: "Data updated successfully in Kintone and LINE message sent.",
       response: updateResponse.data,
     });
   } catch (error) {

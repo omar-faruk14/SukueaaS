@@ -120,6 +120,7 @@ function LineUserInfo() {
                             <a
                               className="btn btn-secondary rounded-pill"
                               href={`/Users/Settings/Update_User_Information/${userId}`}
+                              
                             >
                               編集
                             </a>
