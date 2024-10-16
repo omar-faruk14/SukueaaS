@@ -1,7 +1,7 @@
 import { Client } from "@line/bot-sdk";
 import axios from "axios";
 
-// Define LINE Bot SDK configuration
+
 const lineConfig = {
   channelAccessToken:
     "MIxODpLupR/q1JiD0p6Bqm2/R9L3v+SZxgyLr3CkKnZ4osC5iCAGeD5X/G4VRafltZsNoPvTDX/RwnfSGaVWCiqhqUyhoxQyy/icRsBvtMiUKVEPGrgSp18UTNKblEckBamOrR+FACLJ/PTGa3wS1gdB04t89/1O/w1cDnyilFU=",
@@ -27,13 +27,15 @@ export async function POST(request) {
   }
 }
 
-// Handle each event from the LINE webhook
+
 async function handleEvent(event) {
-  if (
-    event.type === "postback" &&
-    event.postback.data === "action=乗りました"
-  ) {
-    return handleRideAction(event);
+  
+  if (event.type === "postback" && event.postback && event.postback.data) {
+    if (event.postback.data.startsWith("action=showDetails")) {
+      return handlePostback(event); }
+    //  else if (event.postback.data === "action=乗りました") {
+    //   return handleRideAction(event);
+    // }
   } else if (event.type === "follow") {
     return handleFollowEvent(event);
   } else if (event.type === "message" && event.message.type === "text") {
@@ -41,71 +43,146 @@ async function handleEvent(event) {
   }
 }
 
-// Handle the "乗りました" postback action
-async function handleRideAction(event) {
-  const confirmMessage = {
-    type: "flex",
-    altText: "ご乗車ありがとうございます！",
-    contents: {
-      type: "bubble",
-      body: {
-        type: "box",
-        layout: "vertical",
-        contents: [
-          {
-            type: "text",
-            text: "ありがとうございました。",
-            margin: "md",
-            wrap: true,
+
+
+// async function handleRideAction(event) {
+//   const confirmMessage = {
+//     type: "flex",
+//     altText: "ご乗車ありがとうございます！",
+//     contents: {
+//       type: "bubble",
+//       body: {
+//         type: "box",
+//         layout: "vertical",
+//         contents: [
+//           {
+//             type: "text",
+//             text: "ありがとうございました。",
+//             margin: "md",
+//             wrap: true,
+//           },
+//           {
+//             type: "text",
+//             text: "以下のボタンを押して、アンケートにも回答お願いします。",
+//             margin: "md",
+//             wrap: true,
+//           },
+//           {
+//             type: "text",
+//             text: "アンケートに回答頂いた方から、先着100名様に飲み物のプレゼントがございます。",
+//             margin: "md",
+//             wrap: true,
+//           },
+//           {
+//             type: "text",
+//             text: "★アンケート回答後に表示される画面をドライバーさんに提示してください。",
+//             margin: "md",
+//             wrap: true,
+//           },
+//           {
+//             type: "text",
+//             text: "先着100名（一人一回限り、なくなり次第終了となります）",
+//             margin: "md",
+//             wrap: true,
+//           },
+//         ],
+//       },
+//       footer: {
+//         type: "box",
+//         layout: "vertical",
+//         contents: [
+//           {
+//             type: "button",
+//             style: "primary",
+//             action: {
+//               type: "uri",
+//               label: "アンケート表示",
+//               uri: "https://liff.line.me/2003342118-0nJZWOZ8",
+//             },
+//           },
+//         ],
+//         backgroundColor: "#abf7b1",
+//       },
+//     },
+//   };
+//   await client.replyMessage(event.replyToken, confirmMessage);
+// }
+
+async function handlePostback(event) {
+  const data = event.postback.data;
+
+  
+  if (data.startsWith("action=showDetails")) {
+    const recordNumber = data.split("&record=")[1];
+    let eventData;
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information`
+      );
+      eventData = response.data;
+    } catch (error) {
+      console.error("Error fetching event data:", error);
+      return client.replyMessage(event.replyToken, {
+        type: "text",
+        text: "イベントデータを取得できませんでした。",
+      });
+    }
+
+    const selectedEvent = eventData.find(
+      (event) => event.Record_number === recordNumber
+    );
+
+    if (selectedEvent) {
+      const fullEventDetails = `タイトル: ${selectedEvent.tsukuerabo_Line_Title}\n\n日時: ${selectedEvent.tsukuerabo_Line_event_date} ${selectedEvent.tsukuerabo_Line_event_time}\n\n内容: ${selectedEvent.tsukuerabo_Line_Description}`;
+
+      
+      await client.replyMessage(event.replyToken, {
+        type: "flex",
+        altText: "イベント詳細情報",
+        contents: {
+          type: "bubble",
+          body: {
+            type: "box",
+            layout: "vertical",
+            contents: [
+              {
+                type: "text",
+                text: fullEventDetails,
+                wrap: true,
+                weight: "bold",
+                size: "md",
+              },
+
+              {
+                type: "button",
+                style: "primary",
+                action: {
+                  type: "uri",
+                  label: "フォームで予約する",
+                  uri: "https://liff.line.me/2006381311-2LAgdN1y",
+                },
+                margin: "md",
+              },
+              {
+                type: "button",
+                style: "primary",
+                action: {
+                  type: "uri",
+                  label: "電話で問い合わせる",
+                  uri: "tel:+810709276385",
+                },
+                margin: "md",
+              },
+            ],
           },
-          {
-            type: "text",
-            text: "以下のボタンを押して、アンケートにも回答お願いします。",
-            margin: "md",
-            wrap: true,
-          },
-          {
-            type: "text",
-            text: "アンケートに回答頂いた方から、先着100名様に飲み物のプレゼントがございます。",
-            margin: "md",
-            wrap: true,
-          },
-          {
-            type: "text",
-            text: "★アンケート回答後に表示される画面をドライバーさんに提示してください。",
-            margin: "md",
-            wrap: true,
-          },
-          {
-            type: "text",
-            text: "先着100名（一人一回限り、なくなり次第終了となります）",
-            margin: "md",
-            wrap: true,
-          },
-        ],
-      },
-      footer: {
-        type: "box",
-        layout: "vertical",
-        contents: [
-          {
-            type: "button",
-            style: "primary",
-            action: {
-              type: "uri",
-              label: "アンケート表示",
-              uri: "https://liff.line.me/2003342118-0nJZWOZ8",
-            },
-          },
-        ],
-        backgroundColor: "#abf7b1",
-      },
-    },
-  };
-  await client.replyMessage(event.replyToken, confirmMessage);
+        },
+      });
+    }
+  }
 }
 
-// Handle follow event when a user adds the LINE bot
+
+
 async function handleFollowEvent(event) {
   try {
     const userName = await getUserName(event.source.userId);
@@ -162,7 +239,6 @@ async function handleTextMessage(event) {
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Users/Registration/ID/${lineUserId}`
     );
     userData = response.data;
-    console.log("Fetched user data: ", userData);
   } catch (error) {
     console.error("Error fetching user data:", error);
     return client.replyMessage(event.replyToken, {
@@ -179,7 +255,7 @@ async function handleTextMessage(event) {
 }
 
 
-// Get user profile name
+
 async function getUserName(userId) {
   try {
     const userProfile = await client.getProfile(userId);
@@ -190,8 +266,92 @@ async function getUserName(userId) {
   }
 }
 
+
+
 // Functions to show event list and prompt user registration
+// async function showEventList(event) {
+//   const message = {
+//     type: "flex",
+//     altText: "イベント一覧",
+//     contents: {
+//       type: "bubble",
+//       body: {
+//         type: "box",
+//         layout: "vertical",
+//         contents: [
+//           {
+//             type: "text",
+//             text: "以下のボタンをクリックして、イベントリストをご覧ください。",
+//             margin: "lg",
+//             wrap: true,
+//           },
+//         ],
+//       },
+//       footer: {
+//         type: "box",
+//         layout: "vertical",
+//         contents: [
+//           {
+//             type: "button",
+//             style: "primary",
+//             action: {
+//               type: "uri",
+//               label: "イベント一覧",
+//               uri: "https://main.d21o7j09u1kv06.amplifyapp.com/all-event",
+//             },
+//           },
+//         ],
+//       },
+//     },
+//   };
+//   await client.replyMessage(event.replyToken, message);
+// }
+
+
 async function showEventList(event) {
+  let eventData;
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information`
+    );
+    eventData = response.data;
+  } catch (error) {
+    console.error("Error fetching event data:", error);
+    return client.replyMessage(event.replyToken, {
+      type: "text",
+      text: "イベントデータを取得できませんでした。",
+    });
+  }
+
+
+  const eventButtons = eventData.map((eventInfo) => {
+    
+    const eventDate = new Date(eventInfo.tsukuerabo_Line_event_date);
+    const formattedDate = `${eventDate.getMonth() + 1}/${eventDate.getDate()}`; 
+
+  
+    const eventTitle = `${formattedDate} ${eventInfo.tsukuerabo_Line_Title}`;
+
+  
+    return {
+      type: "box",
+      layout: "horizontal",
+      margin: "md",
+      contents: [
+        {
+          type: "button",
+          style: "primary",
+          action: {
+            type: "postback",
+            label: eventTitle, 
+            data: `action=showDetails&record=${eventInfo.Record_number}`, 
+          },
+        },
+      ],
+    };
+  });
+
+  
   const message = {
     type: "flex",
     altText: "イベント一覧",
@@ -203,29 +363,17 @@ async function showEventList(event) {
         contents: [
           {
             type: "text",
-            text: "以下のボタンをクリックして、イベントリストをご覧ください。",
-            margin: "lg",
-            wrap: true,
+            text: "イベント一覧:",
+            weight: "bold",
+            size: "lg",
+            margin: "md",
           },
-        ],
-      },
-      footer: {
-        type: "box",
-        layout: "vertical",
-        contents: [
-          {
-            type: "button",
-            style: "primary",
-            action: {
-              type: "uri",
-              label: "イベント一覧",
-              uri: "https://main.d21o7j09u1kv06.amplifyapp.com/all-event",
-            },
-          },
+          ...eventButtons, 
         ],
       },
     },
   };
+
   await client.replyMessage(event.replyToken, message);
 }
 
