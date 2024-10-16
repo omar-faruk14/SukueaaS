@@ -120,7 +120,6 @@ function LineUserInfo() {
                             <a
                               className="btn btn-secondary rounded-pill"
                               href={`/Users/Settings/Update_User_Information/${userId}`}
-                              
                             >
                               編集
                             </a>
@@ -129,7 +128,7 @@ function LineUserInfo() {
                       </div>
                     </div>
                   ) : (
-                    <p>Loading or no data available...</p>
+                    <p>データを読み込んでいます...</p>
                   )}
                 </div>
               </div>
@@ -160,7 +159,7 @@ function LineUserInfo() {
                         <h5 className="card-title">
                           <a
                             className="link-dark text-decoration-none"
-                            href={`/PrivacyPolicy`}
+                            href={`/Users/Settings/PrivacyPolicy`}
                           >
                             <Shield className="text-center text-primary ms-2" />
                             プライバシーポリシー
@@ -212,7 +211,7 @@ function LineUserInfo() {
                         <h5 className="card-title">
                           <a
                             className="link-dark text-decoration-none"
-                            href={`${process.env.REACT_APP_Line_Server}/line4/10/self_settings`}
+                            href={`/Admin/Settings/Login`}
                           >
                             <Gear className="text-center text-primary ms-2" />{" "}
                             イベント主催者管理用

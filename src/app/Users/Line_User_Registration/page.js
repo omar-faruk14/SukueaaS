@@ -425,7 +425,7 @@ const StukueraboRegistration = () => {
 
                         <p className="text-primary">
                           <a
-                            href="/PrivacyPolicy"
+                            href="/Users/Settings/PrivacyPolicy"
                             className="link-primary fw-bold text-decoration-none"
                           >
                             アプリ利用にあたって プライバシーポリシー

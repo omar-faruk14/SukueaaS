@@ -33,80 +33,12 @@ async function handleEvent(event) {
   if (event.type === "postback" && event.postback && event.postback.data) {
     if (event.postback.data.startsWith("action=showDetails")) {
       return handlePostback(event); }
-    //  else if (event.postback.data === "action=乗りました") {
-    //   return handleRideAction(event);
-    // }
   } else if (event.type === "follow") {
     return handleFollowEvent(event);
   } else if (event.type === "message" && event.message.type === "text") {
     return handleTextMessage(event);
   }
 }
-
-
-
-// async function handleRideAction(event) {
-//   const confirmMessage = {
-//     type: "flex",
-//     altText: "ご乗車ありがとうございます！",
-//     contents: {
-//       type: "bubble",
-//       body: {
-//         type: "box",
-//         layout: "vertical",
-//         contents: [
-//           {
-//             type: "text",
-//             text: "ありがとうございました。",
-//             margin: "md",
-//             wrap: true,
-//           },
-//           {
-//             type: "text",
-//             text: "以下のボタンを押して、アンケートにも回答お願いします。",
-//             margin: "md",
-//             wrap: true,
-//           },
-//           {
-//             type: "text",
-//             text: "アンケートに回答頂いた方から、先着100名様に飲み物のプレゼントがございます。",
-//             margin: "md",
-//             wrap: true,
-//           },
-//           {
-//             type: "text",
-//             text: "★アンケート回答後に表示される画面をドライバーさんに提示してください。",
-//             margin: "md",
-//             wrap: true,
-//           },
-//           {
-//             type: "text",
-//             text: "先着100名（一人一回限り、なくなり次第終了となります）",
-//             margin: "md",
-//             wrap: true,
-//           },
-//         ],
-//       },
-//       footer: {
-//         type: "box",
-//         layout: "vertical",
-//         contents: [
-//           {
-//             type: "button",
-//             style: "primary",
-//             action: {
-//               type: "uri",
-//               label: "アンケート表示",
-//               uri: "https://liff.line.me/2003342118-0nJZWOZ8",
-//             },
-//           },
-//         ],
-//         backgroundColor: "#abf7b1",
-//       },
-//     },
-//   };
-//   await client.replyMessage(event.replyToken, confirmMessage);
-// }
 
 async function handlePostback(event) {
   const data = event.postback.data;
@@ -249,8 +181,12 @@ async function handleTextMessage(event) {
 
   const userExists = userData.some((user) => user.Line_User_ID === lineUserId);
 
-  if (receivedText === "イベントを確認・予約する") {
+  if (receivedText === "textt") {
     return userExists ? showEventList(event) : promptUserRegistration(event);
+  }
+
+  else if (receivedText === "text") {
+    return userExists ? showSettingsMenu(event) : promptUserRegistration(event);
   }
 }
 
@@ -266,46 +202,41 @@ async function getUserName(userId) {
   }
 }
 
+async function showSettingsMenu(event) {
+  const message = {
+    type: "flex",
+    altText: "設定メニュー",
+    contents: {
+      type: "bubble",
+      body: {
+        type: "box",
+        layout: "vertical",
+        contents: [
+          {
+            type: "text",
+            text: "設定メニュー:",
+            weight: "bold",
+            size: "lg",
+            margin: "md",
+          },
+          {
+            type: "button",
+            style: "primary",
+            action: {
+              type: "uri",
+              label: "設定画面を開く",
+              uri: `https://liff.line.me/2006381311-2LAgdN1y`,
+            },
+            margin: "md",
+          },
+        ],
+      },
+    },
+  };
 
+  await client.replyMessage(event.replyToken, message);
+}
 
-// Functions to show event list and prompt user registration
-// async function showEventList(event) {
-//   const message = {
-//     type: "flex",
-//     altText: "イベント一覧",
-//     contents: {
-//       type: "bubble",
-//       body: {
-//         type: "box",
-//         layout: "vertical",
-//         contents: [
-//           {
-//             type: "text",
-//             text: "以下のボタンをクリックして、イベントリストをご覧ください。",
-//             margin: "lg",
-//             wrap: true,
-//           },
-//         ],
-//       },
-//       footer: {
-//         type: "box",
-//         layout: "vertical",
-//         contents: [
-//           {
-//             type: "button",
-//             style: "primary",
-//             action: {
-//               type: "uri",
-//               label: "イベント一覧",
-//               uri: "https://main.d21o7j09u1kv06.amplifyapp.com/all-event",
-//             },
-//           },
-//         ],
-//       },
-//     },
-//   };
-//   await client.replyMessage(event.replyToken, message);
-// }
 
 
 async function showEventList(event) {
@@ -390,7 +321,7 @@ async function promptUserRegistration(event) {
         contents: [
           {
             type: "text",
-            text: `${userName} さんはまだご登録されていないようです。\n\nイベントリストを見るにはご登録が必要です。`,
+            text: `${userName} さんはまだご登録されていないようです。\n\nご利用には登録が必要です。\n\n次のステップに進むにはボタンを押してください。`,
             margin: "lg",
             wrap: true,
           },
