@@ -40,79 +40,6 @@ async function handleEvent(event) {
   }
 }
 
-async function handlePostback(event) {
-  const data = event.postback.data;
-
-  
-  if (data.startsWith("action=showDetails")) {
-    const recordNumber = data.split("&record=")[1];
-    let eventData;
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information`
-      );
-      eventData = response.data;
-    } catch (error) {
-      console.error("Error fetching event data:", error);
-      return client.replyMessage(event.replyToken, {
-        type: "text",
-        text: "イベントデータを取得できませんでした。",
-      });
-    }
-
-    const selectedEvent = eventData.find(
-      (event) => event.Record_number === recordNumber
-    );
-
-    if (selectedEvent) {
-      const fullEventDetails = `タイトル: ${selectedEvent.tsukuerabo_Line_Title}\n\n日時: ${selectedEvent.tsukuerabo_Line_event_date} ${selectedEvent.tsukuerabo_Line_event_time}\n\n内容: ${selectedEvent.tsukuerabo_Line_Description}`;
-
-      
-      await client.replyMessage(event.replyToken, {
-        type: "flex",
-        altText: "イベント詳細情報",
-        contents: {
-          type: "bubble",
-          body: {
-            type: "box",
-            layout: "vertical",
-            contents: [
-              {
-                type: "text",
-                text: fullEventDetails,
-                wrap: true,
-                weight: "bold",
-                size: "md",
-              },
-
-              {
-                type: "button",
-                style: "primary",
-                action: {
-                  type: "uri",
-                  label: "フォームで予約する",
-                  uri: "https://liff.line.me/2006381311-2LAgdN1y",
-                },
-                margin: "md",
-              },
-              {
-                type: "button",
-                style: "primary",
-                action: {
-                  type: "uri",
-                  label: "電話で問い合わせる",
-                  uri: "tel:+810709276385",
-                },
-                margin: "md",
-              },
-            ],
-          },
-        },
-      });
-    }
-  }
-}
-
 
 
 async function handleFollowEvent(event) {
@@ -185,7 +112,7 @@ async function handleTextMessage(event) {
     return userExists ? showEventList(event) : promptUserRegistration(event);
   }
 
-  else if (receivedText === "text") {
+  else if (receivedText === "登録情報を確認、変更する") {
     return userExists ? showSettingsMenu(event) : promptUserRegistration(event);
   }
 }
@@ -346,4 +273,113 @@ async function promptUserRegistration(event) {
     },
   };
   await client.replyMessage(event.replyToken, message);
+}
+
+//********************************this function for postback url sent********************** */
+
+async function handlePostback(event) {
+  const data = event.postback.data;
+
+  if (data.startsWith("action=showDetails")) {
+    const recordNumber = data.split("&record=")[1];
+    let eventData;
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information`
+      );
+      eventData = response.data;
+    } catch (error) {
+      console.error("Error fetching event data:", error);
+      return client.replyMessage(event.replyToken, {
+        type: "text",
+        text: "イベントデータを取得できませんでした。",
+      });
+    }
+
+    const selectedEvent = eventData.find(
+      (event) => event.Record_number === recordNumber
+    );
+
+    if (selectedEvent) {
+      const fullEventDetails = `タイトル: ${selectedEvent.tsukuerabo_Line_Title}\n\n日時: ${selectedEvent.tsukuerabo_Line_event_date} ${selectedEvent.tsukuerabo_Line_event_time}\n\n内容: ${selectedEvent.tsukuerabo_Line_Description}`;
+
+      // Extract image file key from the event data
+      let imageUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information/${selectedEvent.tsukuerabo_Line_event_image[0].fileKey}?width=240&height=160`; // Set to smaller dimensions for thumbnail
+
+      await client.replyMessage(event.replyToken, {
+        type: "flex",
+        altText: "イベント詳細情報",
+        contents: {
+          type: "bubble",
+          hero: {
+            type: "box",
+            layout: "vertical",
+            backgroundColor: "#F4F4F4", 
+            paddingAll: "10px",
+            cornerRadius: "md", 
+            contents: [
+              {
+                type: "image",
+                url: imageUrl,
+                size: "full",
+                aspectRatio: "4:3", 
+                aspectMode: "fit", 
+                action: {
+                  type: "uri",
+                  uri: imageUrl,
+                },
+              },
+            ],
+          },
+          body: {
+            type: "box",
+            layout: "vertical",
+            contents: [
+              {
+                type: "text",
+                text: selectedEvent.tsukuerabo_Line_Title,
+                wrap: true,
+                weight: "bold",
+                size: "lg",
+                margin: "md",
+              },
+              {
+                type: "text",
+                text: fullEventDetails,
+                wrap: true,
+                size: "sm",
+                margin: "md",
+              },
+            ],
+          },
+          footer: {
+            type: "box",
+            layout: "vertical",
+            contents: [
+              {
+                type: "button",
+                style: "primary",
+                action: {
+                  type: "uri",
+                  label: "フォームで予約する",
+                  uri: "https://liff.line.me/2006381311-2LAgdN1y",
+                },
+                margin: "md",
+              },
+              {
+                type: "button",
+                style: "primary",
+                action: {
+                  type: "uri",
+                  label: "電話で問い合わせる",
+                  uri: "tel:+810709276385",
+                },
+                margin: "md",
+              },
+            ],
+          },
+        },
+      });
+    }
+  }
 }
