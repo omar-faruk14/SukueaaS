@@ -8,13 +8,15 @@ export default function EventManager() {
   const [timeRange, setTimeRange] = useState("1month");
   const [phone, setPhone] = useState("");
   const [recordNumber, setRecordNumber] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false); 
+  const [successMessage, setSuccessMessage] = useState(""); 
 
   useEffect(() => {
-    // Fetch existing event data when the component loads
+   
     async function fetchEventData() {
       try {
         const response = await axios.get("/api/Admin/Event_Management");
-        const eventData = response.data[0]; // Assuming the first record
+        const eventData = response.data[0]; 
         setRecordNumber(eventData.Record_number);
         setTimeRange(eventData.tsukuerabo_event_management_month);
         setPhone(eventData.tsukuerabo_event_management_phone);
@@ -27,7 +29,8 @@ export default function EventManager() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsSubmitting(true); 
+    setSuccessMessage(""); 
     try {
       const updateData = {
         Record_number: recordNumber,
@@ -37,10 +40,11 @@ export default function EventManager() {
 
       await axios.put("/api/Admin/Event_Management", updateData);
 
-      console.log("Data updated successfully");
-      // Optionally, you can add success/failure messaging here
+      setSuccessMessage("データが正常に更新されました。"); 
     } catch (error) {
       console.error("Error updating event data:", error);
+    } finally {
+      setIsSubmitting(false); 
     }
   };
 
@@ -115,14 +119,24 @@ export default function EventManager() {
           </div>
 
           <div className="d-flex justify-content-between">
-            <button type="submit" className="btn btn-primary">
-              設定する
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "送信中..." : "設定する"}{" "}
             </button>
             <button type="button" className="btn btn-secondary">
               キャンセル
             </button>
           </div>
         </form>
+
+        {successMessage && (
+          <div className="alert alert-success mt-3" role="alert">
+            {successMessage} 
+          </div>
+        )}
       </div>
       <Footer />
     </div>

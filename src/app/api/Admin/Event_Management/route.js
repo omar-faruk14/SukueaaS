@@ -4,7 +4,7 @@ import axios from "axios";
 const kintoneUrl = "https://emi-lab-osaka.cybozu.com/k/v1";
 const apiToken = "o2H8v4AGU1g54XWEIfJYvARvzfu3O0Gp9WckZN6N";
 const appId = 31;
-
+export const dynamic = "force-dynamic";
 export async function GET(request) {
   
   try {
