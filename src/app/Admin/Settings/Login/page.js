@@ -1,16 +1,19 @@
-"use client"; 
+"use client";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import "./Login_css.css";
 
 export default function Page() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const router = useRouter(); 
+  const [isSubmitting, setIsSubmitting] = useState(false); 
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true); 
+
     try {
       const response = await fetch("/api/Admin/Login", {
         method: "POST",
@@ -26,12 +29,14 @@ export default function Page() {
       const data = await response.json();
       if (response.ok) {
         localStorage.setItem("token", data.token);
-        router.push("/Admin/Settings/Event_Line_Settings"); 
+        router.push("/Admin/Settings/Event_Line_Settings");
       } else {
-        setError(data.message || "Login failed");
+        setError(data.message || "ログインに失敗しました。");
       }
     } catch (err) {
-      setError("An error occurred. Please try again.");
+      setError("エラーが発生しました。もう一度お試しください。");
+    } finally {
+      setIsSubmitting(false); 
     }
   };
 
@@ -46,9 +51,10 @@ export default function Page() {
               type="text"
               name="userName"
               id="userName"
-              placeholder="Username"
+              placeholder="ユーザー名"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
+              required
             />
           </div>
           <div className="form-field d-flex align-items-center">
@@ -57,13 +63,17 @@ export default function Page() {
               type="password"
               name="password"
               id="pwd"
-              placeholder="Password"
+              placeholder="パスワード"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
           {error && <div className="error-message">{error}</div>}
-          <button className="btn mt-3">Login</button>
+          <button className="btn mt-3" disabled={isSubmitting}>
+            {isSubmitting ? "送信中..." : "ログイン"}{" "}
+            
+          </button>
         </form>
       </div>
     </div>

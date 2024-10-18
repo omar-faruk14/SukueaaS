@@ -24,12 +24,12 @@ export async function POST(request) {
         query,
       },
     });
-  
+
     const records = response.data.records;
 
     if (records.length === 0) {
       return NextResponse.json(
-        { message: "Invalid credentials" },
+        { message: "認証情報が無効です。" }, // "Invalid credentials" translated
         { status: 401 }
       );
     }
@@ -52,7 +52,7 @@ export async function POST(request) {
   } catch (error) {
     console.error("Error retrieving records:", error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { message: "内部サーバーエラーが発生しました。" }, // "Internal server error" translated
       { status: 500 }
     );
   }
