@@ -1,0 +1,180 @@
+/* General body styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #f0f2f5 0%, #e1e5ea 100%);
+  color: #333;
+}
+
+/* Container for mobile-friendly layout */
+.container {
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+
+/* Header title styling */
+.card-title {
+  font-size: 2.5rem; /* Increased font size for better visibility */
+  font-weight: 700; /* Use a bolder font weight */
+  color: #ffffff; /* Set text color to white */
+  background: linear-gradient(135deg, #007bff, #0056b3); /* Gradient background */
+  width: 130px; /* Width of the circle */
+  height: 130px; /* Height of the circle */
+  border-radius: 50%; /* Circular shape */
+  margin: 20px auto; /* Centered with margin */
+  display: flex;
+  justify-content: center; /* Center the text horizontally */
+  align-items: center; /* Center the text vertically */
+  box-shadow: 0 8px 24px rgba(0, 123, 255, 0.5); /* Deeper shadow effect */
+  text-align: center; /* Center text alignment */
+  position: relative; /* Position for pseudo-elements */
+  padding: 10px; /* Add padding for better text fit */
+  line-height: 1.2; /* Improved line height for better readability */
+  border: 4px solid #ffffff; /* White border around the circle */
+}
+
+/* Decorative lines for visual interest */
+.card-title::before,
+.card-title::after {
+  content: ""; /* Add empty content */
+  display: block;
+  width: 70px; /* Width of the decorative line */
+  height: 4px; /* Height of the decorative line */
+  background-color: #ffffff; /* Color of the line */
+  border-radius: 2px; /* Rounded edges for the line */
+  position: absolute; /* Position them absolutely */
+  left: 50%; /* Center them */
+  transform: translateX(-50%); /* Adjust for centering */
+}
+
+.card-title::before {
+  top: -10px; /* Position above the title */
+}
+
+.card-title::after {
+  bottom: -10px; /* Position below the title */
+}
+
+
+/* Input styling */
+input[type="text"], 
+input[type="number"], 
+input[type="email"], 
+select, 
+.form-control {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: #f5f7fa;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus, select:focus {
+  background-color: #ffffff;
+  border-color: #007bff;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+}
+
+.form-label {
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+/* Checkbox styling */
+.form-check-label {
+  font-size: 1rem;
+  color: #555;
+}
+
+.form-check-input {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+}
+
+/* Button styles */
+.btn-primary {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  border: none;
+  padding: 15px;
+  font-size: 1.2rem;
+  width: 100%;
+  border-radius: 8px;
+  color: #ffffff;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #0056b3 0%, #003f8c 100%);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
+}
+
+/* Success and error messages */
+.alert {
+  padding: 15px;
+  font-size: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.alert-info {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+
+/* Privacy Policy Link */
+.text-primary a {
+  font-size: 0.9rem;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.text-primary a:hover {
+  text-decoration: underline;
+}
+
+.text-primary .bg-danger {
+  padding: 5px 10px;
+  margin-left: 10px;
+  border-radius: 3px;
+  font-size: 0.8rem;
+}
+
+/* Volunteer interest toggle */
+.text-info {
+  font-size: 1.1rem;
+  color: #17a2b8;
+}
+
+.text-info:hover {
+  color: #138496;
+}
+
+/* Footer styling */
+footer {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 0.9rem;
+}

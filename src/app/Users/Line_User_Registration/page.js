@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from "react";
 import liff from "@line/liff";
 import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import Header from "@Om/components/HeaderandFooter/Header";
-import Footer from "@Om/components/HeaderandFooter/Footer";
+// import Header from "@Om/components/HeaderandFooter/Header";
+// import Footer from "@Om/components/HeaderandFooter/Footer";
+import "./registration.css"
 
 
 const StukueraboRegistration = () => {
@@ -129,10 +129,9 @@ const StukueraboRegistration = () => {
 
   return (
     <div>
-      <Header />
       <div
-        className="d-flex flex-column"
-        style={{ backgroundColor: "lightblue" }}
+      // className="d-flex flex-column"
+      // style={{ backgroundColor: "lightblue" }}
       >
         <div className="container pt-2 pb-2 p-0 overflow-hidden">
           <div className="row justify-content-center">
@@ -140,8 +139,8 @@ const StukueraboRegistration = () => {
               <div className="card rounded-5">
                 <div className="card-body">
                   <div>
-                    <h2 className="card-title border text-center rounded-circle">
-                      登録フォーム
+                    <h2 class="card-title border text-center rounded-circle">
+                      登録
                     </h2>
 
                     {isSubmitted && submissionStatus === "success" && (
@@ -495,7 +494,6 @@ const StukueraboRegistration = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
