@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 const fetchImageChunks = async (fileKey, startByte, endByte) => {
   const kintoneImageURL = `https://emi-lab-osaka.cybozu.com/k/v1/file.json?fileKey=${fileKey}`;
   const headers = {
-    "X-Cybozu-API-Token": "BoPld7DD61iclYtD9Gz4ljNi4Xp2sXXlSbrETcLr",
+    "X-Cybozu-API-Token": "JO3jb3FJbac3Isi73n43HyTTkMvFGHedTx9PbDty",
     Range: `bytes=${startByte}-${endByte}`,
   };
 

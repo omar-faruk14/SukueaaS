@@ -168,29 +168,60 @@ async function showSettingsMenu(event) {
 
 async function showEventList(event) {
   let eventData;
+  let eventManagementData;
+  let eventManagementMonth;
+
   try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information`
+    
+    const managementResponse = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Management`
     );
-    eventData = response.data;
+    eventManagementData = managementResponse.data;
+
+    
+    if (eventManagementData && eventManagementData.length > 0) {
+      eventManagementMonth =
+        eventManagementData[0].tsukuerabo_event_management_month;
+    } else {
+      throw new Error("Event management data is not available or empty.");
+    }
+
+    
+    const eventResponse = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information/Month/${eventManagementMonth}`
+    );
+    eventData = eventResponse.data;
   } catch (error) {
-    console.error("Error fetching event data:", error);
+    console.error("Error fetching event data:", error.message);
     return client.replyMessage(event.replyToken, {
       type: "text",
       text: "イベントデータを取得できませんでした。",
     });
   }
 
+  // If no events are found, send a message indicating no events
+  if (eventData.length === 0) {
+    const currentDate = new Date();
+    const noEventMessage = {
+      type: "text",
+      text: `現在の期間に予定されているイベントはありません。 (${currentDate.toLocaleDateString()} から ${
+        eventManagementMonth === "1month"
+          ? "1ヶ月以内"
+          : eventManagementMonth === "3months"
+          ? "3ヶ月以内"
+          : "すべて"
+      })`,
+    };
 
+    return client.replyMessage(event.replyToken, noEventMessage);
+  }
+
+  // Generate event buttons based on filtered events
   const eventButtons = eventData.map((eventInfo) => {
-    
-    const eventDate = new Date(eventInfo.tsukuerabo_Line_event_date);
-    const formattedDate = `${eventDate.getMonth() + 1}/${eventDate.getDate()}`; 
+    const eventDate = new Date(eventInfo.date);
+    const formattedDate = `${eventDate.getMonth() + 1}/${eventDate.getDate()}`;
+    const eventTitle = `${formattedDate} ${eventInfo.name}`;
 
-  
-    const eventTitle = `${formattedDate} ${eventInfo.tsukuerabo_Line_Title}`;
-
-  
     return {
       type: "box",
       layout: "horizontal",
@@ -201,15 +232,14 @@ async function showEventList(event) {
           style: "primary",
           action: {
             type: "postback",
-            label: eventTitle, 
-            data: `action=showDetails&record=${eventInfo.Record_number}`, 
+            label: eventTitle,
+            data: `action=showDetails&record=${eventInfo.Record_number}`,
           },
         },
       ],
     };
   });
 
-  
   const message = {
     type: "flex",
     altText: "イベント一覧",
@@ -226,7 +256,7 @@ async function showEventList(event) {
             size: "lg",
             margin: "md",
           },
-          ...eventButtons, 
+          ...eventButtons,
         ],
       },
     },
@@ -234,6 +264,8 @@ async function showEventList(event) {
 
   await client.replyMessage(event.replyToken, message);
 }
+
+
 
 async function promptUserRegistration(event) {
   const userName = await getUserName(event.source.userId);
@@ -301,10 +333,10 @@ async function handlePostback(event) {
     );
 
     if (selectedEvent) {
-      const fullEventDetails = `タイトル: ${selectedEvent.tsukuerabo_Line_Title}\n\n日時: ${selectedEvent.tsukuerabo_Line_event_date} ${selectedEvent.tsukuerabo_Line_event_time}\n\n内容: ${selectedEvent.tsukuerabo_Line_Description}`;
+      const fullEventDetails = `タイトル: ${selectedEvent.name}\n\n日時: ${selectedEvent.date} ${selectedEvent.End_Time}\n\n内容: ${selectedEvent.Event_Line_Details}`;
 
       // Extract image file key from the event data
-      let imageUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information/${selectedEvent.tsukuerabo_Line_event_image[0].fileKey}?width=240&height=160`; // Set to smaller dimensions for thumbnail
+      let imageUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information/${selectedEvent.Event_Image[0].fileKey}?width=240&height=160`; 
 
       await client.replyMessage(event.replyToken, {
         type: "flex",
@@ -337,7 +369,7 @@ async function handlePostback(event) {
             contents: [
               {
                 type: "text",
-                text: selectedEvent.tsukuerabo_Line_Title,
+                text: selectedEvent.name,
                 wrap: true,
                 weight: "bold",
                 size: "lg",

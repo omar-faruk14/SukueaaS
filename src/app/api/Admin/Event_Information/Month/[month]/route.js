@@ -4,11 +4,33 @@ import axios from "axios";
 const kintoneUrl = "https://emi-lab-osaka.cybozu.com/k/v1";
 const apiToken = "JO3jb3FJbac3Isi73n43HyTTkMvFGHedTx9PbDty";
 const appId = 46;
-export const dynamic = "force-dynamic";
-export async function GET(request) {
+
+export async function GET(request, { params }) {
+  const { month } = params; 
+  const currentDate = new Date();
+  const currentDateString = currentDate.toISOString().split("T")[0]; 
+  let query = `date >= "${currentDateString}"`; 
+
+  
+  if (month === "1month") {
+    const oneMonthLater = new Date(currentDate);
+    oneMonthLater.setMonth(currentDate.getMonth() + 1);
+    const oneMonthLaterString = oneMonthLater.toISOString().split("T")[0];
+    query += ` and date <= "${oneMonthLaterString}"`; 
+  } else if (month === "3months") {
+    const threeMonthsLater = new Date(currentDate);
+    threeMonthsLater.setMonth(currentDate.getMonth() + 3);
+    const threeMonthsLaterString = threeMonthsLater.toISOString().split("T")[0];
+    query += ` and date <= "${threeMonthsLaterString}"`; 
+  }
+  
+
   try {
+    
     const getRecordsResponse = await axios.get(
-      `${kintoneUrl}/records.json?app=${appId}`,
+      `${kintoneUrl}/records.json?app=${appId}&query=${encodeURIComponent(
+        query
+      )}`,
       {
         headers: {
           "X-Cybozu-API-Token": apiToken,
@@ -16,6 +38,7 @@ export async function GET(request) {
       }
     );
 
+   
     const records = getRecordsResponse.data.records.map((record) => ({
       Record_number: record.Record_number.value,
       id: record.id.value,
@@ -33,9 +56,10 @@ export async function GET(request) {
       Submit_End_Time: record.Submit_End_Time.value,
       Application_Type_Moshikomi: record.Application_Type_Moshikomi.value,
     }));
+
     return NextResponse.json(records);
   } catch (error) {
-    console.error(error);
+    console.error("Error retrieving records:", error);
     return NextResponse.json({ error: "Error retrieving records" });
   }
 }
