@@ -324,7 +324,7 @@ const StukueraboRegistration = () => {
 
                         <div className="card mb-3 p-3 border-0 shadow-sm">
                           <h5
-                            className="fw-bold mb-3 text-info"
+                            className="mb-3 text-info"
                             style={{ cursor: "pointer" }}
                             onClick={handleInfoClick}
                           >
@@ -425,7 +425,7 @@ const StukueraboRegistration = () => {
                         <p className="text-primary">
                           <a
                             href="/Users/Settings/PrivacyPolicy"
-                            className="link-primary fw-bold text-decoration-none"
+                            className="link-primary fw-bold"
                           >
                             アプリ利用にあたって プライバシーポリシー
                           </a>

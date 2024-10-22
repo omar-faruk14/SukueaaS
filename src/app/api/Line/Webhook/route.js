@@ -317,7 +317,7 @@ async function handlePostback(event) {
     let eventData;
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information`
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Informatio`
       );
       eventData = response.data;
     } catch (error) {

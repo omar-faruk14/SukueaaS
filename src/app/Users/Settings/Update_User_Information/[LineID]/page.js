@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Header from "@Om/components/HeaderandFooter/Header";
 import Footer from "@Om/components/HeaderandFooter/Footer";
+import "../../../Line_User_Registration/registration.css"
 
 const UpdateUser = ({ params }) => {
   const { LineID } = params;
@@ -119,10 +120,10 @@ const UpdateUser = ({ params }) => {
 
   return (
     <div>
-      <Header />
+     
       <div
-        className="d-flex flex-column"
-        style={{ backgroundColor: "lightblue" }}
+        // className="d-flex flex-column"
+        // style={{ backgroundColor: "lightblue" }}
       >
         <div className="container pt-2 pb-2 p-0 overflow-hidden">
           <div className="row justify-content-center">
@@ -131,7 +132,7 @@ const UpdateUser = ({ params }) => {
                 <div className="card-body">
                   <div>
                     <h2 className="card-title border text-center rounded-circle">
-                      更新フォーム
+                      更新
                     </h2>
 
                     {submissionStatus === "success" && (
@@ -370,7 +371,7 @@ const UpdateUser = ({ params }) => {
           </div>
         </div>
       </div>
-      <Footer />
+  
     </div>
   );
 };
