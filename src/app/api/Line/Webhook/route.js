@@ -108,11 +108,9 @@ async function handleTextMessage(event) {
 
   const userExists = userData.some((user) => user.Line_User_ID === lineUserId);
 
-  if (receivedText === "textt") {
+  if (receivedText === "イベントを確認・予約する") {
     return userExists ? showEventList(event) : promptUserRegistration(event);
-  }
-
-  else if (receivedText === "登録情報を確認、変更する") {
+  } else if (receivedText === "登録情報を確認、変更する") {
     return userExists ? showSettingsMenu(event) : promptUserRegistration(event);
   }
 }
