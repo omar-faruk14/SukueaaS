@@ -176,6 +176,31 @@ abbr[title] {
           text-decoration-skip-ink: none;
 }
 
+
+/* styles/globals.css */
+.logout-button {
+  background-color: var(--bs-light); /* Light background */
+  color: var(--bs-secondary); /* Text color */
+  border: 2px solid var(--bs-secondary); /* Secondary border color */
+  padding: 10px 20px; /* Padding for the button */
+  border-radius: var(--bs-border-radius); /* Use Bootstrap's border radius */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s, color 0.3s, transform 0.2s; /* Smooth transition */
+}
+
+.logout-button:hover {
+  background-color: var(--bs-secondary); /* Change background on hover */
+  color: var(--bs-white); /* Change text color on hover */
+  transform: scale(1.05); /* Slightly increase size on hover */
+}
+
+.logout-button:focus {
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.5); /* Subtle shadow on focus */
+}
+
+
 address {
   margin-bottom: 1rem;
   font-style: normal;

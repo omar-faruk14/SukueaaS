@@ -4,7 +4,7 @@ import Header from "@Om/components/HeaderandFooter/Header";
 import Footer from "@Om/components/HeaderandFooter/Footer";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import "bootstrap/dist/css/bootstrap.min.css";
+
 
 export default function EventManager() {
   const [timeRange, setTimeRange] = useState("1month");
@@ -155,10 +155,10 @@ export default function EventManager() {
             </button>
             <button
               type="button"
-              className="btn btn-secondary"
+              className="logout-button"
               onClick={handleLogout}
             >
-              ログアウト
+              キャンセル
             </button>
           </div>
         </form>
