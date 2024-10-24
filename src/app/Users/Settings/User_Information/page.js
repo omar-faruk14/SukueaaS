@@ -64,7 +64,7 @@ function LineUserInfo() {
           </nav>
 
           {/* Full-page card */}
-          <div className="card bg-light p-1">
+          <div className="card bg-light p-0">
             <div className="row gx-5">
               <div className="col-lg-4 mb-5 mb-lg-0">
                 <div className="col-md-12">
