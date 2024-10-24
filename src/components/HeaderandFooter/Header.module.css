@@ -1,0 +1,53 @@
+/* Modern header with lighter black background */
+.navbar {
+  background: linear-gradient(135deg, #2a2a2a 0%, #1e1e1e 100%); /* Lighter black to dark gray gradient */
+  padding: 14px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+/* Brand text with modern styling */
+.brand {
+  font-size: 1.7rem; /* Slightly larger font */
+  color: #f1f1f1; /* Light gray for contrast */
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 2px; /* More space between letters for modern feel */
+  transition: color 0.3s ease;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Subtle text shadow for depth */
+  font-family: 'Poppins', sans-serif; /* Modern font family */
+}
+
+.brand:hover {
+  color: #66d9ef; /* Muted teal for hover */
+  text-shadow: 1px 1px 6px rgba(102, 217, 239, 0.8); /* Brighter hover effect */
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Softer shadow for mobile */
+    border-radius: 8px;
+  }
+
+  .brand {
+    font-size: 1.4rem;
+  }
+}

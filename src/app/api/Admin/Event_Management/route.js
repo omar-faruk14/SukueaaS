@@ -39,10 +39,10 @@ export async function PUT(request) {
       tsukuerabo_event_management_month,
     } = await request.json();
 
-    // Construct data payload for Kintone API
+    
     const updateData = {
       app: appId,
-      id: Record_number, // Use the record number to identify the record
+      id: Record_number, 
       record: {
         tsukuerabo_event_management_phone: {
           value: tsukuerabo_event_management_phone,
@@ -53,7 +53,7 @@ export async function PUT(request) {
       },
     };
 
-    // Make PUT request to update record in Kintone
+    
     await axios.put(`${kintoneUrl}/record.json`, updateData, {
       headers: {
         "X-Cybozu-API-Token": apiToken,

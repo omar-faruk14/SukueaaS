@@ -9,29 +9,27 @@ export default function EventManager() {
   const [timeRange, setTimeRange] = useState("1month");
   const [phone, setPhone] = useState("");
   const [recordNumber, setRecordNumber] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false); 
-  const [successMessage, setSuccessMessage] = useState(""); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const router = useRouter();
   const [isAuthorized, setIsAuthorized] = useState(false);
 
+  
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const user = JSON.parse(localStorage.getItem("user"));
-
     if (!token) {
-      router.push("/admin/login");
+      router.push("/Users/Settings/User_Information"); 
     } else {
-      setIsAuthorized(true);
+      setIsAuthorized(true); 
     }
   }, [router]);
 
-
+  
   useEffect(() => {
-   
     async function fetchEventData() {
       try {
         const response = await axios.get("/api/Admin/Event_Management");
-        const eventData = response.data[0]; 
+        const eventData = response.data[0];
         setRecordNumber(eventData.Record_number);
         setTimeRange(eventData.tsukuerabo_event_management_month);
         setPhone(eventData.tsukuerabo_event_management_phone);
@@ -39,19 +37,23 @@ export default function EventManager() {
         console.error("Error fetching event data:", error);
       }
     }
-    fetchEventData();
-  }, []);
 
+    if (isAuthorized) {
+      fetchEventData(); 
+    }
+  }, [isAuthorized]);
 
+  // Logout handler
   const handleLogout = () => {
     localStorage.removeItem("token");
-    router.push("/admin/login");
+    router.push("/Users/Settings/User_Information");
   };
 
+  // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true); 
-    setSuccessMessage(""); 
+    setIsSubmitting(true);
+    setSuccessMessage("");
     try {
       const updateData = {
         Record_number: recordNumber,
@@ -60,14 +62,17 @@ export default function EventManager() {
       };
 
       await axios.put("/api/Admin/Event_Management", updateData);
-
-      setSuccessMessage("データが正常に更新されました。"); 
+      setSuccessMessage("データが正常に更新されました。");
     } catch (error) {
       console.error("Error updating event data:", error);
     } finally {
-      setIsSubmitting(false); 
+      setIsSubmitting(false);
     }
   };
+
+  if (!isAuthorized) {
+    return null; 
+  }
 
   return (
     <div>
@@ -145,17 +150,21 @@ export default function EventManager() {
               className="btn btn-primary"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "送信中..." : "設定する"}{" "}
+              {isSubmitting ? "送信中..." : "設定する"}
             </button>
-            <button type="button" className="btn btn-secondary">
-              キャンセル
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={handleLogout}
+            >
+              ログアウト
             </button>
           </div>
         </form>
 
         {successMessage && (
           <div className="alert alert-success mt-3" role="alert">
-            {successMessage} 
+            {successMessage}
           </div>
         )}
       </div>

@@ -1,0 +1,39 @@
+/* Modern gray theme footer */
+.footer {
+  background: linear-gradient(135deg, #2a2a2a 0%, #1e1e1e 100%); /* Soft gray gradient for the footer */
+  padding: 16px 20px; /* Adequate padding for modern feel */
+  border-radius: 12px; /* Rounded corners for a cohesive look */
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.4); /* Soft upward shadow */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.text {
+  font-size: 1rem; /* Consistent font size for readability */
+  color: #e0e0e0; /* Light gray text for better visibility */
+  font-weight: 400;
+  margin: 0;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+  .footer {
+    padding: 14px 16px; /* Slightly reduced padding for mobile */
+    box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.3); /* Softer shadow on mobile */
+    border-radius: 8px; /* Smaller radius for mobile */
+  }
+
+  .text {
+    font-size: 0.9rem; /* Slightly smaller font for mobile */
+  }
+}

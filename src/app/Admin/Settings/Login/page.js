@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import "./Login_css.css";
+import Header from "@Om/components/HeaderandFooter/Header";
+import Footer from "@Om/components/HeaderandFooter/Footer";
 
 export default function Page() {
   const [userName, setUserName] = useState("");
@@ -42,6 +44,7 @@ export default function Page() {
 
   return (
     <div>
+      <Header/>
       <div className="wrapper">
         <div className="text-center mt-4 name">つくえらぼテスト用</div>
         <form className="p-3 mt-3" onSubmit={handleSubmit}>
@@ -76,6 +79,7 @@ export default function Page() {
           </button>
         </form>
       </div>
+      <Footer/>
     </div>
   );
 }

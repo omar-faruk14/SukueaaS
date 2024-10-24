@@ -6,15 +6,13 @@ import { Gear, Info, Shield, List } from "react-bootstrap-icons";
 import Link from "next/link";
 import Header from "@Om/components/HeaderandFooter/Header";
 import Footer from "@Om/components/HeaderandFooter/Footer";
-
+import './User_information.css'
 
 function LineUserInfo() {
   const [lineData, setLineData] = useState(null);
   const [profile, setProfile] = useState(null);
   const [isUserRegistered, setIsUserRegistered] = useState(false);
   const [userId, setUserId] = useState(null);
-
-  // LIFF initialization and fetching user profile
   useEffect(() => {
     const initLiff = async () => {
       try {
@@ -57,10 +55,10 @@ function LineUserInfo() {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb bg-light p-2 rounded">
               <li className="breadcrumb-item">
-                <Link href="/">Home</Link>
+                <Link href="/Users/Settings/User_Information">ホーム</Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
-                設定とお問合せ
+                登録情報を確認、変更する
               </li>
             </ol>
           </nav>
@@ -71,152 +69,131 @@ function LineUserInfo() {
               <div className="col-lg-4 mb-5 mb-lg-0">
                 <div className="col-md-12">
                   {lineData ? (
-                    <div className="card bg-light py-5 rounded-5">
-                      <div className="card">
-                        <div className="card-body">
-                          <h5 className="card-title text-center bg-light border">
-                            {profile
-                              ? `${profile.displayName}さん`
-                              : "ユーザー名"}
-                          </h5>
+                    <div className="card">
+                      <div className="card-body">
+                        <h5 className="profile-title text-center">
+                          {profile
+                            ? `${profile.displayName}さん`
+                            : "ユーザー名"}
+                        </h5>
 
-                          {/* <p className="card-text">
-                          <span className="fw-bold">Line名:</span>{" "}
-                          {lineData.Registration_Line_Name}
-                        </p> */}
-                          <p className="card-text">
-                            <span className="fw-bold">名前: </span>
-                            {lineData.Registration_Name}
-                          </p>
-
-                          <p className="card-text">
-                            <span className="fw-bold">住所: </span>
-                            {lineData.Registration_Address}
-                          </p>
-                          <p className="card-text">
-                            <span className="fw-bold">電話: </span>
-                            {lineData.Registration_Phone}
-                          </p>
-                          <p className="card-text">
-                            <span className="fw-bold">年代:</span>{" "}
-                            {lineData.Registration_Age}
-                          </p>
-                          <p className="card-text">
-                            <span className="fw-bold">性別:</span>{" "}
-                            {lineData.Registration_Gender}
-                          </p>
-                          <p className="card-text">
-                            <span className="fw-bold">
-                              運転ボランティアとして参加 に興味ある:{" "}
-                            </span>
-                            {lineData.Registration_Driver_Volunteer}
-                          </p>
-                          <p className="card-text">
-                            <span className="fw-bold">
-                              見守りボランティアとしての参加に興味ある:{" "}
-                            </span>
-                            {lineData.Registration_Watch_Volunteer}
-                          </p>
-                          <div className="d-grid">
-                            <a
-                              className="btn btn-secondary rounded-pill"
-                              href={`/Users/Settings/Update_User_Information/${userId}`}
-                            >
-                              編集
-                            </a>
-                          </div>
+                        <p className="card-text">
+                          <span className="fw-bold">名前: </span>
+                          {lineData.Registration_Name}
+                        </p>
+                        <p className="card-text">
+                          <span className="fw-bold">住所: </span>
+                          {lineData.Registration_Address}
+                        </p>
+                        <p className="card-text">
+                          <span className="fw-bold">電話: </span>
+                          {lineData.Registration_Phone}
+                        </p>
+                        <p className="card-text">
+                          <span className="fw-bold">年代:</span>{" "}
+                          {lineData.Registration_Age}
+                        </p>
+                        <p className="card-text">
+                          <span className="fw-bold">性別:</span>{" "}
+                          {lineData.Registration_Gender}
+                        </p>
+                        <p className="card-text">
+                          <span className="fw-bold">
+                            運転ボランティアとして参加 に興味ある:{" "}
+                          </span>
+                          {lineData.Registration_Driver_Volunteer}
+                        </p>
+                        <p className="card-text">
+                          <span className="fw-bold">
+                            見守りボランティアとしての参加に興味ある:{" "}
+                          </span>
+                          {lineData.Registration_Watch_Volunteer}
+                        </p>
+                        <div className="d-grid">
+                          <a
+                            className="btn btn-secondary rounded-pill"
+                            href={`/Users/Settings/Update_User_Information/${userId}`}
+                          >
+                            編集
+                          </a>
                         </div>
                       </div>
                     </div>
                   ) : (
-                    <p>データを読み込んでいます...</p>
+                    <div className="skeleton">
+                      <div className="skeleton-avatar"></div>
+                      <div className="skeleton-text"></div>
+                      <div className="skeleton-text"></div>
+                      <div className="skeleton-text"></div>
+                      <div className="skeleton-text"></div>
+                      <div className="skeleton-text"></div>
+                    </div>
                   )}
                 </div>
               </div>
 
+              {/* Right-side cards */}
               <div className="col-lg-8">
                 <div className="row gx-5 row-cols-1 row-cols-md-2">
-                  {/* ふじみMaaSについて */}
                   <div className="col mb-5 h-100">
                     <div className="card bg-light">
                       <div className="card-body">
                         <h5 className="card-title">
-                          <a
-                            className="link-dark text-decoration-none"
+                          <Link
                             href={`/about_fujimimaas`}
+                            className="link-dark text-decoration-none"
                           >
-                            <Info className="text-center text-primary ms-2" />
+                            <List className="text-center text-primary ms-2" />
                             イベント申し込みリスト
-                          </a>
+                          </Link>
                         </h5>
                       </div>
                     </div>
                   </div>
 
-                  {/* プライバシーポリシーへ */}
                   <div className="col mb-5 mb-md-0 h-100">
                     <div className="card bg-light">
                       <div className="card-body">
                         <h5 className="card-title">
-                          <a
-                            className="link-dark text-decoration-none"
+                          <Link
                             href={`/Users/Settings/PrivacyPolicy`}
+                            className="link-dark text-decoration-none"
                           >
                             <Shield className="text-center text-primary ms-2" />
                             プライバシーポリシー
-                          </a>
+                          </Link>
                         </h5>
                       </div>
                     </div>
                   </div>
 
-                  {/* ふじみMaaSへのお問合せ */}
-                  {/* <div className="col mb-5 h-100">
+                  <div className="col mb-5 mb-md-0 h-100">
                     <div className="card bg-light">
                       <div className="card-body">
                         <h5 className="card-title">
-                          <a
+                          <Link
+                            href={`/Users/Settings/TermsOfService`}
                             className="link-dark text-decoration-none"
-                            href={`/Inquery`}
                           >
                             <Info className="text-center text-primary ms-2" />
-                            ふじみMaaSへのお問合せ
-                          </a>
-                        </h5>
-                      </div>
-                    </div>
-                  </div> */}
-
-                  {/* 利用にあたってのお願い */}
-                  <div className="col mb-5 h-100">
-                    <div className="card bg-light">
-                      <div className="card-body">
-                        {/* You can replace the placeholder icon with the appropriate one */}
-                        <h5 className="card-title">
-                          <a
-                            className="link-dark text-decoration-none"
-                            href={`/Request_use`}
-                          >
-                            <List className="text-center text-primary ms-2" />
                             利用にあたってのお願い
-                          </a>
+                          </Link>
                         </h5>
                       </div>
                     </div>
                   </div>
 
-                  {/* Self Settings */}
                   <div className="col h-100">
                     <div className="card bg-light">
                       <div className="card-body">
                         <h5 className="card-title">
-                          <a
-                            className="link-dark text-decoration-none"
+                          <Link
                             href={`/Admin/Settings/Login`}
+                            className="link-dark text-decoration-none"
                           >
-                            <Gear className="text-center text-primary ms-2" />{" "}
+                            <Gear className="text-center text-primary ms-2" />
                             イベント主催者管理用
-                          </a>
+                          </Link>
                         </h5>
                       </div>
                     </div>

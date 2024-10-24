@@ -1,20 +1,16 @@
 import React from "react";
+import styles from "./Footer.module.css"; // Importing CSS module for styling
 
-
-export default function Footer() {
+function Footer() {
   return (
-    <div>
-      <footer className="bg-dark py-4 mt-auto">
-        <div className="container px-5">
-          <div className="row align-items-center justify-content-between flex-column flex-sm-row">
-            <div className="col-auto">
-              <div className="small m-0 text-white">
-                Copyright © ふじみ MaaS - 2023-2024
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+    <footer className={styles.footer}>
+      <div className={styles.container}>
+        <p className={styles.text}>
+          &copy; 2024 つくえラボ. All Rights Reserved.
+        </p>
+      </div>
+    </footer>
   );
 }
+
+export default Footer;
