@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
+import './Moshikomi.css'
 
 import axios from "axios";
 
@@ -22,11 +23,10 @@ const DefaultApp = () => {
     return new Intl.DateTimeFormat("ja-JP", options).format(new Date(date));
   };
 
-//   const { event_id, user_id } = router.query;
+  //   const { event_id, user_id } = router.query;
 
   const event_id = "1";
   const user_id = "1";
-
 
   const [selectedEvent, setSelectedEvent] = useState(null);
   //const [mapData, setMapData] = useState(null);
@@ -80,9 +80,9 @@ const DefaultApp = () => {
         Participant_Method: "",
       });
 
-    //   const response2 = await fetch(`${process.env.REACT_APP_API_URL}/map`);
-    //   const data2 = await response2.json();
-    //   setMapData(data2);
+      //   const response2 = await fetch(`${process.env.REACT_APP_API_URL}/map`);
+      //   const data2 = await response2.json();
+      //   setMapData(data2);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -127,7 +127,6 @@ const DefaultApp = () => {
     ? selectedEvent.Application_Type_Moshikomi
     : "";
   console.log(Default_Type);
-
 
   const isRegistrationOpen = () => {
     if (!selectedEvent || !selectedEvent.Submit_End_Time) {

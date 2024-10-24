@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Header from "@Om/components/HeaderandFooter/Header";
 import Footer from "@Om/components/HeaderandFooter/Footer";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function EventManager() {
   const [timeRange, setTimeRange] = useState("1month");
@@ -10,6 +11,20 @@ export default function EventManager() {
   const [recordNumber, setRecordNumber] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false); 
   const [successMessage, setSuccessMessage] = useState(""); 
+  const router = useRouter();
+  const [isAuthorized, setIsAuthorized] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!token) {
+      router.push("/admin/login");
+    } else {
+      setIsAuthorized(true);
+    }
+  }, [router]);
+
 
   useEffect(() => {
    
@@ -26,6 +41,12 @@ export default function EventManager() {
     }
     fetchEventData();
   }, []);
+
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    router.push("/admin/login");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();

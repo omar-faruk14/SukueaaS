@@ -429,10 +429,6 @@ const StukueraboRegistration = () => {
                           >
                             アプリ利用にあたって プライバシーポリシー
                           </a>
-
-                          <span className="bg-danger text-white rounded-3">
-                            必須
-                          </span>
                         </p>
 
                         <div className="form-group">
@@ -448,6 +444,9 @@ const StukueraboRegistration = () => {
                               htmlFor="gridCheck"
                             >
                               同意して登録します
+                              <span className="bg-danger text-white rounded-3">
+                                必須
+                              </span>
                             </label>
                           </div>
                         </div>
