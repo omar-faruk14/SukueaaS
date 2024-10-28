@@ -52,13 +52,11 @@ export async function GET(request, { params }) {
 
 
 
-
-
 export async function POST(request,{ params }) {
   try {
     const { Record_number } = params;
     const { userId } = await request.json();
-    console.log("Backend User_ID",userId);
+    // console.log("Backend User_ID",userId);
     // Fetch event data for the specific record number
     const eventResponse = await axios.get(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information/RecordID/${Record_number}`
@@ -71,8 +69,6 @@ export async function POST(request,{ params }) {
     );
 
     const phoneData= response2.data;
-    console.log(phoneData);
-
     const phoneNumber=phoneData[0].tsukuerabo_event_management_phone;
 
     if (!eventData) {
@@ -106,7 +102,7 @@ export async function POST(request,{ params }) {
     };
     const formattedDate = formatDate(eventData.date);
     const formattedTime = formatTime(eventData.date);
-    const fullEventDetails = `📅 日時: ${formattedDate}\n⏰ 時間: ${formattedTime}-${eventData.End_Time}\n\n${eventData.Event_Line_Details}`;
+    const fullEventDetails = `📅 日時: ${formattedDate}\n⏰ 時間: ${formattedTime}-${eventData.End_Time}\n\n${eventData.Event_Line_Details}/n/nURL: ${eventData.Event_Link}`;
     const imageUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information/${eventData.Event_Image[0].fileKey}?width=240&height=160`;
 
     // Flex message template
