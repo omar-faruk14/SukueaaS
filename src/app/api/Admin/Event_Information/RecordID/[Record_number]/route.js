@@ -57,6 +57,8 @@ export async function GET(request, { params }) {
 export async function POST(request,{ params }) {
   try {
     const { Record_number } = params;
+    const { userId } = await request.json();
+    console.log("Backend User_ID",userId);
     // Fetch event data for the specific record number
     const eventResponse = await axios.get(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information/RecordID/${Record_number}`
@@ -164,7 +166,7 @@ export async function POST(request,{ params }) {
               action: {
                 type: "uri",
                 label: "フォームで予約する",
-                uri: "https://liff.line.me/2006381311-2LAgdN1y",
+                uri: `${process.env.NEXT_PUBLIC_API_BASE_URL}/Users/Moshikomi?event_id=${Record_number}&user_id=${userId}`,
               },
               margin: "md",
             },

@@ -5,6 +5,8 @@ import client from "./connection/clientConnect";
 
 export async function handlePostback(event) {
   const data = event.postback.data;
+  const userId = event.source.userId;
+  console.log(userId);
 
   if (data.startsWith("action=showDetails")) {
     const recordNumber = data.split("&record=")[1];
@@ -12,7 +14,11 @@ export async function handlePostback(event) {
     let flexMessage;
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information/RecordID/${recordNumber}`
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information/RecordID/${recordNumber}`,
+        {
+          userId: userId,  
+          
+        }
       );
       flexMessage = response.data;
     } catch (error) {

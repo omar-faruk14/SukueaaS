@@ -1,7 +1,9 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import './Moshikomi.css'
+import React, { useState, useEffect, Suspense} from "react";
+
+import { useSearchParams } from "next/navigation";
+import './Moshikomi.css';
+
 
 import axios from "axios";
 
@@ -25,22 +27,23 @@ const DefaultApp = () => {
 
   //   const { event_id, user_id } = router.query;
 
-  const event_id = "1";
-  const user_id = "1";
+  const searchParams = useSearchParams();
+  const event_id = searchParams.get("event_id"); 
+  const userID = searchParams.get("user_id");
 
   const [selectedEvent, setSelectedEvent] = useState(null);
   //const [mapData, setMapData] = useState(null);
   const [formData, setFormData] = useState({
     Number_of_Participants: 0,
     Additional_Comments: "",
-    Line_User_ID: user_id,
+    Line_User_ID: userID,
     Name: "",
     Date_Time: "",
     Location: "",
     Use_of_mobile_services: "",
     Boarding_and_alighting_place: "",
     Event_Name: "",
-    TEL_contact_information: "",
+    //TEL_contact_information: "",
     event_id: event_id,
     Application_Type: "",
     Desired_meeting_place: "",
@@ -52,45 +55,55 @@ const DefaultApp = () => {
   const [submissionStatus, setSubmissionStatus] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get("/api/Admin/Event_Information");
-      const data = response.data;
-      console.log(data);
-      const selectedEvent = data.find((event) => event.id === event_id);
-      setSelectedEvent(selectedEvent);
-      setFormData({
-        ...formData,
-        Name: "",
-        Number_of_Participants: 1,
-        Additional_Comments: "",
-        Date_Time: selectedEvent ? selectedEvent.date : "",
-        Location: selectedEvent ? selectedEvent.location : "",
-        Use_of_mobile_services: "",
-        Boarding_and_alighting_place: "",
-        Event_Name: selectedEvent ? selectedEvent.name : "",
-        Desired_meeting_place: "",
-        Application_Type: selectedEvent
-          ? selectedEvent.Application_Type_Moshikomi
-          : "",
-        Preferred_Time: "",
-        Preferred_Date: "",
-        Destination: "",
-        Participant_Method: "",
-      });
-
-      //   const response2 = await fetch(`${process.env.REACT_APP_API_URL}/map`);
-      //   const data2 = await response2.json();
-      //   setMapData(data2);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  const [profile, setProfile] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    fetchData();
-  }, [event_id]);
+    const initializeData = async () => {
+      try {
+        // Initialize LIFF
+        // await liff.init({ liffId: "2006381311-oxeKbr3Z" });
+        // if (liff.isLoggedIn()) {
+        //   const userProfile = await liff.getProfile();
+        //   setProfile(userProfile);
+        //   setUserId(userProfile.userId);
+        //   setFormData((prevData) => ({
+        //     ...prevData,
+        //     Line_User_ID: userProfile.userId,
+        //   }));
+        // } else {
+        //   liff.login();
+        // }
+
+        // Fetch event data
+        const response = await axios.get("/api/Admin/Event_Information");
+        const data = response.data;
+        const selectedEvent = data.find((event) => event.id === event_id);
+        setSelectedEvent(selectedEvent);
+        setFormData((prevData) => ({
+          ...prevData,
+          Name: "",
+          Number_of_Participants: 1,
+          Additional_Comments: "",
+          Date_Time: selectedEvent ? selectedEvent.date : "",
+          Location: selectedEvent ? selectedEvent.location : "",
+          Use_of_mobile_services: "",
+          Boarding_and_alighting_place: "",
+          Event_Name: selectedEvent ? selectedEvent.name : "",
+          Desired_meeting_place: "",
+          Application_Type: selectedEvent?.Application_Type_Moshikomi || "",
+          Preferred_Time: "",
+          Preferred_Date: "",
+          Destination: "",
+          Participant_Method: "",
+        }));
+      } catch (error) {
+        console.error("Initialization failed:", error);
+      }
+    };
+
+    initializeData();
+  }, [event_id,userID]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -107,8 +120,7 @@ const DefaultApp = () => {
     setIsSubmitting(true);
     console.log("JSON Data:", JSON.stringify(formData, null, 2));
     try {
-      const response = await axios.post(
-        process.env.REACT_APP_API_URL + "/Application_only_Insert",
+      const response = await axios.post("/api/Users/Moshikomi",
         formData
       );
       setSubmissionStatus("success");
@@ -415,7 +427,7 @@ const DefaultApp = () => {
                     </div>
                   )}
 
-                  <div className="mb-3">
+                  {/* <div className="mb-3">
                     <label
                       htmlFor="TEL_contact_information"
                       className="form-label"
@@ -431,16 +443,17 @@ const DefaultApp = () => {
                       onChange={handleInputChange}
                       required
                     />
-                  </div>
+                  </div> */}
 
                   <div className="mb-3">
                     <label htmlFor="Additional_Comments" className="form-label">
                       追加コメント
                     </label>
-                    <textarea
+                    <textarea rows={5}
                       className="form-control"
                       id="Additional_Comments"
                       name="Additional_Comments"
+                      placeholder={`代表者以外の参加者がいれば、氏名と送迎要否をご記入ください\n山田花子　送迎必要、山田次郎　送迎必要（自宅）`}
                       value={formData.Additional_Comments}
                       onChange={handleInputChange}
                     ></textarea>
@@ -475,4 +488,13 @@ const DefaultApp = () => {
   );
 };
 
-export default DefaultApp;
+
+const MoshikomiForm = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DefaultApp />
+    </Suspense>
+  );
+};
+
+export default MoshikomiForm;
