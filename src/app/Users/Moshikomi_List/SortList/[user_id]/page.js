@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Person } from "react-bootstrap-icons";
+import './MoshikomiPageList.css'
+import Header from "@Om/components/HeaderandFooter/Header";
+import Footer from "@Om/components/HeaderandFooter/Footer";
 
 export default function MoshikomiPageList({ params }) {
   const [selectApplication, setSelectApplication] = useState([]);
@@ -86,6 +89,7 @@ export default function MoshikomiPageList({ params }) {
 
   return (
     <div>
+      <Header/>
       <div className="container">
         <div className="py-5 bg-light">
           <div className="container px-5 my-5">
@@ -111,7 +115,7 @@ export default function MoshikomiPageList({ params }) {
           {currentItems.length > 0 ? (
             currentItems.map((application) => (
               <div
-                className="col-sm-6 col-md-4 col-lg-3 mb-4"
+                className="col-sm-12 col-md-6 col-lg-4 mb-4"
                 key={`${application.Line_User_ID}-${application.id}`}
               >
                 <div className="card">
@@ -162,6 +166,7 @@ export default function MoshikomiPageList({ params }) {
           </nav>
         )}
       </div>
+      <Footer/>
     </div>
   );
 }

@@ -140,7 +140,7 @@ function LineUserInfo() {
                       <div className="card-body">
                         <h5 className="card-title">
                           <Link
-                            href={`/about_fujimimaas`}
+                            href={`/Users/Moshikomi_List/SortList/${userId}`}
                             className="link-dark text-decoration-none"
                           >
                             <List className="text-center text-primary ms-2" />

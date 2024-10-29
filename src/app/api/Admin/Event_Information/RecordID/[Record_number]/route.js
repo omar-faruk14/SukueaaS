@@ -102,7 +102,13 @@ export async function POST(request,{ params }) {
     };
     const formattedDate = formatDate(eventData.date);
     const formattedTime = formatTime(eventData.date);
-    const fullEventDetails = `📅 日時: ${formattedDate}\n⏰ 時間: ${formattedTime}-${eventData.End_Time}\n\n${eventData.Event_Line_Details}\n\nURL: ${eventData.Event_Link}`;
+    
+    const fullEventDetails = `📅 日時: ${formattedDate}\n⏰ 時間: ${formattedTime}-${eventData.End_Time}\n\n${eventData.Event_Line_Details}\n\n`;
+
+    // Add the link only if it exists
+    if (eventData.Event_Link) {
+      fullEventDetails += `URL: ${eventData.Event_Link}`;
+    }
     const imageUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information/${eventData.Event_Image[0].fileKey}?width=240&height=160`;
 
     // Flex message template
@@ -149,6 +155,9 @@ export async function POST(request,{ params }) {
               wrap: true,
               size: "sm",
               margin: "md",
+              action: eventData.Event_Link
+                ? { type: "uri", uri: eventData.Event_Link }
+                : null, // Make it clickable if link exists
             },
           ],
         },
@@ -172,7 +181,7 @@ export async function POST(request,{ params }) {
               action: {
                 type: "uri",
                 label: "電話で問い合わせる",
-                uri: `tel:${phoneNumber}`, // Properly interpolated
+                uri: `tel:${phoneNumber}`,
               },
               margin: "md",
             },

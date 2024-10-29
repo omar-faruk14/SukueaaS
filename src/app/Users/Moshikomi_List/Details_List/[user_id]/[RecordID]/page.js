@@ -1,13 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Header from "@Om/components/HeaderandFooter/Header";
+import Footer from "@Om/components/HeaderandFooter/Footer";
 
 export default function ApplicationDetailsView({params}) {
   const [selectApplication, setSelectApplication] = useState(null);
   const { user_id, RecordID } = params;
   const FetchData = async () => {
     try {
-      const response = await fetch(`/api/Users/Moshikomi/`);
+      const response = await fetch(`/api/Users/Moshikomi/${user_id}`);
       const data = await response.json();
       console.log(JSON.stringify(data));
       const dataSave = data.find(
@@ -52,10 +54,11 @@ export default function ApplicationDetailsView({params}) {
 
   return (
     <div>
+      <Header />
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb bg-light p-2 rounded">
           <li className="breadcrumb-item">
-            <Link href="/">Home</Link>
+            <Link href="/Users/Settings/User_Information">Home</Link>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
             編集フォーム
@@ -67,9 +70,7 @@ export default function ApplicationDetailsView({params}) {
           <div className="col-12 col-md-10 col-lg-10">
             <div className="card bg-light py-5 rounded-5">
               <div className="card">
-                <h5 className="card-header text-center">
-                  イベント申込の詳細
-                </h5>
+                <h5 className="card-header text-center">イベント申込の詳細</h5>
 
                 <div className="card-body">
                   {selectApplication ? (
@@ -185,6 +186,7 @@ export default function ApplicationDetailsView({params}) {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

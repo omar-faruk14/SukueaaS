@@ -1,0 +1,59 @@
+/* Container for mobile-friendly layout */
+.container {
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Button */
+.btn {
+  background-color: #0d6efd; /* Primary color */
+  color: #ffffff; /* Light text color */
+  padding: 0.6rem;
+  width: 100%;
+  border-radius: 8px; /* Border radius */
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.btn:hover {
+  background-color: #0056b3; /* Darker shade of primary color for hover */
+}
+
+/* Compact Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  margin-top: 1rem;
+}
+
+.page-item {
+  background-color: #6c757d; /* Secondary color */
+  color: #ffffff; /* Light text color */
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px; /* Border radius */
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.page-item:hover {
+  background-color: #495057; /* Darker gray on hover */
+}
+
+.page-item.active {
+  background-color: #0d6efd; /* Active state uses primary color */
+}
+
+/* Icon for a simpler style */
+.page-icon {
+  font-size: 0.85rem;
+  margin: 0;
+  color: #0d6efd; /* Primary color for icons */
+}
