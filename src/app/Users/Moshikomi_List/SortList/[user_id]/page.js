@@ -16,10 +16,19 @@ export default function MoshikomiPageList({ params }) {
     try {
       const response = await fetch(`/api/Users/Moshikomi/${user_id}`);
       const data = await response.json();
+
+      
       const filteredApplications = data.filter(
         (application) => application.Line_User_ID === user_id
       );
-      setSelectApplication(filteredApplications);
+
+      
+      const sortedApplications = filteredApplications.sort((a, b) => {
+        return b.id - a.id; 
+      });
+
+      // Update the state with the sorted applications
+      setSelectApplication(sortedApplications);
     } catch (error) {
       console.error("データの取得エラー:", error);
     }
