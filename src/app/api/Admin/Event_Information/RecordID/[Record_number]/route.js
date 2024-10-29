@@ -102,10 +102,11 @@ export async function POST(request,{ params }) {
     };
     const formattedDate = formatDate(eventData.date);
     const formattedTime = formatTime(eventData.date);
-    
-    const fullEventDetails = `📅 日時: ${formattedDate}\n⏰ 時間: ${formattedTime}-${eventData.End_Time}\n\n${eventData.Event_Line_Details}\n\n`;
 
-    // Add the link only if it exists
+    
+    let fullEventDetails = `📅 日時: ${formattedDate}\n⏰ 時間: ${formattedTime}-${eventData.End_Time}\n\n${eventData.Event_Line_Details}\n\n`;
+
+    // only if it exists
     if (eventData.Event_Link) {
       fullEventDetails += `URL: ${eventData.Event_Link}`;
     }
