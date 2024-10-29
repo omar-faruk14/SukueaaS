@@ -100,7 +100,7 @@ export async function POST(request) {
       replyMessageText += `\n追加コメント：${Additional_Comments}`;
     replyMessageText +=
       `\n\nお問合せ、キャンセル等については以下、イベント主催者様までご連絡いただくか、` +
-      `このメッセージへのリプライとしてご連絡をお願いします。\n\nURL：https://d2yd11npfr0aab.cloudfront.net/facilities/${event_id}`;
+      `このメッセージへのリプライとしてご連絡をお願いします。`;
 
    
     const replyMessage = { type: "text", text: replyMessageText };

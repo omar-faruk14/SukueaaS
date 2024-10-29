@@ -55,7 +55,7 @@ export async function POST(request) {
  
     const replyMessage = {
       type: "text",
-      text: `登録が完了しました。\n\n名前: ${data.Registration_Name}\n住所: ${data.Registration_Address}`,
+      text: `登録が完了しました。\n\n名前: ${data.Registration_Name}\n住所: ${data.Registration_Address}\n電話: ${data.Registration_Phone}\n年代: ${data.Registration_Age}\n性別: ${data.Registration_Gender}\n運転ボランティアとして参加 に興味ある: ${data.Registration_Driver_Volunteer}\n見守りボランティアとしての参加に興味ある: ${data.Registration_Watch_Volunteer}`,
     };
 
     await lineClient.pushMessage(data.Line_User_ID, replyMessage);
