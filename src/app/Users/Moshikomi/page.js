@@ -447,7 +447,7 @@ const DefaultApp = () => {
 
                   <div className="mb-3">
                     <label htmlFor="Additional_Comments" className="form-label">
-                      追加コメント
+                      連絡事項
                     </label>
                     <textarea rows={5}
                       className="form-control"
