@@ -183,7 +183,7 @@ function LineUserInfo() {
                     </div>
                   </div>
 
-                  <div className="col h-100">
+                  <div className="col mb-md-0 h-100">
                     <div className="card bg-light">
                       <div className="card-body">
                         <h5 className="card-title">
@@ -193,6 +193,22 @@ function LineUserInfo() {
                           >
                             <Gear className="text-center text-primary ms-2" />
                             イベント主催者管理用
+                          </Link>
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col mt-5 mb-md-0 h-100">
+                    <div className="card bg-light">
+                      <div className="card-body">
+                        <h5 className="card-title">
+                          <Link
+                            href={`/map/DisplayMap`}
+                            className="link-dark text-decoration-none"
+                          >
+                            <Gear className="text-center text-primary ms-2" />
+                            施設MAPの確認
                           </Link>
                         </h5>
                       </div>
