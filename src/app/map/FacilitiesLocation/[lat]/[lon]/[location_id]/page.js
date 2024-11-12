@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css";
 import { GeoAltFill } from "react-bootstrap-icons";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import ReactDOMServer from "react-dom/server";
-import Header from "@Om/components/HeaderandFooter/Header";
+import Header from "@Om/components/HeaderandFooter/HeaderMap";
 import Footer from "@Om/components/HeaderandFooter/Footer";
 
 // Utility function to convert React component to HTML string
@@ -148,8 +148,11 @@ const MapViewFacilities = ({params}) => {
   }, [Map_data, location_id]);
 
   return (
-    <div>
-      <Header/>
+    <div
+      className="d-flex flex-column"
+      style={{ backgroundColor: "lightblue" }}
+    >
+      <Header />
       <section className="py-1">
         <div className="container px-2">
           <div className="bg-light rounded-3 py-1 px-0 px-md-1 mb-1">
@@ -171,7 +174,7 @@ const MapViewFacilities = ({params}) => {
           </div>
         </div>
       </section>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

@@ -29,8 +29,11 @@ export default function FacilitiesDetails({params}) {
   );
 
   return (
-    <div>
-      <Header/>
+    <div
+      className="d-flex flex-column"
+      style={{ backgroundColor: "lightblue" }}
+    >
+      <Header />
       <div className="container-fluid mt-5 p-0 overflow-hidden">
         <div className="row justify-content-center">
           <div className="col-md-8">
@@ -87,7 +90,7 @@ export default function FacilitiesDetails({params}) {
                   </div>
                 </div>
               ))}
-              {!filteredFacilities.length && <p>Loading...</p>}
+              {!filteredFacilities.length && <p>詳細情報がありません...</p>}
             </div>
           </div>
         </div>

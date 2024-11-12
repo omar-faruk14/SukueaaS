@@ -5,12 +5,12 @@ import axios from "axios";
 import "leaflet/dist/leaflet.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { renderToString } from "react-dom/server";
-import Header from "@Om/components/HeaderandFooter/HeaderMap";
-import Footer from "@Om/components/HeaderandFooter/Footer";
+import StickyFooter from "@Om/components/HeaderandFooter/StickyFooter";
+import './map.css'
 
 export default function Map() {
   const mapRef = useRef(null);
-  const layersControlRef = useRef(null); 
+  const layersControlRef = useRef(null);
   const mapContainerRef = useRef(null);
   const [userMarker, setUserMarker] = useState(null);
 
@@ -34,7 +34,6 @@ export default function Map() {
         const newUserMarker = L.marker([lat, lon], { icon: userIcon }).addTo(
           mapRef.current
         );
-        //newUserMarker.bindPopup("Your Location").openPopup();
         mapRef.current.setView([lat, lon], 13);
         setUserMarker(newUserMarker);
       });
@@ -42,7 +41,7 @@ export default function Map() {
   };
 
   const fetchMapData = async () => {
-    if (!mapRef.current || layersControlRef.current) return; // Prevent adding multiple controls
+    if (!mapRef.current || layersControlRef.current) return;
 
     try {
       const endpoint = "/api/map/mapData";
@@ -73,7 +72,6 @@ export default function Map() {
           <div class="card">
             <div class="card-body border border-secondary">
               <h5 class="card-title text-center bg-light border">${title}</h5>
-              
               <p class="card-text">
                 <small class="text-muted">Latitude: ${lat}, Longitude: ${lon}</small>
               </p>
@@ -97,12 +95,12 @@ export default function Map() {
     }
   };
 
-
   useEffect(() => {
     if (!mapRef.current && mapContainerRef.current) {
       const mapInstance = L.map(mapContainerRef.current).setView(
         [35.9121, 138.2378],
-        16
+        16,
+      
       );
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
         mapInstance
@@ -132,23 +130,11 @@ export default function Map() {
 
   return (
     <div>
-      <Header/>
-      <section className="py-1">
-        <div className="container px-2">
-          <div className="bg-light rounded-3 py-1 px-0 px-md-1 mb-1">
-            <div className="text-center mb-1"></div>
-            <div className="row gx-0 justify-content-center">
-              <div className="col-lg-8 col-xl-6"></div>
-              <div
-                className="map-container"
-                style={{ width: "100%", height: "100vh" }}
-                ref={mapContainerRef}
-              ></div>
-            </div>
-          </div>
-        </div>
+      <section className="py-0">
+        <div className="map-container" ref={mapContainerRef}></div>
       </section>
-      <Footer/>
+
+      <StickyFooter onShowLocation={showUserLocation} />
     </div>
   );
 }
