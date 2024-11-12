@@ -33,47 +33,47 @@ export async function GET(request) {
   }
 }
 
-export async function PUT(request) {
-  try {
-    const { Record_number, location_id_0, Facilities_detail_title } =
-      await request.json();
+// export async function PUT(request) {
+//   try {
+//     const { Record_number, location_id_0, Facilities_detail_title } =
+//       await request.json();
 
    
 
-    const updateData = {
-      app: appId,
-      id: Record_number,
-      record: {
-        location_id_0: {
-          value: location_id_0, 
-        },
-        Facilities_detail_title: {
+//     const updateData = {
+//       app: appId,
+//       id: Record_number,
+//       record: {
+//         location_id_0: {
+//           value: location_id_0, 
+//         },
+//         Facilities_detail_title: {
        
-          value: Facilities_detail_title,
-        },
-        Facilities_detail_title: {
+//           value: Facilities_detail_title,
+//         },
+//         Facilities_detail_title: {
      
-          value: Facilities_detail_title, 
-        },
-      },
-    };
+//           value: Facilities_detail_title, 
+//         },
+//       },
+//     };
 
-    // Send the request to Kintone API to update the record
-    const response = await axios.put(`${kintoneUrl}/record.json`, updateData, {
-      headers: {
-        "X-Cybozu-API-Token": apiToken,
-      },
-    });
+//     // Send the request to Kintone API to update the record
+//     const response = await axios.put(`${kintoneUrl}/record.json`, updateData, {
+//       headers: {
+//         "X-Cybozu-API-Token": apiToken,
+//       },
+//     });
 
-    return NextResponse.json({
-      success: true,
-      message: "Record updated successfully",
-    });
-  } catch (error) {
-    console.error("Error updating record:", error);
-    return NextResponse.json({
-      success: false,
-      message: `Error updating record: ${error.message}`,
-    });
-  }
-}
+//     return NextResponse.json({
+//       success: true,
+//       message: "Record updated successfully",
+//     });
+//   } catch (error) {
+//     console.error("Error updating record:", error);
+//     return NextResponse.json({
+//       success: false,
+//       message: `Error updating record: ${error.message}`,
+//     });
+//   }
+// }

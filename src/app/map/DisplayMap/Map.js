@@ -6,13 +6,18 @@ import "leaflet/dist/leaflet.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { renderToString } from "react-dom/server";
 import StickyFooter from "@Om/components/HeaderandFooter/StickyFooter";
+import CustomLoading from "@Om/components/CustomLoading/CustomLoading";
 import './map.css'
+
+import "@Om/app/globals.css";
+
 
 export default function Map() {
   const mapRef = useRef(null);
   const layersControlRef = useRef(null);
   const mapContainerRef = useRef(null);
   const [userMarker, setUserMarker] = useState(null);
+  const [loadingData, setLoadingData] = useState(true);
 
   const showUserLocation = () => {
     if (userMarker) {
@@ -42,6 +47,7 @@ export default function Map() {
 
   const fetchMapData = async () => {
     if (!mapRef.current || layersControlRef.current) return;
+     setLoadingData(true);
 
     try {
       const endpoint = "/api/map/mapData";
@@ -75,7 +81,8 @@ export default function Map() {
               <p class="card-text">
                 <small class="text-muted">Latitude: ${lat}, Longitude: ${lon}</small>
               </p>
-              <a href="/map/mapInsideFacilities/${id}" class="btn btn-secondary text-center text-white">施設詳細情報</a>
+              <div class ="text-center">
+              <a href="/map/mapInsideFacilities/${id}" class="btn btn-secondary text-white">施設詳細情報</a></div>
             </div>
           </div>`;
 
@@ -92,6 +99,8 @@ export default function Map() {
         .addTo(mapRef.current);
     } catch (error) {
       console.error("Error fetching data from API:", error);
+    } finally {
+      setLoadingData(false); // Hide loading overlay
     }
   };
 
@@ -130,9 +139,11 @@ export default function Map() {
 
   return (
     <div>
+      
       <section className="py-0">
         <div className="map-container" ref={mapContainerRef}></div>
       </section>
+      
 
       <StickyFooter onShowLocation={showUserLocation} />
     </div>
