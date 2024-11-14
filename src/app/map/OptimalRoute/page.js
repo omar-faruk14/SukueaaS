@@ -94,7 +94,7 @@ const OptimizeRoute = () => {
 
     try {
       const response = await fetch("https://d1uqrcsprcjbp.cloudfront.net/Optimal/optimize_route",
-        //"http://127.0.0.1:5000/optimize_route",
+        
         {
           method: "POST",
           headers: {
