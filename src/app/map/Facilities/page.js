@@ -145,8 +145,8 @@ export default function AllFacilities2() {
                     )}
                     <Image
                       className="card-img-top"
-                      src={`/api/map/facilities/${facility.Facilities_detail_image[0]?.fileKey}`}
-                      alt="Facility Image"
+                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/map/facilities/${facility.Facilities_detail_image[0]?.fileKey}`}
+                      alt={facility.Facilities_detail_title}
                       style={{
                         objectFit: "cover",
                         display:
