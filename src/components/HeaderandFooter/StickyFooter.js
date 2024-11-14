@@ -32,11 +32,11 @@ const StickyFooter = ({ onShowLocation}) => {
         <i className="fas fa-location-arrow"></i>
         <span>現在地</span>
       </button>
-      <a href="/map/Facilities" className={styles.footerButton}>
+      <a href="https://liff.line.me/2006381311-VlRevLaD" className={styles.footerButton}>
         <i className="fas fa-list"></i>
         <span>施設一覧</span>
       </a>
-      <a href="/map/OptimalRoute" className={styles.footerButton}>
+      <a href="https://liff.line.me/2006381311-4BNmvWOq" className={styles.footerButton}>
         <i className="fa-solid fa-road"></i>
         <span>最適な順序</span>
       </a>

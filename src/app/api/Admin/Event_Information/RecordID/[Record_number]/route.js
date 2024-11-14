@@ -104,7 +104,7 @@ export async function POST(request,{ params }) {
     const formattedTime = formatTime(eventData.date);
 
     
-    let fullEventDetails = `📅 日時: ${formattedDate}\n⏰ 時間: ${formattedTime}-${eventData.End_Time}\n\n${eventData.Event_Line_Details}\n\n`;
+    let fullEventDetails = `📅 日付: ${formattedDate}\n⏰ 時間: ${formattedTime}-${eventData.End_Time}\n\n${eventData.Event_Line_Details}\n\n`;
 
     // only if it exists
     if (eventData.Event_Link) {

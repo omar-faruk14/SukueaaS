@@ -203,7 +203,7 @@ function LineUserInfo() {
                       <div className="card-body">
                         <h5 className="card-title">
                           <Link
-                            href={`/map/DisplayMap`}
+                            href={`https://liff.line.me/2006381311-5oQgPJed`}
                             className="link-dark text-decoration-none"
                           >
                             <Gear className="text-center text-primary ms-2" />
