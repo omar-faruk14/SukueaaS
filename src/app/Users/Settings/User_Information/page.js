@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import liff from "@line/liff";
-import { Gear, Info, Shield, List } from "react-bootstrap-icons";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import Link from "next/link";
 import Header from "@Om/components/HeaderandFooter/Header";
 import Footer from "@Om/components/HeaderandFooter/Footer";
@@ -143,7 +143,7 @@ function LineUserInfo() {
                             href={`/Users/Moshikomi_List/SortList/${userId}`}
                             className="link-dark text-decoration-none"
                           >
-                            <List className="text-center text-primary ms-2" />
+                            <i className="fas fa-list text-center text-primary ms-2"></i>
                             イベント申し込みリスト
                           </Link>
                         </h5>
@@ -159,7 +159,7 @@ function LineUserInfo() {
                             href={`/Users/Settings/PrivacyPolicy`}
                             className="link-dark text-decoration-none"
                           >
-                            <Shield className="text-center text-primary ms-2" />
+                            <i className="fas fa-shield-alt text-center text-primary ms-2"></i>
                             プライバシーポリシー
                           </Link>
                         </h5>
@@ -175,7 +175,7 @@ function LineUserInfo() {
                             href={`/Users/Settings/TermsOfService`}
                             className="link-dark text-decoration-none"
                           >
-                            <Info className="text-center text-primary ms-2" />
+                            <i className="fas fa-info-circle text-center text-primary ms-2"></i>
                             利用にあたってのお願い
                           </Link>
                         </h5>
@@ -191,7 +191,7 @@ function LineUserInfo() {
                             href={`/Admin/Settings/Login`}
                             className="link-dark text-decoration-none"
                           >
-                            <Gear className="text-center text-primary ms-2" />
+                            <i className="fas fa-cog text-center text-primary ms-2"></i>
                             イベント主催者管理用
                           </Link>
                         </h5>
@@ -206,7 +206,7 @@ function LineUserInfo() {
                             href={`https://liff.line.me/2006381311-5oQgPJed`}
                             className="link-dark text-decoration-none"
                           >
-                            <Gear className="text-center text-primary ms-2" />
+                            <i className="fas fa-location-arrow text-center text-primary ms-2"></i>
                             施設MAPの確認
                           </Link>
                         </h5>
