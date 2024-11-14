@@ -198,8 +198,7 @@ function LineUserInfo() {
                       </div>
                     </div>
                   </div>
-
-                  {/* <div className="col mt-5 mb-md-0 h-100">
+                  <div className="col mt-5 mb-md-0 h-100">
                     <div className="card bg-light">
                       <div className="card-body">
                         <h5 className="card-title">
@@ -213,7 +212,7 @@ function LineUserInfo() {
                         </h5>
                       </div>
                     </div>
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </div>
