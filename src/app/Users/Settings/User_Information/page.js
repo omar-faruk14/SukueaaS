@@ -7,6 +7,7 @@ import Link from "next/link";
 import Header from "@Om/components/HeaderandFooter/Header";
 import Footer from "@Om/components/HeaderandFooter/Footer";
 import './User_information.css'
+import "@Om/app/globals.css";
 
 function LineUserInfo() {
   const [lineData, setLineData] = useState(null);
@@ -50,7 +51,7 @@ function LineUserInfo() {
     <div>
       <Header />
       <section className="py-3">
-        <div className="container justify-content-center">
+        <div className="container justify-content-center p-1">
           {/* Breadcrumb */}
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb bg-light p-2 rounded">
