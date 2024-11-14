@@ -10,7 +10,7 @@ import CustomLoading from "@Om/components/CustomLoading/CustomLoading2";
 
 export default function FacilitiesDetails({params}) {
   const { location_id } = params;
-  console.log(location_id);
+  
   const [facilitiesData, setFacilitiesData] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
 
@@ -46,7 +46,7 @@ export default function FacilitiesDetails({params}) {
       <div className="container-fluid mt-5 p-0 overflow-hidden">
         <div className="row justify-content-center">
           <div className="col-md-8">
-            <div className="card bg-light border mb-3 rounded-5 p-4">
+            <div className="card bg-light border mb-3 rounded-5 p-0">
               {loadingData ? (
                 <CustomLoading />
               ) : (
@@ -105,7 +105,7 @@ export default function FacilitiesDetails({params}) {
                       </div>
                     </div>
                   ))}
-                  {!filteredFacilities.length && <p>詳細情報がありません...</p>}
+                  {!filteredFacilities.length && <p className="ms-3">詳細情報がありません...</p>}
                 </div>
               )}
             </div>

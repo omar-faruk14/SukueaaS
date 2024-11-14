@@ -32,7 +32,7 @@ const DefaultApp = () => {
   const userID = searchParams.get("user_id");
 
   const [selectedEvent, setSelectedEvent] = useState(null);
-  //const [mapData, setMapData] = useState(null);
+  const [mapData, setMapData] = useState(null);
   const [formData, setFormData] = useState({
     Number_of_Participants: 0,
     Additional_Comments: "",
@@ -97,6 +97,9 @@ const DefaultApp = () => {
           Destination: "",
           Participant_Method: "",
         }));
+         const response2 = await fetch(`/api/map/mapData`);
+         const data2 = await response2.json();
+         setMapData(data2);
       } catch (error) {
         console.error("Initialization failed:", error);
       }
@@ -365,12 +368,12 @@ const DefaultApp = () => {
                           <option value="" disabled>
                             選択してください
                           </option>
-                          {/* {mapData &&
+                          {mapData &&
                             mapData.map((item) => (
                               <option key={item.id} value={item.title}>
                                 {item.title}
                               </option>
-                            ))} */}
+                            ))}
                           <option value="その他">その他</option>
                         </select>
                       </div>

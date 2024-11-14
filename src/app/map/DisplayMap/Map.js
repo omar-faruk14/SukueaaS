@@ -75,16 +75,21 @@ export default function Map() {
             : description;
 
         const popupContent = `
-          <div class="card">
-            <div class="card-body border border-secondary">
-              <h5 class="card-title text-center bg-light border">${title}</h5>
-              <p class="card-text">
-                <small class="text-muted">Latitude: ${lat}, Longitude: ${lon}</small>
-              </p>
-              <div class ="text-center">
-              <a href="/map/mapInsideFacilities/${id}" class="btn btn-secondary text-white">施設詳細情報</a></div>
-            </div>
-          </div>`;
+  <div class="custom-popup">
+    <div class="custom-card">
+      <div class="custom-card-body">
+        <h5 class="custom-card-title">${title}</h5>
+        <p class="custom-card-text">
+          <small>Latitude: ${lat}, Longitude: ${lon}</small>
+        </p>
+        <div class="custom-button-container">
+          <a href="/map/mapInsideFacilities/${id}" class="custom-button">施設詳細情報</a>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+
 
         const newMarker = L.marker([lat, lon], { icon: customIcon }).bindPopup(
           popupContent

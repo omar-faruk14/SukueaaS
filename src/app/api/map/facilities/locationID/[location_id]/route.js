@@ -39,7 +39,9 @@ export async function GET(request, { params }) {
       location_title: record.location_title.value,
     }));
 
-    return NextResponse.json(results);
+    const sortedResults = results.sort((a, b) => a.id - b.id);
+
+    return NextResponse.json(sortedResults);
   } catch (error) {
     console.error("Error retrieving records:", error);
     return NextResponse.json({ error: "Error retrieving records" });

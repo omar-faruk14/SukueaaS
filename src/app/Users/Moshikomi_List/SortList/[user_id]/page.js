@@ -106,7 +106,7 @@ export default function MoshikomiPageList({ params }) {
               <div className="col-lg-10 col-xl-7">
                 <div className="text-center">
                   <div className="fs-2 mb-2 fst-italic">
-                    <h1 className="mb-2">イベント申込リスト</h1>
+                    <h5 className="mb-2">イベント申込リスト</h5>
                   </div>
                   <div className="d-flex align-items-center justify-content-center">
                     <Person

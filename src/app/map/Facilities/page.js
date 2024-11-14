@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import '../../globals.css';
 
 import { GeoAlt } from "react-bootstrap-icons";
@@ -129,12 +130,23 @@ export default function AllFacilities2() {
                 <Link
                   href={`/map/DetailsFacilities/${facility.location_id}/${facility.id}`}
                 >
-                  <img
-                    className="card-img-top"
-                    src={`/api/map/facilities/${facility.Facilities_detail_image[0]?.fileKey}`}
-                    alt="Facility Image"
-                    loading="lazy"
-                  />
+                  <div
+                    style={{
+                      position: "relative",
+                      width: "100%",
+                      height: "250px",
+                    }}
+                  >
+                    <Image
+                      className="card-img-top"
+                      src={`/api/map/facilities/${facility.Facilities_detail_image[0]?.fileKey}`}
+                      alt="Facility Image"
+                      style={{ objectFit: "cover" }} // Adjust the image fit
+                      sizes="(max-width: 768px) 100vw, 50vw" // Adjust sizes as needed based on your layout
+                      priority 
+                      fill // Use `fill` instead of `layout="fill"`
+                    />
+                  </div>
                 </Link>
                 <div className="card-body p-4">
                   <p className="card-text">

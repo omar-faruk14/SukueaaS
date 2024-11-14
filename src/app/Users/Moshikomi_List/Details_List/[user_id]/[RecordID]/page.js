@@ -58,10 +58,10 @@ export default function ApplicationDetailsView({params}) {
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb bg-light p-2 rounded">
           <li className="breadcrumb-item">
-            <Link href="/Users/Settings/User_Information">Home</Link>
+            <Link href="/Users/Settings/User_Information">ホーム</Link>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-            編集フォーム
+            イベント申込の詳細
           </li>
         </ol>
       </nav>
