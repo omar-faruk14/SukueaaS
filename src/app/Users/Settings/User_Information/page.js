@@ -51,7 +51,7 @@ function LineUserInfo() {
     <div>
       <Header />
       <section className="py-3">
-        <div className="container justify-content-center p-1">
+        <div className="container justify-content-center p-0">
           {/* Breadcrumb */}
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb bg-light p-2 rounded">
