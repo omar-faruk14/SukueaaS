@@ -2,13 +2,12 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import '../../globals.css';
+import "../../globals.css";
+import styles from "./AllFacilities2.module.css"; // Import the CSS module for skeleton styles
 
 import { GeoAlt } from "react-bootstrap-icons";
 import Header from "@Om/components/HeaderandFooter/Header";
 import Footer from "@Om/components/HeaderandFooter/Footer";
-
-
 
 const itemsPerPage = 6;
 
@@ -18,19 +17,18 @@ export default function AllFacilities2() {
   const [filteredFacilities, setFilteredFacilities] = useState([]);
   const [titleFilter, setTitleFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [imageLoading, setImageLoading] = useState({}); // State to track image loading
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/map/facilities"
-        );
+        const response = await fetch("/api/map/facilities");
         const data = await response.json();
 
         const firstFacilityMap = new Map();
 
         data.forEach((facility) => {
           const locationId = facility.location_id;
-
           if (!firstFacilityMap.has(locationId)) {
             firstFacilityMap.set(locationId, facility);
           }
@@ -50,7 +48,6 @@ export default function AllFacilities2() {
     handleFilter();
   }, [titleFilter, facilitiesData, currentPage]);
 
-  // Data for Map location
   useEffect(() => {
     const fetchLocationData = async () => {
       try {
@@ -95,12 +92,19 @@ export default function AllFacilities2() {
     setCurrentPage(newPage);
   };
 
-  // Add a new function to get the latitude and longitude from the map data
   const getLocationLatLon = (locationId) => {
     const location = LocationData.find((loc) => loc.id === locationId);
     return location
       ? { lat: location.lat, lon: location.lon, Map_Location: location.title }
       : { lat: "", lon: "", Map_Location: "" };
+  };
+
+  const handleImageLoad = (facilityId) => {
+    setImageLoading((prev) => ({ ...prev, [facilityId]: false }));
+  };
+
+  const handleImageError = (facilityId) => {
+    setImageLoading((prev) => ({ ...prev, [facilityId]: false }));
   };
 
   return (
@@ -112,7 +116,6 @@ export default function AllFacilities2() {
             <div className="text-center">
               <h2 className="fw-bolder">施設一覧</h2>
               <p className="lead fw-normal text-muted mb-5">施設の詳細</p>
-              {/* Search Bar */}
               <input
                 type="text"
                 className="form-control mb-4"
@@ -126,7 +129,7 @@ export default function AllFacilities2() {
         <div className="row gx-5">
           {filteredFacilities.map((facility) => (
             <div key={facility.id} className="col-lg-4 mb-5">
-              <div className={`card h-100 shadow border-0 `}>
+              <div className="card h-100 shadow border-0">
                 <Link
                   href={`/map/DetailsFacilities/${facility.location_id}/${facility.id}`}
                 >
@@ -137,14 +140,25 @@ export default function AllFacilities2() {
                       height: "250px",
                     }}
                   >
+                    {imageLoading[facility.id] !== false && (
+                      <div className={styles.skeleton}></div> // Show skeleton if image is loading
+                    )}
                     <Image
                       className="card-img-top"
                       src={`/api/map/facilities/${facility.Facilities_detail_image[0]?.fileKey}`}
                       alt="Facility Image"
-                      style={{ objectFit: "cover" }} // Adjust the image fit
-                      sizes="(max-width: 768px) 100vw, 50vw" // Adjust sizes as needed based on your layout
-                      priority 
-                      fill // Use `fill` instead of `layout="fill"`
+                      style={{
+                        objectFit: "cover",
+                        display:
+                          imageLoading[facility.id] === false
+                            ? "block"
+                            : "none",
+                      }}
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      priority
+                      fill
+                      onLoadingComplete={() => handleImageLoad(facility.id)}
+                      onError={() => handleImageError(facility.id)}
                     />
                   </div>
                 </Link>
@@ -169,18 +183,18 @@ export default function AllFacilities2() {
 
                   <Link
                     href={`/map/DetailsFacilities/${facility.location_id}/${facility.id}`}
-                    className={`text-decoration-none fw-bold link-dark `}
+                    className="text-decoration-none fw-bold link-dark"
                   >
-                    <h5 className={`card-title mb-3 `}>
+                    <h5 className="card-title mb-3">
                       {facility.Facilities_detail_title}
                     </h5>
                   </Link>
 
                   <Link
                     href={`/map/DetailsFacilities/${facility.location_id}/${facility.id}`}
-                    className={`text-decoration-none link-dark `}
+                    className="text-decoration-none link-dark"
                   >
-                    <p className={`card-text mb-0 `}>
+                    <p className="card-text mb-0">
                       {truncateText(
                         facility.Facilities_detail_description,
                         100
@@ -192,7 +206,6 @@ export default function AllFacilities2() {
             </div>
           ))}
         </div>
-        {/* Pagination */}
         <nav>
           <ul className="pagination justify-content-center">
             {Array.from({ length: totalPages }).map((_, index) => (
