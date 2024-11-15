@@ -201,13 +201,15 @@ function LineUserInfo() {
                     <div className="card bg-light">
                       <div className="card-body">
                         <h5 className="card-title">
-                          <Link
-                            href={`/map/DisplayMap`}
+                          <a
+                            href={`https://liff.line.me/2006381311-5oQgPJed`}
                             className="link-dark text-decoration-none"
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
                             <i className="fas fa-location-arrow text-center text-primary ms-2"></i>
                             施設MAPの確認
-                          </Link>
+                          </a>
                         </h5>
                       </div>
                     </div>
