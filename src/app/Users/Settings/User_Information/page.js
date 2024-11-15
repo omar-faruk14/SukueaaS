@@ -202,7 +202,7 @@ function LineUserInfo() {
                       <div className="card-body">
                         <h5 className="card-title">
                           <Link
-                            href={`https://liff.line.me/2006381311-5oQgPJed`}
+                            href={`/map/DisplayMap`}
                             className="link-dark text-decoration-none"
                           >
                             <i className="fas fa-location-arrow text-center text-primary ms-2"></i>
