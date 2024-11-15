@@ -42,7 +42,7 @@ import client from "./connection/clientConnect";
 export async function handlePostback(event) {
   const data = event.postback.data;
   const userId = event.source.userId;
-  console.log(userId);
+  // console.log(userId);
 
   if (data.startsWith("action=showDetails")) {
     const recordNumber = data.split("&record=")[1];
@@ -142,7 +142,9 @@ export async function handlePostback(event) {
                       type: "text",
                       text: `🔗 ${eventData.Event_Link}`,
                       size: "sm",
-                      color: "#0000EE", // Link color
+                      weight: "regular", 
+                      decoration: "underline", 
+                      color: "#000000", 
                       action: {
                         type: "uri",
                         uri: eventData.Event_Link,
