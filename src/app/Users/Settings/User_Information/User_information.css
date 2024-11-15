@@ -26,12 +26,13 @@
   display: block;
   width: 100%;
   text-align: center;
-  font-size: 1.2rem; /* Base size */
-  white-space: nowrap; /* Ensures text stays in one line */
+  font-size: 1.2rem;
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* Adds '...' if text overflows */
+  text-overflow: ellipsis;
   max-width: 100%;
 }
+
 
 /* On hover, make it more dynamic */
 .profile-title:hover {
@@ -106,6 +107,21 @@
   100% {
     background-position: -200% 0;
   }
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.no-padding-container {
+  width: 100%;
+  overflow-x: hidden;
+}
+.container-fluid {
+  padding: 0 !important;
+  margin: 0 auto;
+  max-width: 100%;
 }
 
 

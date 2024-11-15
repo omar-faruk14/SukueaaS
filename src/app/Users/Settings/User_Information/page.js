@@ -48,11 +48,10 @@ function LineUserInfo() {
   }, []);
 
   return (
-    <div>
+    <div className="no-padding-container">
       <Header />
       <section className="py-3">
-        <div className="container justify-content-center p-0">
-          {/* Breadcrumb */}
+        <div className="container-fluid justify-content-center">
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb bg-light p-2 rounded">
               <li className="breadcrumb-item">
@@ -64,8 +63,7 @@ function LineUserInfo() {
             </ol>
           </nav>
 
-          {/* Full-page card */}
-          <div className="card bg-light p-0">
+          <div className="card full-width bg-light p-1">
             <div className="row gx-5">
               <div className="col-lg-4 mb-5 mb-lg-0">
                 <div className="col-md-12">
