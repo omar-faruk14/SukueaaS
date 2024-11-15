@@ -1,16 +1,23 @@
-'use client';
+"use client";
+
 import React, { useState, useEffect } from "react";
 import "@Om/app/globals.css";
 import Header from "@Om/components/HeaderandFooter/Header";
+import Image from "next/image";
+import styles from "./FacilitiesDetails.module.css"; // Import CSS module
 import Footer from "@Om/components/HeaderandFooter/Footer";
+
 export default function FacilitiesDetails({ params }) {
   const { location_id, facilities_id } = params;
   const [facilitiesData, setFacilitiesData] = useState([]);
+  const [imageLoading, setImageLoading] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`/api/map/facilities`);
+        const response = await fetch(
+          `/api/map/facilities/locationID/${location_id}`
+        );
         const data = await response.json();
         setFacilitiesData(data);
       } catch (error) {
@@ -19,9 +26,8 @@ export default function FacilitiesDetails({ params }) {
     };
 
     fetchData();
-  }, []);
+  }, [location_id]);
 
-  // Filter facilities based on location_id and facilities_id
   const filteredFacilitiesWithId = facilitiesData.filter(
     (facility) =>
       facility.location_id === location_id &&
@@ -33,10 +39,19 @@ export default function FacilitiesDetails({ params }) {
       facility.location_id === location_id &&
       (facilities_id ? facility.id !== facilities_id : true)
   );
+
   const combinedFacilities = [
     ...filteredFacilitiesWithId,
     ...filteredFacilitiesWithoutId,
   ];
+
+  const handleImageLoad = (facilityId) => {
+    setImageLoading((prev) => ({ ...prev, [facilityId]: false }));
+  };
+
+  const handleImageError = (facilityId) => {
+    setImageLoading((prev) => ({ ...prev, [facilityId]: false }));
+  };
 
   return (
     <div
@@ -61,16 +76,36 @@ export default function FacilitiesDetails({ params }) {
                         {facility.Facilities_detail_title}
                       </h3>
                       <br />
-                      {facility.Facilities_detail_image.map((image, index) => (
-                        <img
-                          key={index}
-                          src={`/api/map/facilities/${image.fileKey}`}
-                          className="img-thumbnail"
-                          alt={image.name}
-                          style={{ maxWidth: "100%", height: "auto" }}
-                          loading="lazy"
-                        />
-                      ))}
+                      
+                        {facility.Facilities_detail_image.map(
+                          (image, index) => (
+                            <div key={index} className={styles.imageContainer}>
+                              {imageLoading[`${facility.id}_${index}`] !==
+                                false && (
+                                <div className={styles.skeleton}></div> // Skeleton loader
+                              )}
+                              <Image
+                                src={`/api/map/facilities/${image.fileKey}`}
+                                alt={image.name || "Facility Image"}
+                                fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                className={`img-thumbnail ${
+                                  imageLoading[`${facility.id}_${index}`] ===
+                                  false
+                                    ? ""
+                                    : styles.hidden
+                                }`}
+                                onLoad={() =>
+                                  handleImageLoad(`${facility.id}_${index}`)
+                                }
+                                onError={() =>
+                                  handleImageError(`${facility.id}_${index}`)
+                                }
+                              />
+                            </div>
+                          )
+                        )}
+                    
                       <br /> <br />
                     </div>
                     <p className="card-text">

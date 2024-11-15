@@ -157,7 +157,7 @@ export default function AllFacilities2() {
                       sizes="(max-width: 768px) 100vw, 50vw"
                       priority
                       fill
-                      onLoadingComplete={() => handleImageLoad(facility.id)}
+                      onLoad={() => handleImageLoad(facility.id)}
                       onError={() => handleImageError(facility.id)}
                     />
                   </div>
