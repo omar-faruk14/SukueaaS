@@ -76,36 +76,31 @@ export default function FacilitiesDetails({ params }) {
                         {facility.Facilities_detail_title}
                       </h3>
                       <br />
-                      
-                        {facility.Facilities_detail_image.map(
-                          (image, index) => (
-                            <div key={index} className={styles.imageContainer}>
-                              {imageLoading[`${facility.id}_${index}`] !==
-                                false && (
-                                <div className={styles.skeleton}></div> // Skeleton loader
-                              )}
-                              <Image
-                                src={`/api/map/facilities/${image.fileKey}`}
-                                alt={image.name || "Facility Image"}
-                                fill
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                className={`img-thumbnail ${
-                                  imageLoading[`${facility.id}_${index}`] ===
-                                  false
-                                    ? ""
-                                    : styles.hidden
-                                }`}
-                                onLoad={() =>
-                                  handleImageLoad(`${facility.id}_${index}`)
-                                }
-                                onError={() =>
-                                  handleImageError(`${facility.id}_${index}`)
-                                }
-                              />
-                            </div>
-                          )
-                        )}
-                    
+                      {facility.Facilities_detail_image.map((image, index) => (
+                        <div key={index} className={styles.imageContainer}>
+                          {imageLoading[`${facility.id}_${index}`] !==
+                            false && (
+                            <div className={styles.skeleton}></div> // Skeleton loader
+                          )}
+                          <Image
+                            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/map/facilities/${image.fileKey}`}
+                            alt={image.name || "Facility Image"}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            className={`img-thumbnail ${
+                              imageLoading[`${facility.id}_${index}`] === false
+                                ? ""
+                                : styles.hidden
+                            }`}
+                            onLoad={() =>
+                              handleImageLoad(`${facility.id}_${index}`)
+                            }
+                            onError={() =>
+                              handleImageError(`${facility.id}_${index}`)
+                            }
+                          />
+                        </div>
+                      ))}
                       <br /> <br />
                     </div>
                     <p className="card-text">
