@@ -17,7 +17,7 @@ function LineUserInfo() {
   useEffect(() => {
     const initLiff = async () => {
       try {
-        await liff.init({ liffId: "2006381311-2LAgdN1y" });
+        await liff.init({ liffId: "2006583911-lzwnAZLM" });
 
         if (liff.isLoggedIn()) {
           const userProfile = await liff.getProfile();
@@ -25,7 +25,7 @@ function LineUserInfo() {
           setUserId(userProfile.userId);
 
           const response = await axios.get(
-            `/api/Users/Registration/ID/${userProfile.userId}`
+            `/api/Yoyaku_Nagano/Users/Registration/ID/${userProfile.userId}`
           );
 
           const userExists = response.data.find(
@@ -111,7 +111,7 @@ function LineUserInfo() {
                         <div className="d-grid">
                           <a
                             className="btn btn-secondary rounded-pill"
-                            href={`/Users/Settings/Update_User_Information/${userId}`}
+                            href={`/Nagano_Reservation/Users/Settings/Update_User_Information/${userId}`}
                           >
                             編集
                           </a>

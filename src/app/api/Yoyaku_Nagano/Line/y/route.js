@@ -141,7 +141,7 @@ async function showSettingsMenu(event) {
             action: {
               type: "uri",
               label: "設定画面を開く",
-              uri: `https://liff.line.me/2006381311-2LAgdN1y`,
+              uri: `https://liff.line.me/2006583911-lzwnAZLM`,
             },
             margin: "md",
           },

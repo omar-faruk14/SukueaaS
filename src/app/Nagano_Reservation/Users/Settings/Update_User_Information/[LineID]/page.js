@@ -17,30 +17,18 @@ const UpdateUser = ({ params }) => {
     Registration_Phone: "",
     Line_User_ID: "",
     Registration_Gender: "",
-    Registration_Driver_Volunteer: "No",
-    Registration_Watch_Volunteer: "No",
     Registration_Line_Name: "",
   });
 
-  const [driverVolunteer, setDriverVolunteer] = useState(false);
-  const [WatchVolunteer, setWatchVolunteer] = useState(false);
+  
   const [submissionStatus, setSubmissionStatus] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const handleInfoClick = () => {
-    setShowModal(true);
-  };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
-  
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `/api/Users/Registration/ID/${LineID}`
+          `/api/Yoyaku_Nagano/Users/Registration/ID/${LineID}`
         );
         if (response.data.length > 0) {
           const userData = response.data[0]; 
@@ -51,14 +39,10 @@ const UpdateUser = ({ params }) => {
             Registration_Phone: userData.Registration_Phone,
             Line_User_ID: userData.Line_User_ID,
             Registration_Gender: userData.Registration_Gender,
-            Registration_Driver_Volunteer:
-              userData.Registration_Driver_Volunteer === "Yes" ? "Yes" : "No",
-            Registration_Watch_Volunteer:
-              userData.Registration_Watch_Volunteer === "Yes" ? "Yes" : "No",
+            
             Registration_Line_Name: userData.Registration_Line_Name,
           });
-          setDriverVolunteer(userData.Registration_Driver_Volunteer === "Yes");
-          setWatchVolunteer(userData.Registration_Watch_Volunteer === "Yes");
+          
         }
       } catch (error) {
         console.error("Error retrieving data:", error);
@@ -74,8 +58,7 @@ const UpdateUser = ({ params }) => {
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
-      Registration_Driver_Volunteer: driverVolunteer ? "Yes" : "No",
-      Registration_Watch_Volunteer: WatchVolunteer ? "Yes" : "No",
+      
     }));
   };
 
@@ -87,7 +70,7 @@ const UpdateUser = ({ params }) => {
 
     try {
       
-      await axios.put(`/api/Users/Registration`, formData);
+      await axios.put(`/api/Yoyaku_Nagano/Users/Registration`, formData);
       setSubmissionStatus("success");
 
 
@@ -100,30 +83,13 @@ const UpdateUser = ({ params }) => {
     }
   };
 
-  const handleCheckboxChange = (event) => {
-    const isChecked = event.target.checked;
-    setDriverVolunteer(isChecked);
-    setFormData((prevData) => ({
-      ...prevData,
-      Registration_Driver_Volunteer: isChecked ? "Yes" : "No",
-    }));
-  };
-
-  const handleCheckboxChange2 = (event) => {
-    const isChecked = event.target.checked;
-    setWatchVolunteer(isChecked);
-    setFormData((prevData) => ({
-      ...prevData,
-      Registration_Watch_Volunteer: isChecked ? "Yes" : "No",
-    }));
-  };
+ 
 
   return (
     <div>
-     
       <div
-        // className="d-flex flex-column"
-        // style={{ backgroundColor: "lightblue" }}
+      // className="d-flex flex-column"
+      // style={{ backgroundColor: "lightblue" }}
       >
         <div className="container pt-2 pb-2 p-0 overflow-hidden">
           <div className="row justify-content-center">
@@ -197,17 +163,26 @@ const UpdateUser = ({ params }) => {
                           htmlFor="Registration_Address"
                           className="form-label"
                         >
-                          住所<span className="text-danger">*</span>
+                          お住いの地域<span className="text-danger">*</span>
                         </label>
-                        <input
-                          type="text"
+                        <select
                           className="form-control"
                           id="Registration_Address"
                           name="Registration_Address"
                           value={formData.Registration_Address}
                           onChange={handleInputChange}
                           required
-                        />
+                        >
+                          <option value="" disabled>
+                            選択してください
+                          </option>
+                          <option value="長野市内">長野市内</option>
+                          <option value="長野県内（長野市以外）">
+                            長野県内（長野市以外）
+                          </option>
+                          <option value="県外">県外</option>
+                          <option value="その他">その他</option>
+                        </select>
                       </div>
 
                       <div className="mb-3">
@@ -215,7 +190,8 @@ const UpdateUser = ({ params }) => {
                           htmlFor="Registration_Phone"
                           className="form-label"
                         >
-                          電話<span className="text-danger">*</span>
+                          連絡先（イベントの際連絡の取れるもの）
+                          <span className="text-danger">*</span>
                         </label>
                         <input
                           type="text"
@@ -309,38 +285,6 @@ const UpdateUser = ({ params }) => {
                         </div>
                       </div>
 
-                      <div className="mb-3">
-                        <label
-                          className="form-check-label"
-                          htmlFor="driverVolunteer"
-                        >
-                          運転ボランティアとしての参加に興味ある
-                        </label>
-                        <input
-                          className="form-check-input ms-2"
-                          type="checkbox"
-                          id="driverVolunteer"
-                          checked={driverVolunteer}
-                          onChange={handleCheckboxChange}
-                        />
-                      </div>
-
-                      <div className="mb-3">
-                        <label
-                          className="form-check-label"
-                          htmlFor="WatchVolunteer"
-                        >
-                          見守りボランティアとしての参加に興味ある
-                        </label>
-                        <input
-                          className="form-check-input ms-2"
-                          type="checkbox"
-                          id="WatchVolunteer"
-                          checked={WatchVolunteer}
-                          onChange={handleCheckboxChange2}
-                        />
-                      </div>
-
                       <div className="text-center mt-3">
                         <button
                           type="submit"
@@ -371,7 +315,6 @@ const UpdateUser = ({ params }) => {
           </div>
         </div>
       </div>
-  
     </div>
   );
 };
