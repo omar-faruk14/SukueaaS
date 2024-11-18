@@ -1,0 +1,117 @@
+/* FacilitiesDetails.module.css */
+
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #f9fafb;
+  min-height: 100vh;
+}
+
+.contentContainer {
+  padding: 1rem 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.facilityCard {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.facilityCard:hover {
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.facilityTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c7a7b;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Updated Image grid styling */
+.imageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Wider min width */
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.image {
+  border-radius: 8px;
+  object-fit: cover;
+  width: 100%; /* Ensures image fills container */
+  height: 100%; /* Ensures image fills container */
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 1rem;
+  white-space: pre-line;
+}
+
+.linkContainer {
+  text-align: center;
+}
+
+.link {
+  color: #3182ce;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.link:hover {
+  color: #2c5282;
+}
+
+.noDetails {
+  font-size: 1.1rem;
+  text-align: center;
+  color: #888;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .contentContainer {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .facilityTitle {
+    font-size: 1.3rem;
+  }
+
+  .description {
+    font-size: 0.95rem;
+  }
+
+  .imageContainer {
+    height: 180px; /* Adjust height for mobile screens */
+  }
+}

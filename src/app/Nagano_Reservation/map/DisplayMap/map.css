@@ -1,0 +1,95 @@
+/* Ensure the body and html elements take up full height */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Container that holds the map and takes the full viewport height */
+.map-container {
+  width: 100%;
+  height: calc(100vh - 60px); /* Adjust height to account for footer */
+}
+
+.stickyFooter {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 0;
+  border-top: 1px solid #ddd;
+  box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+
+
+/* CSS for the custom popup card */
+/* CSS for the custom popup card */
+.custom-popup {
+  width: 260px; 
+  font-family: Arial, sans-serif;
+}
+
+.custom-card {
+  background-color: #f8fafc; 
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+  overflow: hidden;
+  border: 1px solid #e2e8f0; 
+}
+
+.custom-card-body {
+  padding: 1rem;
+  text-align: center;
+}
+
+.custom-card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2a4365; 
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background-color: #e2e8f0; 
+  border-radius: 6px;
+}
+
+.custom-card-text {
+  font-size: 0.9rem;
+  color: #4a5568; /* Muted color for text */
+  margin: 0.5rem 0;
+}
+
+.custom-button-container {
+  text-align: center;
+  margin-top: 0.75rem;
+}
+
+/* Primary Blue Button Styling */
+.custom-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #3182ce; /* Primary blue color */
+  color: #ffffff !important; 
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+
+.custom-button:hover {
+  background-color: #2b6cb0; /* Darker blue on hover */
+  transform: translateY(-2px); 
+}
+
+/* Ensure text doesn't overflow on small screens */
+.custom-card-title,
+.custom-card-text {
+  word-wrap: break-word;
+}
+
