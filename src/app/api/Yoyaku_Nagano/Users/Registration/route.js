@@ -4,14 +4,16 @@ import axios from "axios";
 const { Client } = require("@line/bot-sdk");
 
 const kintoneUrl = "https://emi-lab-osaka.cybozu.com/k/v1";
-const apiToken = "2y1jtdTXfHArGgdAzKlHiPFTf0IluCplHFDZOF8x";
-const appId = 30;
+const apiToken = "MMugrtttCZQpZiXZgD9ML20sV0LybUbK744qQNKZ";
+const appId = 80;
 
 const lineConfig = {
-  channelAccessToken:
-    "MIxODpLupR/q1JiD0p6Bqm2/R9L3v+SZxgyLr3CkKnZ4osC5iCAGeD5X/G4VRafltZsNoPvTDX/RwnfSGaVWCiqhqUyhoxQyy/icRsBvtMiUKVEPGrgSp18UTNKblEckBamOrR+FACLJ/PTGa3wS1gdB04t89/1O/w1cDnyilFU=",
-  channelSecret: "6eff6ee34af287ead8444ece38e8eb74",
+  channelAccessToken: process.env.NEXT_PUBLIC_LINE_CHANNEL_ACCESS_TOKEN_2,
+  channelSecret: process.env.NEXT_PUBLIC_LINE_CHANNEL_SECRET_2,
 };
+
+
+
 
 
 const lineClient = new Client(lineConfig);
@@ -29,12 +31,7 @@ export async function POST(request) {
         Registration_Phone: { value: data.Registration_Phone },
         Registration_Age: { value: data.Registration_Age },
         Registration_Gender: { value: data.Registration_Gender },
-        Registration_Driver_Volunteer: {
-          value: data.Registration_Driver_Volunteer,
-        },
-        Registration_Watch_Volunteer: {
-          value: data.Registration_Watch_Volunteer,
-        },
+        
         Line_User_ID: { value: data.Line_User_ID },
       },
     };
@@ -55,7 +52,7 @@ export async function POST(request) {
  
     const replyMessage = {
       type: "text",
-      text: `登録が完了しました。\n\n名前: ${data.Registration_Name}\n住所: ${data.Registration_Address}\n電話: ${data.Registration_Phone}\n年代: ${data.Registration_Age}\n性別: ${data.Registration_Gender}\n運転ボランティアとして参加 に興味ある: ${data.Registration_Driver_Volunteer}\n見守りボランティアとしての参加に興味ある: ${data.Registration_Watch_Volunteer}`,
+      text: `登録が完了しました。\n\n名前: ${data.Registration_Name}\nお住いの地域: ${data.Registration_Address}\n連絡先: ${data.Registration_Phone}\n年代: ${data.Registration_Age}\n性別: ${data.Registration_Gender}`,
     };
 
     await lineClient.pushMessage(data.Line_User_ID, replyMessage);
@@ -105,12 +102,6 @@ export async function PUT(request) {
         Registration_Phone: { value: data.Registration_Phone },
         Registration_Age: { value: data.Registration_Age },
         Registration_Gender: { value: data.Registration_Gender },
-        Registration_Driver_Volunteer: {
-          value: data.Registration_Driver_Volunteer,
-        },
-        Registration_Watch_Volunteer: {
-          value: data.Registration_Watch_Volunteer,
-        },
         Line_User_ID: { value: data.Line_User_ID },
       },
     };

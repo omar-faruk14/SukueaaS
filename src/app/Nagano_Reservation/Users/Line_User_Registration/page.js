@@ -17,31 +17,20 @@ const StukueraboRegistration = () => {
     Registration_Phone: "",
     Line_User_ID: "",
     Registration_Gender: "",
-    Registration_Driver_Volunteer: "No",
-    Registration_Watch_Volunteer: "No",
     Registration_Line_Name: "",
   });
 
-  const [driverVolunteer, setDriverVolunteer] = useState(false);
-  const [WatchVolunteer, setWatchVolunteer] = useState(false);
+  
   const [submissionStatus, setSubmissionStatus] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const handleInfoClick = () => {
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
 
   const [isUserRegistered, setIsUserRegistered] = useState(false);
 
   useEffect(() => {
     const initLiff = async () => {
       try {
-        await liff.init({ liffId: "2006381311-XDQEmkPw" });
+        await liff.init({ liffId: "2006583911-Ya10ln3g" });
 
         if (liff.isLoggedIn()) {
           const userProfile = await liff.getProfile();
@@ -56,7 +45,7 @@ const StukueraboRegistration = () => {
 
           // Correctly use userProfile.userId instead of Line_User_ID
           const response = await axios.get(
-            `/api/Users/Registration/ID/${userProfile.userId}`
+            `/api/Yoyaku_Nagano/Users/Registration/ID/${userProfile.userId}`
           );
 
           const userExists = response.data.some(
@@ -83,8 +72,7 @@ const StukueraboRegistration = () => {
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
-      Registration_Driver_Volunteer: driverVolunteer ? "Yes" : "No",
-      Registration_Watch_Volunteer: WatchVolunteer ? "Yes" : "No",
+      
     }));
   };
 
@@ -94,7 +82,7 @@ const StukueraboRegistration = () => {
     setIsSubmitting(true);
 
     try {
-      await axios.post(`/api/Users/Registration`, formData);
+      await axios.post(`/api/Yoyaku_Nagano/Users/Registration`, formData);
       setSubmissionStatus("success");
       setIsSubmitted(true);
 
@@ -109,23 +97,7 @@ const StukueraboRegistration = () => {
     }
   };
 
-  const handleCheckboxChange = (event) => {
-    const isChecked = event.target.checked;
-    setDriverVolunteer(isChecked);
-    setFormData((prevData) => ({
-      ...prevData,
-      Registration_Driver_Volunteer: isChecked ? "Yes" : "No",
-    }));
-  };
 
-  const handleCheckboxChange2 = (event) => {
-    const isChecked = event.target.checked;
-    setWatchVolunteer(isChecked);
-    setFormData((prevData) => ({
-      ...prevData,
-      Registration_Watch_Volunteer: isChecked ? "Yes" : "No",
-    }));
-  };
 
   return (
     <div>
@@ -205,17 +177,26 @@ const StukueraboRegistration = () => {
                             htmlFor="Registration_Address"
                             className="form-label"
                           >
-                            住所<span className="text-danger">*</span>
+                            お住いの地域<span className="text-danger">*</span>
                           </label>
-                          <input
-                            type="text"
+                          <select
                             className="form-control"
                             id="Registration_Address"
                             name="Registration_Address"
                             value={formData.Registration_Address}
                             onChange={handleInputChange}
                             required
-                          />
+                          >
+                            <option value="" disabled>
+                              選択してください
+                            </option>
+                            <option value="長野市内">長野市内</option>
+                            <option value="長野県内（長野市以外）">
+                              長野県内（長野市以外）
+                            </option>
+                            <option value="県外">県外</option>
+                            <option value="その他">その他</option>
+                          </select>
                         </div>
 
                         <div className="mb-3">
@@ -223,7 +204,8 @@ const StukueraboRegistration = () => {
                             htmlFor="Registration_Phone"
                             className="form-label"
                           >
-                            電話<span className="text-danger">*</span>
+                            連絡先（イベントの際連絡の取れるもの）
+                            <span className="text-danger">*</span>
                           </label>
                           <input
                             type="text"
@@ -319,106 +301,6 @@ const StukueraboRegistration = () => {
                             <label className="form-check-label" htmlFor="other">
                               その他・未回答
                             </label>
-                          </div>
-                        </div>
-
-                        <div className="card mb-3 p-3 border-0 shadow-sm">
-                          <h5
-                            className="mb-3 text-info"
-                            style={{ cursor: "pointer" }}
-                            onClick={handleInfoClick}
-                          >
-                            <span>ボランティアの種類について</span>
-
-                            <i
-                              className="ms-1 fa-solid fa-circle-info text-danger"
-                              onClick={handleInfoClick}
-                              style={{
-                                cursor: "pointer",
-                                fontSize: "1rem",
-                              }}
-                            ></i>
-                          </h5>
-
-                          <div className="form-check mb-2">
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
-                              id="Registration_Driver_Volunteer"
-                              name="Registration_Driver_Volunteer"
-                              checked={driverVolunteer}
-                              onChange={handleCheckboxChange}
-                            />
-                            <label
-                              className="form-check-label"
-                              htmlFor="Registration_Driver_Volunteer"
-                            >
-                              運転ボランティアとしての参加に興味ある
-                            </label>
-                          </div>
-
-                          <div className="form-check d-flex align-items-center">
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
-                              id="Registration_Watch_Volunteer"
-                              name="Registration_Watch_Volunteer"
-                              checked={WatchVolunteer}
-                              onChange={handleCheckboxChange2}
-                            />
-                            <label
-                              className="form-check-label text-danger mb-0 me-2"
-                              htmlFor="Registration_Watch_Volunteer"
-                            >
-                              見守りボランティアとしての参加に興味ある
-                            </label>
-                          </div>
-
-                          {/* Modal for volunteer information */}
-                          <div
-                            className={`modal fade ${showModal ? "show" : ""}`}
-                            style={{ display: showModal ? "block" : "none" }}
-                            tabIndex="-1"
-                            role="dialog"
-                            aria-labelledby="volunteerInfoModalLabel"
-                            aria-hidden={!showModal}
-                          >
-                            <div className="modal-dialog" role="document">
-                              <div className="modal-content">
-                                <div className="modal-header">
-                                  <h5
-                                    className="modal-title"
-                                    id="volunteerInfoModalLabel"
-                                  >
-                                    ボランティアについて
-                                  </h5>
-                                </div>
-                                <div className="modal-body">
-                                  <h6>運転ボランティアとは？</h6>
-                                  <ul>
-                                    <li>
-                                      イベントの際に送迎をお手伝いをしてくれる方
-                                    </li>
-                                    <li>送迎用の車両が貸し出し可能な方</li>
-                                  </ul>
-                                  <h6>見守りボランティアとは？</h6>
-                                  <ul>
-                                    <li>
-                                      イベント会場で介助が必要な方のお手伝いをしてくれる方。例.車の乗り降りを補助する、等
-                                    </li>
-                                  </ul>
-                                </div>
-                                <div className="modal-footer">
-                                  <button
-                                    type="button"
-                                    className="btn btn-secondary"
-                                    onClick={handleCloseModal}
-                                  >
-                                    閉じる
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
                           </div>
                         </div>
 

@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import axios from "axios";
 
 const kintoneUrl = "https://emi-lab-osaka.cybozu.com/k/v1";
-const apiToken = "2y1jtdTXfHArGgdAzKlHiPFTf0IluCplHFDZOF8x";
-const appId = 30;
+const apiToken = "MMugrtttCZQpZiXZgD9ML20sV0LybUbK744qQNKZ";
+const appId = 80;
 
 export async function GET(request, { params }) {
   const Line_User_ID = params.LineID;

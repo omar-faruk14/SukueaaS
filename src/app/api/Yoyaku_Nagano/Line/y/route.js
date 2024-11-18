@@ -64,7 +64,7 @@ async function handleFollowEvent(event) {
               action: {
                 type: "uri",
                 label: "こちらから登録",
-                uri: "https://liff.line.me/2006381311-XDQEmkPw",
+                uri: "https://liff.line.me/2006583911-Ya10ln3g",
               },
             },
           ],
@@ -87,7 +87,7 @@ async function handleTextMessage(event) {
   let userData;
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Users/Registration/ID/${lineUserId}`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Yoyaku_Nagano/Users/Registration/ID/${lineUserId}`
     );
     userData = response.data;
   } catch (error) {
@@ -185,7 +185,7 @@ async function promptUserRegistration(event) {
             action: {
               type: "uri",
               label: "こちらから登録",
-              uri: "https://liff.line.me/2006381311-XDQEmkPw",
+              uri: "https://liff.line.me/2006583911-Ya10ln3g",
             },
           },
         ],
