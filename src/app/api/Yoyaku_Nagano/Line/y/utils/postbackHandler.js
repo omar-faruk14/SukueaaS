@@ -50,7 +50,7 @@ export async function handlePostback(event) {
     try {
       // Fetch event data
       const eventResponse = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information/RecordID/${recordNumber}`
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Yoyaku_Nagano/Admin/Event_Information/RecordID/${recordNumber}`
       );
       const eventData = eventResponse.data;
 
@@ -88,7 +88,7 @@ export async function handlePostback(event) {
 
       let fullEventDetails = `📅 日付: ${formattedDate}\n⏰ 時間: ${formattedTime}-${eventData.End_Time}\n\n${eventData.Event_Line_Details}\n\n`;
 
-      const imageUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information/${eventData.Event_Image[0].fileKey}?width=240&height=160`;
+      const imageUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Yoyaku_Nagano/Admin/Event_Information/${eventData.Event_Image[0].fileKey}?width=240&height=160`;
 
       // Construct Flex message
       const flexMessage = {

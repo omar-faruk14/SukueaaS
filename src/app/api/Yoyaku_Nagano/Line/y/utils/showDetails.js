@@ -20,7 +20,7 @@ export async function showEventList(event) {
     }
 
     const eventResponse = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Information/Month/${eventManagementMonth}`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Yoyaku_Nagano/Admin/Event_Information/Month/${eventManagementMonth}`
     );
     eventData = eventResponse.data;
   } catch (error) {
