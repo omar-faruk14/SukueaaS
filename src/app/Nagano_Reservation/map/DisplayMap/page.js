@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import CustomLoading from "@Om/components/CustomLoading/CustomLoading";
 
 const MapView = dynamic(
-  () => import("@Om/app/map/DisplayMap/Map"),
+  () => import("@Om/app/Nagano_Reservation/map/DisplayMap/Map"),
   {
     loading: () => <CustomLoading />,
     ssr: false,

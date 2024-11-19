@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import axios from "axios";
 
 const kintoneUrl = "https://emi-lab-osaka.cybozu.com/k/v1";
-const apiToken = "8ojdjZ9PHAsV38lC5tKx6nc23ufwXAfLCr6l9TdS";
-const appId = 44;
+const apiToken = "2it8SI8qMfE5H5rWwjC4wK7uRXW9gmM4EXP1LRJs";
+const appId = 64;
 export const dynamic = "force-dynamic";
 export async function GET(request) {
   try {
@@ -30,46 +30,5 @@ export async function GET(request) {
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: "Error retrieving records" });
-  }
-}
-
-export async function PUT(request) {
-  try {
-    const { Record_number, location_id_0, Facilities_detail_title } =
-      await request.json();
-
-    const updateData = {
-      app: appId,
-      id: Record_number,
-      record: {
-        location_id_0: {
-          value: location_id_0,
-        },
-        Facilities_detail_title: {
-          value: Facilities_detail_title,
-        },
-        Facilities_detail_title: {
-          value: Facilities_detail_title,
-        },
-      },
-    };
-
-    // Send the request to Kintone API to update the record
-    const response = await axios.put(`${kintoneUrl}/record.json`, updateData, {
-      headers: {
-        "X-Cybozu-API-Token": apiToken,
-      },
-    });
-
-    return NextResponse.json({
-      success: true,
-      message: "Record updated successfully",
-    });
-  } catch (error) {
-    console.error("Error updating record:", error);
-    return NextResponse.json({
-      success: false,
-      message: `Error updating record: ${error.message}`,
-    });
   }
 }

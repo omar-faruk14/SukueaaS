@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import axios from "axios";
 
 const kintoneUrl = "https://emi-lab-osaka.cybozu.com/k/v1";
-const apiToken = "e5wfAEa2iW2lrj9K6zkCUGxtTsZmCs9Ioj6lNbNM";
-const appId = 59;
+const apiToken = "Cw6JqsILemnOUjk6CJMN0hAezXuqiuBYe6te5Xqd";
+const appId = 62;
 
 export async function GET(request, { params }) {
   const { location_id } = params;

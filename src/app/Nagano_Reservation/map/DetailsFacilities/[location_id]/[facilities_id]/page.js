@@ -16,7 +16,7 @@ export default function FacilitiesDetails({ params }) {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `/api/map/facilities/locationID/${location_id}`
+          `/api/Yoyaku_Nagano/map/facilities/locationID/${location_id}`
         );
         const data = await response.json();
         setFacilitiesData(data);
@@ -83,7 +83,7 @@ export default function FacilitiesDetails({ params }) {
                             <div className={styles.skeleton}></div> // Skeleton loader
                           )}
                           <Image
-                            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/map/facilities/${image.fileKey}`}
+                            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Yoyaku_Nagano/map/facilities/${image.fileKey}`}
                             alt={image.name || "Facility Image"}
                             fill
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

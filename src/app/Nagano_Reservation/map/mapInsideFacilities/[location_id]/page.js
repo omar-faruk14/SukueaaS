@@ -19,7 +19,7 @@ export default function FacilitiesDetails({params}) {
       setLoadingData(true);
       try {
         const response = await fetch(
-          `/api/map/facilities/locationID/${location_id}`
+          `/api/Yoyaku_Nagano/map/facilities/locationID/${location_id}`
         );
         const data = await response.json();
         setFacilitiesData(data);
@@ -68,7 +68,7 @@ export default function FacilitiesDetails({params}) {
                             (image, index) => (
                               <img
                                 key={index}
-                                src={`/api/map/facilities/${image.fileKey}`}
+                                src={`/api/Yoyaku_Nagano/map/facilities/${image.fileKey}`}
                                 className="img-thumbnail"
                                 alt={image.name}
                                 style={{ maxWidth: "100%", height: "auto" }}
@@ -88,24 +88,26 @@ export default function FacilitiesDetails({params}) {
                                 <br />
                               </React.Fragment>
                             ))}
-                            {facility.Facilities_Details_Link && (
-                              <p>
-                                URL:{" "}
-                                <a
-                                  href={facility.Facilities_Details_Link}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  {facility.Facilities_Details_Link}
-                                </a>
-                              </p>
-                            )}
                           </p>
+                          {facility.Facilities_Details_Link && (
+                            <div className="card-text">
+                              🔗{" "}
+                              <a
+                                href={facility.Facilities_Details_Link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {facility.Facilities_Details_Link}
+                              </a>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
                   ))}
-                  {!filteredFacilities.length && <p className="ms-3">詳細情報がありません...</p>}
+                  {!filteredFacilities.length && (
+                    <p className="ms-3">詳細情報がありません...</p>
+                  )}
                 </div>
               )}
             </div>

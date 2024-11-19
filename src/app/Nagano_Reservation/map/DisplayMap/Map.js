@@ -50,7 +50,7 @@ export default function Map() {
      setLoadingData(true);
 
     try {
-      const endpoint = "/api/map/mapData";
+      const endpoint = "/api/Yoyaku_Nagano/map/mapData";
       const response = await axios.get(endpoint);
       const apiData = response.data;
       const groups = {};
@@ -83,7 +83,7 @@ export default function Map() {
           <small>Latitude: ${lat}, Longitude: ${lon}</small>
         </p>
         <div class="custom-button-container">
-          <a href="/map/mapInsideFacilities/${id}" class="custom-button">施設詳細情報</a>
+          <a href="/Nagano_Reservation/map/mapInsideFacilities/${id}" class="custom-button">施設詳細情報</a>
         </div>
       </div>
     </div>

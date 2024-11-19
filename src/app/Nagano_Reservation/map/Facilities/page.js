@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import "../../globals.css";
+import "@Om/app/globals.css";
 import styles from "./AllFacilities2.module.css"; // Import the CSS module for skeleton styles
 
 import { GeoAlt } from "react-bootstrap-icons";
@@ -22,7 +22,7 @@ export default function AllFacilities2() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/map/facilities");
+        const response = await fetch("/api/Yoyaku_Nagano/map/facilities");
         const data = await response.json();
 
         const firstFacilityMap = new Map();
@@ -51,7 +51,7 @@ export default function AllFacilities2() {
   useEffect(() => {
     const fetchLocationData = async () => {
       try {
-        const response = await fetch("/api/map/mapData");
+        const response = await fetch("/api/Yoyaku_Nagano/map/mapData");
         const data = await response.json();
         setLocationData(data);
       } catch (error) {
@@ -131,7 +131,7 @@ export default function AllFacilities2() {
             <div key={facility.id} className="col-lg-4 mb-5">
               <div className="card h-100 shadow border-0">
                 <Link
-                  href={`/map/DetailsFacilities/${facility.location_id}/${facility.id}`}
+                  href={`/Nagano_Reservation/map/DetailsFacilities/${facility.location_id}/${facility.id}`}
                 >
                   <div
                     style={{
@@ -145,7 +145,7 @@ export default function AllFacilities2() {
                     )}
                     <Image
                       className="card-img-top"
-                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/map/facilities/${facility.Facilities_detail_image[0]?.fileKey}`}
+                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Yoyaku_Nagano/map/facilities/${facility.Facilities_detail_image[0]?.fileKey}`}
                       alt={facility.Facilities_detail_title}
                       style={{
                         objectFit: "cover",
@@ -182,7 +182,7 @@ export default function AllFacilities2() {
                   </p>
 
                   <Link
-                    href={`/map/DetailsFacilities/${facility.location_id}/${facility.id}`}
+                    href={`/Nagano_Reservation/map/DetailsFacilities/${facility.location_id}/${facility.id}`}
                     className="text-decoration-none fw-bold link-dark"
                   >
                     <h5 className="card-title mb-3">
@@ -191,7 +191,7 @@ export default function AllFacilities2() {
                   </Link>
 
                   <Link
-                    href={`/map/DetailsFacilities/${facility.location_id}/${facility.id}`}
+                    href={`/Nagano_Reservation/map/DetailsFacilities/${facility.location_id}/${facility.id}`}
                     className="text-decoration-none link-dark"
                   >
                     <p className="card-text mb-0">

@@ -202,7 +202,7 @@ function LineUserInfo() {
                       <div className="card-body">
                         <h5 className="card-title">
                           <a
-                            href={`https://liff.line.me/2006381311-5oQgPJed`}
+                            href={`https://liff.line.me/2006583911-prdr3wLD`}
                             className="link-dark text-decoration-none"
                             target="_blank"
                             rel="noopener noreferrer"

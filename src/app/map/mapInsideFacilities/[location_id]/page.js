@@ -88,24 +88,26 @@ export default function FacilitiesDetails({params}) {
                                 <br />
                               </React.Fragment>
                             ))}
-                            {facility.Facilities_Details_Link && (
-                              <p>
-                                URL:{" "}
-                                <a
-                                  href={facility.Facilities_Details_Link}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  {facility.Facilities_Details_Link}
-                                </a>
-                              </p>
-                            )}
                           </p>
+                          {facility.Facilities_Details_Link && (
+                            <div className="card-text">
+                              🔗{" "}
+                              <a
+                                href={facility.Facilities_Details_Link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {facility.Facilities_Details_Link}
+                              </a>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
                   ))}
-                  {!filteredFacilities.length && <p className="ms-3">詳細情報がありません...</p>}
+                  {!filteredFacilities.length && (
+                    <p className="ms-3">詳細情報がありません...</p>
+                  )}
                 </div>
               )}
             </div>
