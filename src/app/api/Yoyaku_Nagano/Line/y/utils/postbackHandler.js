@@ -54,12 +54,6 @@ export async function handlePostback(event) {
       );
       const eventData = eventResponse.data;
 
-      // Fetch phone data
-      const phoneResponse = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Admin/Event_Management`
-      );
-      const phoneData = phoneResponse.data;
-      const phoneNumber = phoneData[0].tsukuerabo_event_management_phone;
 
       // Formatting helpers
       const formatDate = (dateString) => {
@@ -85,9 +79,9 @@ export async function handlePostback(event) {
       // Format event data
       const formattedDate = formatDate(eventData.date);
       const formattedTime = formatTime(eventData.date);
+      const dateAndTimeText = `📅 日付: ${formattedDate}\n⏰ 時間: ${formattedTime}-${eventData.End_Time}`;
 
-      let fullEventDetails = `📅 日付: ${formattedDate}\n⏰ 時間: ${formattedTime}-${eventData.End_Time}\n\n${eventData.Event_Line_Details}\n\n`;
-
+      let fullEventDetails = `${eventData.Event_Line_Details}\n\n`;
       const imageUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/Yoyaku_Nagano/Admin/Event_Information/${eventData.Event_Image[0].fileKey}?width=240&height=160`;
 
       // Construct Flex message
@@ -130,21 +124,42 @@ export async function handlePostback(event) {
               },
               {
                 type: "text",
+                text: dateAndTimeText, // Separate date and time text
+                wrap: true,
+                size: "sm",
+                margin: "md",
+              },
+
+              {
+                type: "text",
+                text: `🏠 ${eventData.location}`, // Separate date and time text
+                size: "sm",
+                weight: "regular",
+                // decoration: "underline",
+                color: "#007AFF",
+                action: {
+                  type: "uri",
+                  uri: `${process.env.NEXT_PUBLIC_API_BASE_URL}/Nagano_Reservation/map/mapInsideFacilities/${eventData.locations_id}`,
+                },
+                margin: "md",
+                wrap: true,
+              },
+              {
+                type: "text",
                 text: fullEventDetails,
                 wrap: true,
                 size: "sm",
                 margin: "md",
               },
-              // Conditional link element
               ...(eventData.Event_Link
                 ? [
                     {
                       type: "text",
                       text: `🔗 ${eventData.Event_Link}`,
                       size: "sm",
-                      weight: "regular", 
-                      decoration: "underline", 
-                      color: "#000000", 
+                      weight: "regular",
+                      decoration: "underline",
+                      color: "#000000",
                       action: {
                         type: "uri",
                         uri: eventData.Event_Link,
@@ -167,16 +182,6 @@ export async function handlePostback(event) {
                   type: "uri",
                   label: "フォームで予約する",
                   uri: `${process.env.NEXT_PUBLIC_API_BASE_URL}/Users/Moshikomi?event_id=${recordNumber}&user_id=${userId}`,
-                },
-                margin: "md",
-              },
-              {
-                type: "button",
-                style: "primary",
-                action: {
-                  type: "uri",
-                  label: "電話で問い合わせる",
-                  uri: `tel:${phoneNumber}`,
                 },
                 margin: "md",
               },
