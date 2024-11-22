@@ -6,7 +6,7 @@ import "leaflet/dist/leaflet.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { renderToString } from "react-dom/server";
 import StickyFooter from "@Om/components/HeaderandFooter/StickyFooter";
-import CustomLoading from "@Om/components/CustomLoading/CustomLoading";
+
 import './map.css'
 
 import "@Om/app/globals.css";
