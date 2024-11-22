@@ -14,7 +14,7 @@ export default function MoshikomiPageList({ params }) {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`/api/Users/Moshikomi/${user_id}`);
+      const response = await fetch(`/api/Yoyaku_Nagano/Users/Moshikomi/${user_id}`);
       const data = await response.json();
 
       
@@ -98,7 +98,7 @@ export default function MoshikomiPageList({ params }) {
 
   return (
     <div>
-      <Header/>
+      <Header />
       <div className="container">
         <div className="py-5 bg-light">
           <div className="container px-5 my-5">
@@ -148,7 +148,7 @@ export default function MoshikomiPageList({ params }) {
                       </p>
                     )}
                     <Link
-                      href={`/Users/Moshikomi_List/Details_List/${application.Line_User_ID}/${application.id}`}
+                      href={`/Nagano_Reservation/Users/Moshikomi_List/Details_List/${application.Line_User_ID}/${application.id}`}
                       className="btn btn-primary btn-sm"
                     >
                       詳細を見る
@@ -175,7 +175,7 @@ export default function MoshikomiPageList({ params }) {
           </nav>
         )}
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

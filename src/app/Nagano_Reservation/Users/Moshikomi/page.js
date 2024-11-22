@@ -97,7 +97,7 @@ const DefaultApp = () => {
           Destination: "",
           Participant_Method: "",
         }));
-         const response2 = await fetch(`/Yoyaku_Nagano/api/map/mapData`);
+         const response2 = await fetch(`/api/Yoyaku_Nagano/map/mapData`);
          const data2 = await response2.json();
          setMapData(data2);
       } catch (error) {

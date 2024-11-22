@@ -9,7 +9,7 @@ export default function ApplicationDetailsView({params}) {
   const { user_id, RecordID } = params;
   const FetchData = async () => {
     try {
-      const response = await fetch(`/api/Users/Moshikomi/${user_id}`);
+      const response = await fetch(`/api/Yoyaku_Nagano/Users/Moshikomi/${user_id}`);
       const data = await response.json();
       console.log(JSON.stringify(data));
       const dataSave = data.find(
