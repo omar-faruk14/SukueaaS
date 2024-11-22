@@ -7,7 +7,7 @@ function Header() {
     <nav className={styles.navbar}>
       <div className={styles.container}>
         <Link href="/Users/Settings/User_Information" className={styles.brand}>
-          つくえラボ
+          長野市の予約
         </Link>
       </div>
     </nav>

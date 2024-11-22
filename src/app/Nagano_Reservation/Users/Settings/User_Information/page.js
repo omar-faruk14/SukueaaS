@@ -4,8 +4,8 @@ import axios from "axios";
 import liff from "@line/liff";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Link from "next/link";
-import Header from "@Om/components/HeaderandFooter/Header";
-import Footer from "@Om/components/HeaderandFooter/Footer";
+import Header from "@Om/app/Nagano_Reservation/components/HeaderandFooter/Header";
+import Footer from "@Om/app/Nagano_Reservation/components/HeaderandFooter/Footer";
 import './User_information.css'
 import "@Om/app/globals.css";
 
