@@ -5,8 +5,8 @@ import "leaflet/dist/leaflet.css";
 import { GeoAltFill } from "react-bootstrap-icons";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import ReactDOMServer from "react-dom/server";
-import Header from "@Om/components/HeaderandFooter/HeaderMap";
-import Footer from "@Om/components/HeaderandFooter/Footer";
+import Header from "@Om/app/Nagano_Reservation/components/HeaderandFooter/Header";
+import Footer from "@Om/app/Nagano_Reservation/components/HeaderandFooter/Footer";
 
 // Utility function to convert React component to HTML string
 const reactToHTMLString = (reactComponent) => {

@@ -2,10 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import "@Om/app/globals.css";
-import Header from "@Om/components/HeaderandFooter/Header";
+import Header from "@Om/app/Nagano_Reservation/components/HeaderandFooter/Header";
+import Footer from "@Om/app/Nagano_Reservation/components/HeaderandFooter/Footer";
 import Image from "next/image";
 import styles from "./FacilitiesDetails.module.css"; // Import CSS module
-import Footer from "@Om/components/HeaderandFooter/Footer";
+
 
 export default function FacilitiesDetails({ params }) {
   const { location_id, facilities_id } = params;

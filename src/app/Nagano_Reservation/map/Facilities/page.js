@@ -6,8 +6,8 @@ import "@Om/app/globals.css";
 import styles from "./AllFacilities2.module.css"; // Import the CSS module for skeleton styles
 
 import { GeoAlt } from "react-bootstrap-icons";
-import Header from "@Om/components/HeaderandFooter/Header";
-import Footer from "@Om/components/HeaderandFooter/Footer";
+import Header from "@Om/app/Nagano_Reservation/components/HeaderandFooter/Header";
+import Footer from "@Om/app/Nagano_Reservation/components/HeaderandFooter/Footer";
 
 const itemsPerPage = 6;
 
