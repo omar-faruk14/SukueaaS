@@ -1,0 +1,50 @@
+.stickyFooter {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 0;
+  border-top: 1px solid #ddd;
+  box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.footerButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #333;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.footerButton,
+.footerButton a {
+  text-decoration: none;
+}
+
+.footerButton i {
+  font-size: 1.6rem;
+  color: #007bff;
+  margin-bottom: 4px;
+  transition: color 0.3s;
+}
+
+.footerButton span {
+  font-size: 0.75rem;
+  color: #333;
+}
+
+.footerButton:hover i {
+  color: #0056b3;
+  transform: scale(1.1);
+}
+
+.footerButton:hover span {
+  color: #0056b3;
+}

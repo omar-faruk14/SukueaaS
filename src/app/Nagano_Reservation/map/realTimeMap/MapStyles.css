@@ -1,0 +1,32 @@
+.custom-bus-icon {
+    position: relative;
+    animation: pulse 1.5s infinite alternate; /* Apply the animation */
+}
+
+.custom-bus-icon img {
+    display: block; /* Removes any inline spacing */
+    margin: 0;
+    padding: 0;
+    width: 15px; /* Fixed icon width */
+    height: auto; /* Maintain aspect ratio */
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 5px rgba(255, 0, 0, 0.8), 
+                    0 0 10px rgba(255, 0, 0, 0.6), 
+                    0 0 15px rgba(255, 0, 0, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 1), 
+                    0 0 30px rgba(255, 0, 0, 1), 
+                    0 0 45px rgba(255, 0, 0, 0.7);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(255, 0, 0, 0.8), 
+                    0 0 10px rgba(255, 0, 0, 0.6), 
+                    0 0 15px rgba(255, 0, 0, 0.4);
+    }
+}
+
+
