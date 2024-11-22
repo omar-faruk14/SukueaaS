@@ -39,7 +39,6 @@ export async function GET(request, { params }) {
 
     const records = getRecordsResponse.data.records.map((record) => ({
       Record_number: record.Record_number.value,
-      id: record.id.value,
       name: record.name.value,
       date: record.date.value,
       End_Time: record.End_Time.value,

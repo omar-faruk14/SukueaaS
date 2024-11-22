@@ -26,8 +26,6 @@ export async function GET(request, { params }) {
       Registration_Phone: record.Registration_Phone.value,
       Registration_Age: record.Registration_Age.value,
       Registration_Gender: record.Registration_Gender.value,
-      Registration_Driver_Volunteer: record.Registration_Driver_Volunteer.value,
-      Registration_Watch_Volunteer: record.Registration_Watch_Volunteer.value,
       Line_User_ID: record.Line_User_ID.value,
     }));
     return NextResponse.json(records);

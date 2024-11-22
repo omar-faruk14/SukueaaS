@@ -76,9 +76,9 @@ const DefaultApp = () => {
         // }
 
         // Fetch event data
-        const response = await axios.get("/api/Admin/Event_Information");
+        const response = await axios.get(`/api/Yoyaku_Nagano/Admin/Event_Information/`);
         const data = response.data;
-        const selectedEvent = data.find((event) => event.id === event_id);
+        const selectedEvent = data.find((event) => event.Record_number === event_id);
         setSelectedEvent(selectedEvent);
         setFormData((prevData) => ({
           ...prevData,
@@ -97,7 +97,7 @@ const DefaultApp = () => {
           Destination: "",
           Participant_Method: "",
         }));
-         const response2 = await fetch(`/api/map/mapData`);
+         const response2 = await fetch(`/Yoyaku_Nagano/api/map/mapData`);
          const data2 = await response2.json();
          setMapData(data2);
       } catch (error) {
@@ -123,7 +123,7 @@ const DefaultApp = () => {
     setIsSubmitting(true);
     console.log("JSON Data:", JSON.stringify(formData, null, 2));
     try {
-      const response = await axios.post("/api/Users/Moshikomi",
+      const response = await axios.post("/api/Yoyaku_Nagano/Users/Moshikomi",
         formData
       );
       setSubmissionStatus("success");

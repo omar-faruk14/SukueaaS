@@ -8,8 +8,8 @@ import { NextResponse } from "next/server";
 // Kintone configuration
 const kintoneConfig = {
   baseUrl: "https://emi-lab-osaka.cybozu.com",
-  appId: "48",
-  apiToken: "8x9GPZtE6VaTDjeMiY9SNWvjERFQy3wuv1OLxuC7",
+  appId: "63",
+  apiToken: "Y60dAOaFCgQwm7CRJbMfVZbIZVtbiqkYqhId7fGY",
 };
 
 // Function to handle POST requests

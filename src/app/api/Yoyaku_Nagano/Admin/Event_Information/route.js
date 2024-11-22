@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import axios from "axios";
 
 const kintoneUrl = "https://emi-lab-osaka.cybozu.com/k/v1";
-const apiToken = "JO3jb3FJbac3Isi73n43HyTTkMvFGHedTx9PbDty";
-const appId = 46;
+const apiToken = "M0GkaBFNuv2j37Y3mRpeKaiEUHZcixMBJyEHupHf";
+const appId = 67;
 export const dynamic = "force-dynamic";
 export async function GET(request) {
   try {
@@ -18,7 +18,6 @@ export async function GET(request) {
 
     const records = getRecordsResponse.data.records.map((record) => ({
       Record_number: record.Record_number.value,
-      id: record.id.value,
       name: record.name.value,
       date: record.date.value,
       End_Time: record.End_Time.value,

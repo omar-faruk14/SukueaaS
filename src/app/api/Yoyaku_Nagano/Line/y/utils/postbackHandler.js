@@ -181,7 +181,7 @@ export async function handlePostback(event) {
                 action: {
                   type: "uri",
                   label: "フォームで予約する",
-                  uri: `${process.env.NEXT_PUBLIC_API_BASE_URL}/Users/Moshikomi?event_id=${recordNumber}&user_id=${userId}`,
+                  uri: `${process.env.NEXT_PUBLIC_API_BASE_URL}/Nagano_Reservation/Users/Moshikomi?event_id=${recordNumber}&user_id=${userId}`,
                 },
                 margin: "md",
               },
