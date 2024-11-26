@@ -16,7 +16,7 @@ const OptimizeRoute = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        "https://d1uqrcsprcjbp.cloudfront.net/api/map"
+        "/api/Yoyaku_Nagano/map/mapData"
       );
       const data = await response.json();
       setMapData(data);

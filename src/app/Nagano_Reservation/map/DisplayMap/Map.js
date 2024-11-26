@@ -5,7 +5,7 @@ import axios from "axios";
 import "leaflet/dist/leaflet.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { renderToString } from "react-dom/server";
-import StickyFooter from "@Om/components/HeaderandFooter/StickyFooter";
+import StickyFooter from "@Om/app/Nagano_Reservation/components/HeaderandFooter/StickyFooter";
 import CustomLoading from "@Om/components/CustomLoading/CustomLoading";
 import './map.css'
 
@@ -19,31 +19,33 @@ export default function Map() {
   const [userMarker, setUserMarker] = useState(null);
   const [loadingData, setLoadingData] = useState(true);
 
-  const showUserLocation = () => {
-    if (userMarker) {
-      mapRef.current.removeLayer(userMarker);
-    }
+ const showUserLocation = () => {
+   if ("geolocation" in navigator) {
+     navigator.geolocation.getCurrentPosition((position) => {
+       const { latitude, longitude } = position.coords;
 
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
+       // Create a custom FontAwesome icon with a class name
+       const customIcon = L.divIcon({
+         html: `
+    <div class="current-location-icon"></div>
+  `,
+         className: "", 
+         iconSize: [20, 20], 
+         iconAnchor: [10, 10], 
+       });
 
-        const userIcon = L.divIcon({
-          html: '<i class="fas fa-location-dot fa-lg text-success"></i>',
-          className: "custom-marker-icon",
-          iconSize: [20, 20],
-          iconAnchor: [10, 20],
-        });
+       // Add the marker with popup
+       const userMarker = L.marker([latitude, longitude], {
+         icon: customIcon,
+       }).addTo(mapRef.current);
+       // .bindPopup("現在地")
+       // .openPopup();
 
-        const newUserMarker = L.marker([lat, lon], { icon: userIcon }).addTo(
-          mapRef.current
-        );
-        mapRef.current.setView([lat, lon], 13);
-        setUserMarker(newUserMarker);
-      });
-    }
-  };
+       // Center the map on the user's location
+       mapRef.current.setView([latitude, longitude], 13);
+     });
+   }
+ };
 
   const fetchMapData = async () => {
     if (!mapRef.current || layersControlRef.current) return;
@@ -112,9 +114,8 @@ export default function Map() {
   useEffect(() => {
     if (!mapRef.current && mapContainerRef.current) {
       const mapInstance = L.map(mapContainerRef.current).setView(
-        [35.9121, 138.2378],
-        16,
-      
+        [36.6436, 138.1878],
+        12
       );
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
         mapInstance
