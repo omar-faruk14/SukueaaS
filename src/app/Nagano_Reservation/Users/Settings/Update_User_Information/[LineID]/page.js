@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import Header from "@Om/components/HeaderandFooter/Header";
-import Footer from "@Om/components/HeaderandFooter/Footer";
+import Header from "@Om/app/Nagano_Reservation/components/HeaderandFooter/Header";
+import Footer from "@Om/app/Nagano_Reservation/components/HeaderandFooter/Footer";
 import "../../../Line_User_Registration/registration.css"
 
 const UpdateUser = ({ params }) => {

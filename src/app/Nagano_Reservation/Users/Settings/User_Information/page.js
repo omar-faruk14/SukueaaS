@@ -55,7 +55,7 @@ function LineUserInfo() {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb bg-light p-2 rounded">
               <li className="breadcrumb-item">
-                <Link href="/Users/Settings/User_Information">ホーム</Link>
+                <Link href="/Nagano_Reservation/Users/Settings/User_Information">ホーム</Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
                 登録情報を確認、変更する
@@ -155,7 +155,7 @@ function LineUserInfo() {
                       <div className="card-body">
                         <h5 className="card-title">
                           <Link
-                            href={`/Users/Settings/PrivacyPolicy`}
+                            href={`/Nagano_Reservation/Users/Settings/PrivacyPolicy`}
                             className="link-dark text-decoration-none"
                           >
                             <i className="fas fa-shield-alt text-center text-primary ms-2"></i>
@@ -166,7 +166,7 @@ function LineUserInfo() {
                     </div>
                   </div>
 
-                  <div className="col mb-5 mb-md-0 h-100">
+                  {/* <div className="col mb-5 mb-md-0 h-100">
                     <div className="card bg-light">
                       <div className="card-body">
                         <h5 className="card-title">
@@ -180,7 +180,7 @@ function LineUserInfo() {
                         </h5>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="col mb-md-0 h-100">
                     <div className="card bg-light">

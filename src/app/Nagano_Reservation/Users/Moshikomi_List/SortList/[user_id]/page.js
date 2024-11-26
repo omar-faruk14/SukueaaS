@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Person } from "react-bootstrap-icons";
 import './MoshikomiPageList.css'
-import Header from "@Om/components/HeaderandFooter/Header";
-import Footer from "@Om/components/HeaderandFooter/Footer";
+import Header from "@Om/app/Nagano_Reservation/components/HeaderandFooter/Header";
+import Footer from "@Om/app/Nagano_Reservation/components/HeaderandFooter/Footer";
 
 export default function MoshikomiPageList({ params }) {
   const [selectApplication, setSelectApplication] = useState([]);
