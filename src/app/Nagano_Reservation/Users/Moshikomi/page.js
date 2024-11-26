@@ -79,6 +79,7 @@ const DefaultApp = () => {
         const response = await axios.get(`/api/Yoyaku_Nagano/Admin/Event_Information/`);
         const data = response.data;
         const selectedEvent = data.find((event) => event.Record_number === event_id);
+        
         setSelectedEvent(selectedEvent);
         setFormData((prevData) => ({
           ...prevData,
