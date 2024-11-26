@@ -48,7 +48,7 @@ async function handleFollowEvent(event) {
           contents: [
             {
               type: "text",
-              text: `${userName} さん、このLINE公式つくえラボテスト用全機能を利用するには登録が必要です。さらなるイベント申し込みが便利になります。`,
+              text: `${userName} さん、このアプリの全機能を利用するには登録が必要です。さらなるイベント申し込みが便利になります。`,
               margin: "lg",
               wrap: true,
             },

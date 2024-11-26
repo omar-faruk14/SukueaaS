@@ -169,7 +169,7 @@ async function promptUserRegistration(event) {
         contents: [
           {
             type: "text",
-            text: `${userName} さんはまだご登録されていないようです。\n\nご利用には登録が必要です。\n\n次のステップに進むにはボタンを押してください。`,
+            text: `${userName} さん、このアプリの全機能を利用するには登録が必要です。さらなるイベント申し込みが便利になります。`,
             margin: "lg",
             wrap: true,
           },
