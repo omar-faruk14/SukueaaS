@@ -461,11 +461,12 @@ const DefaultApp = () => {
                     <label htmlFor="Additional_Comments" className="form-label">
                       連絡事項
                     </label>
-                    <textarea rows={5}
+                    <textarea
+                      rows={5}
                       className="form-control"
                       id="Additional_Comments"
                       name="Additional_Comments"
-                      placeholder={`代表者以外の参加者がいれば、氏名と送迎要否をご記入ください\n山田花子　送迎必要、山田次郎　送迎必要（自宅）`}
+                      placeholder={`代表者以外に参加される方がいる場合は、その方の、年代（職業）、性別についての記入をお願いします。\n例.山田花子、小学生、女\n山田次郎、60代、男`}
                       value={formData.Additional_Comments}
                       onChange={handleInputChange}
                     ></textarea>

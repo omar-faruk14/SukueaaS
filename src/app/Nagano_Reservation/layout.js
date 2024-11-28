@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "ながVision",
+  title: "ながのアグリツーリズム",
 };
 
 export default function AboutLayout({ children }) {
