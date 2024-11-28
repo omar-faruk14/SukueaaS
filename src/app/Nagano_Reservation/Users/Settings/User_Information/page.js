@@ -187,7 +187,7 @@ function LineUserInfo() {
                       <div className="card-body">
                         <h5 className="card-title">
                           <Link
-                            href={`/Admin/Settings/Login`}
+                            href={`/Nagano_Reservation/Admin/Settings/Login`}
                             className="link-dark text-decoration-none"
                           >
                             <i className="fas fa-cog text-center text-primary ms-2"></i>

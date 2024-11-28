@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import "./Login_css.css";
-import Header from "@Om/components/HeaderandFooter/Header";
-import Footer from "@Om/components/HeaderandFooter/Footer";
+import Header from "@Om/app/Nagano_Reservation/components/HeaderandFooter/Header";
+import Footer from "@Om/app/Nagano_Reservation/components/HeaderandFooter/Footer";
 
 export default function Page() {
   const [userName, setUserName] = useState("");
