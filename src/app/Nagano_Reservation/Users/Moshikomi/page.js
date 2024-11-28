@@ -76,23 +76,31 @@ const DefaultApp = () => {
         // }
 
         // Fetch event data
-        const response = await axios.get(`/api/Yoyaku_Nagano/Admin/Event_Information/`);
+        const response = await axios.get(
+          `/api/Yoyaku_Nagano/Admin/Event_Information/RecordID/${event_id}`
+        );
         const data = response.data;
-        const selectedEvent = data.find((event) => event.Record_number === event_id);
-        
-        setSelectedEvent(selectedEvent);
+
+        // const selectedEvent = data.find(
+        //   (event) => event.Record_number === event_id
+        // );
+
+        // setSelectedEvent(selectedEvent);
+
+        // No need for .find()
+        setSelectedEvent(data);
         setFormData((prevData) => ({
           ...prevData,
           Name: "",
           Number_of_Participants: 1,
           Additional_Comments: "",
-          Date_Time: selectedEvent ? selectedEvent.date : "",
-          Location: selectedEvent ? selectedEvent.location : "",
+          Date_Time: data.date || "", // Use 'data' directly here
+          Location: data.location || "",
           Use_of_mobile_services: "",
           Boarding_and_alighting_place: "",
-          Event_Name: selectedEvent ? selectedEvent.name : "",
+          Event_Name: data.name || "",
           Desired_meeting_place: "",
-          Application_Type: selectedEvent?.Application_Type_Moshikomi || "",
+          Application_Type: data.Application_Type_Moshikomi || "",
           Preferred_Time: "",
           Preferred_Date: "",
           Destination: "",
