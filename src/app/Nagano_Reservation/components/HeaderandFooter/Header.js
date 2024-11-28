@@ -7,7 +7,7 @@ function Header() {
     <nav className={styles.navbar}>
       <div className={styles.container}>
         <Link href="/Users/Settings/User_Information" className={styles.brand}>
-          長野市の予約
+          ながのアグリツーリズム
         </Link>
       </div>
     </nav>
