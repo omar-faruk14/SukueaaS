@@ -306,8 +306,10 @@ const StukueraboRegistration = () => {
 
                         <p className="text-primary">
                           <a
-                            href="/Users/Settings/PrivacyPolicy"
+                            href="/Nagano_Reservation/Users/Settings/PrivacyPolicy"
                             className="link-primary fw-bold"
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
                             アプリ利用にあたって プライバシーポリシー
                           </a>
