@@ -96,18 +96,7 @@ function LineUserInfo() {
                           <span className="fw-bold">性別:</span>{" "}
                           {lineData.Registration_Gender}
                         </p>
-                        <p className="card-text">
-                          <span className="fw-bold">
-                            運転ボランティアとして参加 に興味ある:{" "}
-                          </span>
-                          {lineData.Registration_Driver_Volunteer}
-                        </p>
-                        <p className="card-text">
-                          <span className="fw-bold">
-                            見守りボランティアとしての参加に興味ある:{" "}
-                          </span>
-                          {lineData.Registration_Watch_Volunteer}
-                        </p>
+                        
                         <div className="d-grid">
                           <a
                             className="btn btn-secondary rounded-pill"

@@ -118,7 +118,7 @@ export async function PUT(request) {
     );
     const replyMessage = {
       type: "text",
-      text: `登録情報が更新されました。\n\n名前: ${data.Registration_Name}\n住所: ${data.Registration_Address}`,
+      text: `登録情報が更新されました。\n\n名前: ${data.Registration_Name}\nお住いの地域: ${data.Registration_Address}\n連絡先: ${data.Registration_Phone}\n年代: ${data.Registration_Age}\n性別: ${data.Registration_Gender}`,
     };
 
     await lineClient.pushMessage(data.Line_User_ID, replyMessage);
